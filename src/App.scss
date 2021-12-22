@@ -1,10 +1,30 @@
 $main-gray: #808080;
 $main-blue: #ACC6FF;
 $shadow: 0 3px 6px rgba(50, 50, 80, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+
+/* 뼈대 잡기 */
+@mixin main {
+  padding: 0 40px;
+  overflow: scroll;
+  height: 80%;
+}
+
+@mixin row {
+  display: flex;
+  flex-direction: row;
+}
+@mixin col {
+  display: flex;
+  flex-direction: column;
+}
+
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+ul, li {
+  list-style: none;
 }
 
 button, i {
@@ -22,13 +42,13 @@ button, i {
     box-shadow: $shadow;
     border-radius: 8px;
     .nav {
-      display: flex;
-      flex-direction: row;
+      @include row;
       justify-content: space-between;
       padding: {
         top: 60px;
         right: 40px;
         left: 40px;
+        bottom: 20px;
       }
       div {
         font-size: 24px; 
@@ -38,8 +58,7 @@ button, i {
       position: absolute;
       bottom: 20px;
       width: 100%;
-      display: flex;
-      flex-direction: row;
+      @include row;
       align-items: center;
       justify-content: space-between;
       padding: {

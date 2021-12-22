@@ -1,32 +1,29 @@
 import '../styles/friends.scss';
 
-function Friends() {
+function Friends(props) {
     return <div className="friends">
-        <header>
-            <h1>친구</h1>
-            <div></div>
-        </header>
-        <section className="my-profile">
+        <section onClick={()=>{
+            props.history.push('/myprofile');
+        }} className="my-profile">
             <img src="/images/happy.jpg" alt="#" />
             <p>재홍</p>
         </section>
-        <div>
+        <div className="friends-number">
             <p>친구 4</p>
         </div>
         <ul className="friends-list">
-            <li>
-            <img src="/images/happy.jpg" alt="#" />
-            <p>재홍</p>
-            </li>
-            <li>
-            <img src="/images/happy.jpg" alt="#" />
-            <p>재홍</p>
-            </li>
-            <li>
-            <img src="/images/happy.jpg" alt="#" />
-            <p>재홍</p>
-            </li>
+        {
+            props.user.map(({ id, name })=>{
+                return (
+                <li key={id}>
+                    <img src="/images/happy.jpg" alt="#" />
+                    <p>{name}</p>
+                </li>
+                )
+            })
+        }
         </ul>
+        
     </div>
 }
 

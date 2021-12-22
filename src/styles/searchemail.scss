@@ -1,0 +1,40 @@
+@import '../App.scss';
+.search-email {
+    @include col;
+    @include main;
+    .search-form {
+        @include row;
+        align-items: center;
+        margin-bottom: 20px;
+        input {
+            width: 280px;
+            height: 40px;
+            outline: none;
+            padding: 4px;
+            border-radius: 8px;
+            margin-right: 10px;
+            color: $main-gray;
+        }
+        .cancel-btn {
+            font-size: 18px;
+        }
+    }
+    .item-list {
+        @include col;
+        .item {
+            @include row;
+            align-items: center;
+            margin-bottom: 20px;
+            img {
+                width: 50px;
+                height: 50px;
+                border-radius: 12px;
+                margin-right: 10px;
+                background: #eee;
+            }
+            p {
+                font-size: 14px;
+            }
+        }
+    }
+}
