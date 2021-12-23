@@ -22,19 +22,28 @@ function App() {
   const [user, setUser] = useState([{
     id: 0,
     name: '김재우',
+    img: '/images/1.jpg',
     email: '',
     active: false,
   }, {
     id: 1,
     name: '강유진',
+    img: '/images/2.jpg',
     email: '',
     active: false,
   }, {
     id: 2,
     name: '강현수',
+    img: '/images/3.jpg',
     email: '',
     active: false,
   }]);
+
+  // 친구 검색 input & onChange.
+  const [search, setSearch] = useState('');
+  const searchOnChange = function(e) {
+    setSearch(e.target.value);
+  }
 
   // 삭제할 친구 선택 함수.
   const deleteModal = function(id) {
@@ -47,6 +56,52 @@ function App() {
 
   // 삭제 모달창 params.
   const { id } = useParams();
+
+  // 내 이름 state.
+  const [nickName, setNickName] = useState({ name: '재홍' });
+  const { name } = nickName;
+
+  // 변경할 이름 받아올 state.
+  const [nickNameEdit, setNickNameEdit] = useState({ nameEdit: '' });
+
+  // 변경할 이름 input.value 받아오는 함수.
+  const onChange = function(e) {
+    setNickNameEdit({ ...nickNameEdit, [e.target.name]: e.target.value })
+  }
+
+  // 클릭시 이름 변경하는 함수.
+  const nameChange = function() {
+    setNickName(nickNameEdit);
+    setNickNameEdit({ nameEdit: '' });
+  }
+
+  // 마이 프로필 사진.
+  const [myImage, setMyImage] = useState({ img: '/images/happy.jpg' });
+  const { img } = myImage;
+
+  // 기본 이미지 state.
+  const [basicImage, setBasicImage] = useState([{
+    id: 0,
+    img: '/images/happy.jpg'
+  }, {
+    id: 1,
+    img: '/images/1.jpg'
+  }, {
+    id: 2,
+    img: '/images/2.jpg'
+  }, {
+    id: 3,
+    img: '/images/3.jpg'
+  }, {
+    id: 4,
+    img: '/images/4.jpg'
+  }]);
+
+  // 기본 이미지 선택 함수.
+  const selectBasicImage = function(id) {
+    let arr = [...basicImage];
+    setMyImage(arr[id]);
+  }
   return (
     <div className="App">
       <div className="app-box">
@@ -60,12 +115,12 @@ function App() {
       </Route>
 
       {/* navigation */}
-      <Nav />
+      <Nav history={history} />
       {/* 액션버튼s */}
       <Action history={history} />
       {/* 친구창 */}
       <Route path="/friends">
-        <Friends user={user} history={history} />
+        <Friends img={img} name={name} user={user} history={history} />
       </Route>
       <Route path="/friends/setting">
         <Setting history={history} />
@@ -81,7 +136,10 @@ function App() {
 
       {/* 친구찾기 */}
       <Route path="/search">
-        <Search />
+        <Search user={user}  
+        search={search} 
+        searchOnChange={searchOnChange} 
+        />
       </Route>
       {/* 친구추가 */}
       <Route path="/searchemail">
@@ -97,11 +155,21 @@ function App() {
         </Route>
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
-        <MyProfile history={history} />
+        <MyProfile 
+        img={img} 
+        nameChange={nameChange} 
+        history={history} 
+        name={name} 
+        onChange={onChange} 
+        />
       </Route>
       {/* 내 프로필 이미지 변경 */}
       <Route path="/myprofile/profileimageedit">
-        <ProfileImageEdit history={history}/>
+        <ProfileImageEdit 
+        selectBasicImage={selectBasicImage} 
+        basicImage={basicImage} 
+        history={history}
+        />
       </Route>
 
       </div>
@@ -109,7 +177,7 @@ function App() {
   );
 }
 
-function Nav() {
+function Nav(props) {
   const [navSite, setNavSite] = useState([{
     id: 0,
     site: '/friends',
@@ -133,12 +201,14 @@ function Nav() {
   }]);
   return <div className="nav" key={navSite.id}>
     {
-      navSite.map(({ site, title })=>{
+      navSite.map(({ site, title, id })=>{
         return (<>
         <Route exact path={site}>
-        <div>{title}</div>
+        <div key={id}>{title}</div>
         <div>
-          <i className="fas fa-cog"></i>
+          <i onClick={()=>{
+            props.history.push('/friends/setting')
+          }} className="fas fa-cog"></i>
           </div>
         </Route>
         </>)

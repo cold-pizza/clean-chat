@@ -26,7 +26,9 @@ $shadow: 0 3px 6px rgba(50, 50, 80, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
 ul, li {
   list-style: none;
 }
-
+img {
+  object-fit: cover;
+}
 button, i {
   cursor: pointer;
 }

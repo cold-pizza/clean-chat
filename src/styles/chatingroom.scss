@@ -82,4 +82,32 @@
             }
         }
     }
+    .chating-input {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        @include row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        input {
+            width: 350px;
+            height: 30px;
+            border-radius: 16px;
+            border: 1px solid $main-gray;
+            outline: none;
+            padding: {
+                left: 10px;
+            }
+        }
+        button {
+            position: absolute;
+            right: 30px;
+            border: none;
+            background: transparent;
+            i {
+                font-size: 18px;
+            }
+        }
+    }
 }

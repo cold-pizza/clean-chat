@@ -25,6 +25,10 @@ function ChatingRoom(props) {
                 <p className="time">11:33</p>
             </div>
         </section>
+        <div className="chating-input">
+        <input id="chating" type="text" />
+        <button><i className="fas fa-arrow-up"></i></button>
+        </div>
     </div>
 }
 

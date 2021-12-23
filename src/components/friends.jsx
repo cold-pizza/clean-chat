@@ -5,8 +5,8 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src="/images/happy.jpg" alt="#" />
-            <p>재홍</p>
+            <img src={props.img} alt="#" />
+            <p>{props.name}</p>
         </section>
         <div className="friends-number">
             <p>친구 4</p>

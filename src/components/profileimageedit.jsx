@@ -4,7 +4,10 @@ import '../styles/profileimageedit.scss';
 function ProfileImageEdit(props) {
     const [imageEdit, setImageEdit] = useState(false);
     return <div className="profile-image-edit">
-        { imageEdit ? <ImageSelect /> : null }
+        { imageEdit ? <ImageSelect
+        history={props.history}
+        selectBasicImage={props.selectBasicImage}
+        basicImage={props.basicImage} /> : null }
         <div className="btns">
             <button onClick={()=>{
                 setImageEdit(!imageEdit);
@@ -20,14 +23,20 @@ function ProfileImageEdit(props) {
     </div>
 }
 
-function ImageSelect() {
+function ImageSelect(props) {
     return <section>
             <div className="imgs1">
-                <img src="/images/happy.jpg" alt="#" />
-                <img src="/images/1.jpg" alt="#" />
-                <img src="/images/2.jpg" alt="#" />
-                <img src="/images/3.jpg" alt="#" />
-                <img src="/images/4.jpg" alt="#" />
+            {
+                props.basicImage.map(({ img, id })=>{
+                   return (
+                   <img key={id} onClick={()=>{
+                       props.selectBasicImage(id);
+                       props.history.push('/myprofile');
+                   }} src={img} alt={img} />
+               
+                   )
+                })
+            }
             </div>
     
             <i className="fas fa-chevron-up"></i>

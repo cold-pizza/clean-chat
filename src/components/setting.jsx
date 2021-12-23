@@ -10,6 +10,9 @@ function Setting(props) {
                 props.history.push('/friendsremove')
             }} type="button">친구삭제</button>
             <button onClick={()=>{
+                props.history.push('/')
+            }}>로그아웃</button>
+            <button onClick={()=>{
                 props.history.goBack();
             }} type="button">취소</button>
         </div>
