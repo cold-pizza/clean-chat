@@ -102,6 +102,14 @@ function App() {
     let arr = [...basicImage];
     setMyImage(arr[id]);
   }
+
+  // 채팅창 채팅방 목록.
+  const [chatRoom, setChatRoom] = useState({
+    name: '',
+    img: '',
+    comments:'',
+    day: ''
+  });
   return (
     <div className="App">
       <div className="app-box">

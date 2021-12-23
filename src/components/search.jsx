@@ -13,7 +13,7 @@ function Search(props) {
                     return user;
                 } else if (user.name.includes(props.search)) {
                     return user;
-                }
+               }
             }).map(({ name, img })=>{
                 return <li>
                 <img src={img} alt={img} />
