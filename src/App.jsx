@@ -18,23 +18,49 @@ import { Route, useHistory, useParams } from 'react-router-dom';
 function App() {
   const history = useHistory();
 
+  // 로그인 계정.
+  const [account, setAccount] = useState({ email: 'hi@naver.com', password: '1234' });
+
+  // 아이디 입력 state.
+  const [idInput, setIdInput] = useState({ email: "", password: "" });
+  const { email, password } = idInput;
+
+  const accountOnChange = function(e) {
+    setIdInput({ ...idInput, [e.target.name]: e.target.value });
+  }
+
+  // 로그인 함수.
+  const login = function(email, password) {
+    if (email === account.email) {
+      if (password === account.password) {
+        console.log('로그인 성공!');
+        setIdInput({ email:'', password:'' });
+        history.push('/friends');
+      } else {
+        console.log('비밀번호를 다시 입력해주세요.')
+      }
+    } else {
+      console.log('아이디를 다시 입력해주세요.')
+    }
+  }
+
   // 친구 계정.
   const [user, setUser] = useState([{
     id: 0,
     name: '김재우',
-    img: '/images/1.jpg',
+    img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg',
     email: '',
     active: false,
   }, {
     id: 1,
     name: '강유진',
-    img: '/images/2.jpg',
+    img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg', 
     email: '',
     active: false,
   }, {
     id: 2,
     name: '강현수',
-    img: '/images/3.jpg',
+    img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg',
     email: '',
     active: false,
   }]);
@@ -76,25 +102,25 @@ function App() {
   }
 
   // 마이 프로필 사진.
-  const [myImage, setMyImage] = useState({ img: '/images/happy.jpg' });
+  const [myImage, setMyImage] = useState({ img: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
   const { img } = myImage;
 
   // 기본 이미지 state.
   const [basicImage, setBasicImage] = useState([{
     id: 0,
-    img: '/images/happy.jpg'
+    img: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg'
   }, {
     id: 1,
-    img: '/images/1.jpg'
+    img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg'
   }, {
     id: 2,
-    img: '/images/2.jpg'
+    img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg'
   }, {
     id: 3,
-    img: '/images/3.jpg'
+    img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg'
   }, {
     id: 4,
-    img: '/images/4.jpg'
+    img: 'https://cold-pizza.github.io/clean-chat/images/4.jpg'
   }]);
 
   // 기본 이미지 선택 함수.
@@ -115,7 +141,7 @@ function App() {
       <div className="app-box">
         {/* 로그인 */}
       <Route exact path="/">
-        <Login history={history} />
+        <Login history={history} email={email} password={password} login={login} accountOnChange={accountOnChange} />
       </Route>
       {/* 회원가입 */}
       <Route path="/signup">

@@ -11,7 +11,7 @@ function MyProfile(props) {
         <main>
             <nav>
             <i onClick={()=>{
-                props.history.goBack();
+                props.history.push('/friends');
             }} className="fas fa-chevron-left"></i>
             { !onNameInput ? <i className="fas fa-cog"></i> : <i onClick={()=>{
             props.nameChange();

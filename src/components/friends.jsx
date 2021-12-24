@@ -13,10 +13,10 @@ function Friends(props) {
         </div>
         <ul className="friends-list">
         {
-            props.user.map(({ id, name })=>{
+            props.user.map(({ id, name,img })=>{
                 return (
                 <li key={id}>
-                    <img src="/images/happy.jpg" alt="#" />
+                    <img src={img} alt={img} />
                     <p>{name}</p>
                 </li>
                 )
