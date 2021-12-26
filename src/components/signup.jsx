@@ -1,7 +1,12 @@
+import { useEffect } from 'react';
 import '../styles/signup.scss';
-import { useState } from 'react';
 
 function Signup(props) {
+    // 첫 렌더링시 성별.
+    useEffect(()=>{
+        let item = "male";
+        props.setGender(item);
+    }, [])
     return <div className="signup">
         <h1>회원가입</h1>
         <form id="signup-form" action="/">
@@ -15,20 +20,18 @@ function Signup(props) {
                                 color: props.selectGender ? "#808080" : "white" }}
                     className="male-btn"
                     type="button"
-                    value="male"
-                    ref={props.male}
                     onClick={()=>{
                        props.setSelectGender(!props.selectGender);
+                       props.genderSelectFn(props.selectGender);
                    }}>남</button>
                 <button 
                     style={{ background: props.selectGender ? "#ACC6FF" : "white",
                                 color: props.selectGender ? "white" : "#808080" }}
                     className="female-btn"
                     type="button"
-                    value="female"
-                    ref={props.female}
                     onClick={()=>{
                         props.setSelectGender(!props.selectGender);
+                        props.genderSelectFn(props.selectGender);
                     }}
                 >여</button>
             </div>

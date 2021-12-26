@@ -7,7 +7,7 @@ function Login(props) {
             <input onChange={props.accountOnChange} name="id" className="email" type="email" placeholder="이메일" />
             <input onChange={props.accountOnChange} name="password" className="password" type="password" placeholder="비밀번호" />
             <button onClick={()=>{
-                props.login(props.id, props.password);
+                props.loginFn(props.idInput.id, props.idInput.password);
             }} className="login-btn" type="submit">로그인</button>
             <button onClick={()=>{
                 props.history.push('/signup')

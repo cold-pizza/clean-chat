@@ -6,7 +6,7 @@ function Friends(props) {
             props.history.push('/myprofile');
         }} className="my-profile">
             <img src={props.img} alt="#" />
-            <p>{props.name}</p>
+            <p>{props.names}</p>
         </section>
         <div className="friends-number">
             <p>친구 4</p>
