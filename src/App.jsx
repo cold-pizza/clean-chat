@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Login from './components/login';
 import Signup from './components/signup';
 import Friends from './components/friends';
@@ -81,7 +81,7 @@ const [selectGender, setSelectGender] = useState(false);
         alert('이름, 이메일 또는 비밀번호를 입력해주세요.')
       } else {
         console.log('회원가입 성공.');
-        setJoinAccount({ name:'', id: '', password: '', sex: '' });
+        setJoinAccount({ name:'', id: '', password: '' });
         history.push('/');
       }
     })
