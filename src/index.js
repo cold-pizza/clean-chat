@@ -7,7 +7,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-   <BrowserRouter basename="clean-chat">
+   <BrowserRouter basename="/clean-chat">
     <App />
     </BrowserRouter>
   </React.StrictMode>,

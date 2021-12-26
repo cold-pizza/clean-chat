@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Login from './components/login';
 import Signup from './components/signup';
 import Friends from './components/friends';
@@ -11,37 +11,85 @@ import Delete from './components/delete';
 import MyProfile from './components/myprofile';
 import ProfileImageEdit from './components/profileimageedit';
 import ChatingRoom from './components/chatingroom';
+import FriendsModal from './components/friendsmodal';
 import './App.scss';
 
-import { Route, useHistory, useParams } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 function App() {
   const history = useHistory();
 
   // 로그인 계정.
-  const [account, setAccount] = useState({ email: 'hi@naver.com', password: '1234' });
+  const [account, setAccount] = useState({ id: 'hi@naver.com', password: '1234' });
 
   // 아이디 입력 state.
-  const [idInput, setIdInput] = useState({ email: "", password: "" });
-  const { email, password } = idInput;
+  const [idInput, setIdInput] = useState({ id: "", password: "" });
+  const { id, password } = idInput;
 
   const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
   }
 
   // 로그인 함수.
-  const login = function(email, password) {
-    if (email === account.email) {
-      if (password === account.password) {
-        console.log('로그인 성공!');
-        setIdInput({ email:'', password:'' });
-        history.push('/friends');
+  const login = async function(id, password) {
+     const db = await axios.get('http://localhost:8000/users');
+     // 데이터 요청.
+      if (db) {
+        const users = db.data;
+        // 같은 이메일 찾기.
+        const user = users.find((user)=>{
+          return user.id === id;
+        })
+        if (!user || user.password !== password) {
+          throw new Error('아이디 또는 비밀번호가 다릅니다.')
+        } else {
+          console.log('로그인 성공!');
+          history.push('/friends');
+        }
       } else {
-        console.log('비밀번호를 다시 입력해주세요.')
+        throw new Error('서버 통신이 원활하지 않습니다.')
       }
+  }
+
+ 
+// 성별 Ref.current.value.
+const male = useRef(null);
+const female = useRef(null);
+const [selectGender, setSelectGender] = useState(false);
+const [gender, setGender] = useState('');
+
+
+ // 회원가입 state & onChange.
+ const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '', sex: '' });
+ const joinOnChange = function(e) {
+   setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
+ }
+
+console.log(joinAccount.id)
+console.log(joinAccount.sex)
+  // 회원가입 함수.
+  const signupFn = function() {
+    // 성별 확인.
+    if (selectGender) {
+      setJoinAccount({ ...joinAccount, sex: "female" });
     } else {
-      console.log('아이디를 다시 입력해주세요.')
+      setJoinAccount({ ...joinAccount, sex: "female" });
     }
+    // 회원가입 post 요청.
+    axios.post('http://localhost:8000/users', joinAccount)
+    .then(()=>{
+      if (joinAccount === null) {
+        console.log('이름, 이메일 또는 비밀번호를 입력해주세요.')
+      } else {
+        console.log('회원가입 성공.');
+        setJoinAccount({ name:'', id: '', password: '', sex: '' });
+        history.push('/');
+      }
+    })
+    .catch((error)=>{
+      console.log(error);
+    })
   }
 
   // 친구 계정.
@@ -80,8 +128,7 @@ function App() {
     )
   }
 
-  // 삭제 모달창 params.
-  const { id } = useParams();
+
 
   // 내 이름 state.
   const [nickName, setNickName] = useState({ name: '재홍' });
@@ -141,11 +188,20 @@ function App() {
       <div className="app-box">
         {/* 로그인 */}
       <Route exact path="/">
-        <Login history={history} email={email} password={password} login={login} accountOnChange={accountOnChange} />
+        <Login history={history} id={id} password={password} login={login} accountOnChange={accountOnChange} />
       </Route>
       {/* 회원가입 */}
       <Route path="/signup">
-        <Signup history={history} />
+        <Signup 
+        jojnAccount={joinAccount}
+        signupFn={signupFn}
+        selectGender={selectGender} 
+        setSelectGender={setSelectGender} 
+        male={male} 
+        female={female} 
+        history={history} 
+        joinOnChange={joinOnChange} 
+        />
       </Route>
 
       {/* navigation */}
@@ -204,6 +260,10 @@ function App() {
         basicImage={basicImage} 
         history={history}
         />
+      </Route>
+
+      <Route path="/friends/friendsmodal">
+        <FriendsModal history={history} />
       </Route>
 
       </div>

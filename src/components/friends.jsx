@@ -15,7 +15,9 @@ function Friends(props) {
         {
             props.user.map(({ id, name,img })=>{
                 return (
-                <li key={id}>
+                <li onClick={()=>{
+                    props.history.push('/friends/friendsmodal')
+                }} key={id}>
                     <img src={img} alt={img} />
                     <p>{name}</p>
                 </li>
