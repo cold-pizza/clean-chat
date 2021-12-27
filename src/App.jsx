@@ -20,11 +20,9 @@ import axios from 'axios';
 function App() {
   const history = useHistory();
 
-  // 로그인 계정.
-  const [account, setAccount] = useState({ id: 'hi@naver.com', password: '1234' });
-
   // 아이디 입력 state.
   const [idInput, setIdInput] = useState({ id: "", password: "" });
+  const { loginId, loginPs } = idInput;
 
   const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
@@ -32,35 +30,50 @@ function App() {
 
   // 로그인 함수.
   const loginFn = async function(id, password) {
-     const db = await axios.get('http://localhost:8000/users');
-     // 데이터 요청.
-      if (db) {
-        const users = db.data;
-        // 같은 이메일 찾기.
-        const user = users.find((user)=>{
-          return user.id === id;
-        })
-        if (!user || user.password !== password) {
-          throw new Error('아이디 또는 비밀번호가 다릅니다.')
-        } else {
-          console.log('로그인 성공!');
-          history.push('/friends');
+     const db = await axios.post('http://localhost:8000/users', { loginId, loginPs });
+     // 일치하는지 확인하는 로직 추가.
+     db.then((res) => {
+       if (db.data === loginId && db.data === loginPs) {
+        if (res.status === 200) {
+          alert('로그인 성공.')
+        } else if (res.status === 404) {
+          alert('이메일 또는 비밀번호가 다릅니다.');
+        } else if (res.status === 400) {
+          alert('잘못된 요청 입니다. 이메일 또는 비밀번호를 다시 입력해주세요.');
         }
-      } else {
-        throw new Error('서버 통신이 원활하지 않습니다.')
-      }
+       }
+     })
+      // if (db) {
+      //   const users = db.data;
+      //   // 같은 이메일 찾기.
+      //   const user = users.find((user)=>{
+      //     return user.id === id;
+      //   })
+      //   if (!user || user.password !== password) {
+      //     throw new Error('아이디 또는 비밀번호가 다릅니다.')
+      //   } else {
+      //     console.log('로그인 성공!');
+      //     history.push('/friends');
+      //   }
+      // } else {
+      //   throw new Error('서버 통신이 원활하지 않습니다.')
+      // }
   }
 
 // 성별 button state.
 const [selectGender, setSelectGender] = useState(false);
 
  // 회원가입 state & onChange.
- const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '' });
+ const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '', psCheck: '' });
  const { name, id, password } = joinAccount;
  const [gender, setGender] = useState('');
  const joinOnChange = function(e) {
    setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
  }
+ const joinPsOnChange = function(e) {
+  setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
+}
+
 
   // 성별 결졍 함수.
   const genderSelectFn = function(selectGender) {
@@ -72,22 +85,35 @@ const [selectGender, setSelectGender] = useState(false);
       setGender(female);
     }
   }
-  console.log(joinAccount.name)
   // 회원가입 함수.
   const signupFn = function() {
-   axios.post('http://localhost:8000/users', {name, id, password, gender})
-    .then(()=>{
-      if (name === '' || id === '' || password === '') {
-        alert('이름, 이메일 또는 비밀번호를 입력해주세요.')
-      } else {
+    if (name === '' || id === '' || password === '') {
+      alert('이름, 이메일 또는 비밀번호를 입력해주세요.')
+      return false;
+    }
+    const spe = password.search(/[!@#$%^&*]/gi);
+    const num = password.search(/[0-9]/g);
+    const eng = password.search(/[a-z]/ig);
+    if (password.length < 7 || password.length > 20) {
+      alert('비밀번호를 6자리 ~ 20자리 이내로 입력해주세요.');
+      return false;
+    } else if ((spe < 0 && num < 0) || (spe < 0 && eng < 0) || (num < 0 && eng < 0)) {
+      alert('영문, 숫자, 특수문자 중 2가지 이상 혼합하여 입력해주세요.');
+      return false;
+    }
+    if (password !== joinAccount.psCheck) {
+      alert('비밀번호가 일치하지 않습니다.');
+    } else {
+      axios.post('http://localhost:8000/users', {name, id, password, gender})
+      .then(()=>{
         console.log('회원가입 성공.');
         setJoinAccount({ name:'', id: '', password: '' });
         history.push('/');
-      }
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+    }
   }
 
   // 친구 계정.
@@ -203,6 +229,8 @@ const [selectGender, setSelectGender] = useState(false);
         setSelectGender={setSelectGender} 
         history={history} 
         joinOnChange={joinOnChange} 
+        joinAccount={joinAccount}
+        joinPsOnChange={joinPsOnChange}
         />
       </Route>
 
