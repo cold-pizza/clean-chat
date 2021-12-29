@@ -14,8 +14,10 @@ function Search(props) {
                 } else if (user.name.includes(props.search)) {
                     return user;
                }
-            }).map(({ name, img })=>{
-                return <li>
+            }).map(({ name, img, id })=>{
+                return <li onClick={()=>{
+                    props.history.push(`/friends/friendsmodal/${id}`)
+                }}>
                 <img src={img} alt={img} />
                 <p>{name}</p>
             </li>

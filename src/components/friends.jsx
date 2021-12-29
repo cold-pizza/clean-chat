@@ -5,8 +5,8 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={props.img} alt="#" />
-            <p>{props.names}</p>
+            <img src={props.basicImg} alt="#" />
+            <p>{props.myAccount.name}</p>
         </section>
         <div className="friends-number">
             <p>친구 4</p>
@@ -16,7 +16,7 @@ function Friends(props) {
             props.user.map(({ id, name,img })=>{
                 return (
                 <li onClick={()=>{
-                    props.history.push('/friends/friendsmodal')
+                    props.history.push(`/friends/friendsmodal/${id}`)
                 }} key={id}>
                     <img src={img} alt={img} />
                     <p>{name}</p>

@@ -4,7 +4,7 @@ import '../styles/profileimageedit.scss';
 function ProfileImageEdit(props) {
     const [imageEdit, setImageEdit] = useState(false);
     return <div className="profile-image-edit">
-        { imageEdit ? <ImageSelect
+        { imageEdit ? <BasicImageModal
         history={props.history}
         selectBasicImage={props.selectBasicImage}
         basicImage={props.basicImage} /> : null }
@@ -23,24 +23,15 @@ function ProfileImageEdit(props) {
     </div>
 }
 
-function ImageSelect(props) {
-    return <section>
-            <div className="imgs1">
-            {
-                props.basicImage.map(({ img, id })=>{
-                   return (
-                   <img key={id} onClick={()=>{
-                       props.selectBasicImage(id);
-                       props.history.push('/myprofile');
-                   }} src={img} alt={img} />
-               
-                   )
-                })
-            }
+function BasicImageModal(props) {
+    return <section className="basic-image-modal">
+            <p>기본 이미지로 변경하시겠습니까?</p>
+            <div>
+            <button className="yes-btn">Yes</button>
+            <button onClick={()=>{
+                props.history.goBack();
+            }} className="no-btn">No</button>
             </div>
-    
-            <i className="fas fa-chevron-up"></i>
-            <p>선택해주세요!</p>
         </section>
 }
 

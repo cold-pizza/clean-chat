@@ -1,11 +1,13 @@
+import { useParams } from 'react-router';
 import '../styles/friendsmodal.scss';
 
 function FriendsModal(props) {
+    const { id } = useParams();
     return <div className="friends-modal">
         <section className="friends-profile">
             <div className="meta-info">
-                <img src="../images/1.jpg" alt="#" />
-                <p>이름</p>
+                <img src={props.user[id].img} alt={props.user[id].img} />
+                <p>{props.user[id].name}</p>
             </div>
             <div className="btns">
                 <button className="chating-btn">채팅</button>

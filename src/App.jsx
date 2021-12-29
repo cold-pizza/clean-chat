@@ -20,44 +20,76 @@ import axios from 'axios';
 function App() {
   const history = useHistory();
 
+
+
   // 아이디 입력 state.
-  const [idInput, setIdInput] = useState({ id: "", password: "" });
+  const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
   const { loginId, loginPs } = idInput;
 
+  // 로그인한 계정.
+  const [myAccount, setMyAccount] = useState(null);
+    // 기본 이미지🌠
+    const [myImage, setMyImage] = useState({ basicImg: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
+    const { basicImg } = myImage;
+
+    // 로그인 input.value
   const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
   }
 
   // 로그인 함수.
-  const loginFn = async function(id, password) {
-     const db = await axios.post('http://localhost:8000/users', { loginId, loginPs });
-     // 일치하는지 확인하는 로직 추가.
-     db.then((res) => {
-       if (db.data === loginId && db.data === loginPs) {
-        if (res.status === 200) {
-          alert('로그인 성공.')
-        } else if (res.status === 404) {
-          alert('이메일 또는 비밀번호가 다릅니다.');
-        } else if (res.status === 400) {
-          alert('잘못된 요청 입니다. 이메일 또는 비밀번호를 다시 입력해주세요.');
+  const loginFn = function() {
+    if (loginId === '') {
+      alert('이메일을 입력해주세요.')
+      return false;
+    } else {
+      if (loginPs === '') {
+        alert('비밀번호를 입력해주세요.')
+        return false;
+      }
+    }
+    const headers = {
+        "accept": "application/json",
+        "Content-Type": "application/json"
+    }
+    const data = {
+      email: loginId, 
+      password: loginPs
+    }
+     axios.post('https://clean-chat.kumas.dev/api/user/login',
+       data, headers)
+     .then(res => {
+       console.log(res)
+       if (res.status === 200) {
+         console.log(res.data.message);
+         history.push('/friends');
+         setMyAccount(res.data.result);
+         setIdInput({ loginId: '', loginPs: '' });
         }
-       }
-     })
-      // if (db) {
-      //   const users = db.data;
-      //   // 같은 이메일 찾기.
-      //   const user = users.find((user)=>{
-      //     return user.id === id;
-      //   })
-      //   if (!user || user.password !== password) {
-      //     throw new Error('아이디 또는 비밀번호가 다릅니다.')
-      //   } else {
-      //     console.log('로그인 성공!');
-      //     history.push('/friends');
-      //   }
-      // } else {
-      //   throw new Error('서버 통신이 원활하지 않습니다.')
-      // }
+      })
+      .catch(err => {
+        console.log(err);
+        alert('이메일 또는 비밀번호를 다시 입력해주세요.');
+      }) 
+  }
+
+  // 로그아웃 함수.
+  const logoutFn = function() {
+    const config = {
+      headers: {
+        "accept": "application.json"
+      }
+    }
+    axios.get('https://clean-chat.kumas.dev/api/user/logout')
+    .then(res => {
+        console.log(res.data.message);
+        history.replace('/');
+    })
+    .catch(err => {
+      console.log(err);
+      console.log('401에러 대체 로그아웃.')
+      history.replace('/');
+    })
   }
 
 // 성별 button state.
@@ -104,8 +136,9 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('http://localhost:8000/users', {name, id, password, gender})
-      .then(()=>{
+      axios.post('https://clean-chat.kumas.dev/api/user', {name, email: id, password, gender})
+      .then((res)=>{
+        console.log(res);
         console.log('회원가입 성공.');
         setJoinAccount({ name:'', id: '', password: '' });
         history.push('/');
@@ -152,6 +185,20 @@ const [selectGender, setSelectGender] = useState(false);
     )
   }
 
+// 채팅창 목록.
+const [chatRoomList, setChatRoomList] = useState([{
+  name: '',
+  img: '',
+  comments:'',
+  days: ''
+}]);
+// 채팅방 state.
+const [chatingRoom, setChatingRoom] = useState({
+  name: '',
+  img: '',
+  comments: '',
+  days: ''
+});
 
 
   // 내 이름 state.
@@ -159,7 +206,7 @@ const [selectGender, setSelectGender] = useState(false);
   const { names } = nickName;
 
   // 변경할 이름 받아올 state.
-  const [nickNameEdit, setNickNameEdit] = useState({ nameEdit: '' });
+  const [nickNameEdit, setNickNameEdit] = useState({ names: '' });
 
   // 변경할 이름 input.value 받아오는 함수.
   const onChange = function(e) {
@@ -169,12 +216,8 @@ const [selectGender, setSelectGender] = useState(false);
   // 클릭시 이름 변경하는 함수.
   const nameChange = function() {
     setNickName(nickNameEdit);
-    setNickNameEdit({ nameEdit: '' });
+    setNickNameEdit({ names: '' });
   }
-
-  // 마이 프로필 사진.
-  const [myImage, setMyImage] = useState({ img: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
-  const { img } = myImage;
 
   // 기본 이미지 state.
   const [basicImage, setBasicImage] = useState([{
@@ -200,13 +243,6 @@ const [selectGender, setSelectGender] = useState(false);
     setMyImage(arr[id]);
   }
 
-  // 채팅창 채팅방 목록.
-  const [chatRoom, setChatRoom] = useState({
-    name: '',
-    img: '',
-    comments:'',
-    day: ''
-  });
   return (
     <div className="App">
       <div className="app-box">
@@ -233,6 +269,7 @@ const [selectGender, setSelectGender] = useState(false);
         joinPsOnChange={joinPsOnChange}
         />
       </Route>
+      
 
       {/* navigation */}
       <Nav history={history} />
@@ -240,10 +277,10 @@ const [selectGender, setSelectGender] = useState(false);
       <Action history={history} />
       {/* 친구창 */}
       <Route path="/friends">
-        <Friends img={img} names={names} user={user} history={history} />
+        <Friends myAccount={myAccount} basicImg={basicImg} names={names} user={user} history={history} />
       </Route>
       <Route path="/friends/setting">
-        <Setting history={history} />
+        <Setting history={history} logoutFn={logoutFn} />
       </Route>
       {/* 채팅목록 */}
       <Route path="/chat">
@@ -256,7 +293,9 @@ const [selectGender, setSelectGender] = useState(false);
 
       {/* 친구찾기 */}
       <Route path="/search">
-        <Search user={user}  
+        <Search 
+        history={history}
+        user={user}  
         search={search} 
         searchOnChange={searchOnChange} 
         />
@@ -276,10 +315,10 @@ const [selectGender, setSelectGender] = useState(false);
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
         <MyProfile 
-        img={img} 
+        basicImg={basicImg}
         nameChange={nameChange} 
         history={history} 
-        name={name} 
+        names={names} 
         onChange={onChange} 
         />
       </Route>
@@ -292,8 +331,8 @@ const [selectGender, setSelectGender] = useState(false);
         />
       </Route>
 
-      <Route path="/friends/friendsmodal">
-        <FriendsModal history={history} />
+      <Route path="/friends/friendsmodal/:id">
+        <FriendsModal history={history} user={user} />
       </Route>
 
       </div>

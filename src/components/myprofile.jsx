@@ -20,15 +20,15 @@ function MyProfile(props) {
         }} className="fas fa-check"></i> }
             </nav>
 
-        { onNameInput ? <NameInput onChange={props.onChange} name={props.name} /> : null }
+        { onNameInput ? <NameInput onChange={props.onChange} names={props.names} /> : null }
         <section>
-            <img src={props.img} alt="#" />
+            <img src={props.basicImg} alt="#" />
 
             { onEdit ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');
             }} className="fas fa-edit image-edit"></i> : null }
 
-            <p>{props.name}</p>
+            <p>{props.names}</p>
             
             { onEdit ? <i onClick={()=>{
                 setOnNameInput(!onNameInput);
@@ -50,11 +50,12 @@ function NameInput(props) {
     return <div className="name-input">
         <input
         onChange={props.onChange}
-        name="name"
+        name="names"
         type="text"
-        placeholder={props.name}
+        placeholder={props.names}
         />
     </div>
 }
+
 
 export default MyProfile;
