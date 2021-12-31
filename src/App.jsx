@@ -48,22 +48,25 @@ function App() {
         return false;
       }
     }
-    const headers = {
-        "accept": "application/json",
-        "Content-Type": "application/json"
+    const config = {
+      headers: {
+        accept: "application/json",
+        Authorization: loginId
+      },
+  
     }
     const data = {
       email: loginId, 
       password: loginPs
     }
      axios.post('https://clean-chat.kumas.dev/api/user/login',
-       data, headers)
+       data, config)
      .then(res => {
        console.log(res)
        if (res.status === 200) {
+         setMyAccount(res.data.result);
          console.log(res.data.message);
          history.push('/friends');
-         setMyAccount(res.data.result);
          setIdInput({ loginId: '', loginPs: '' });
         }
       })
@@ -75,11 +78,6 @@ function App() {
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    const config = {
-      headers: {
-        "accept": "application.json"
-      }
-    }
     axios.get('https://clean-chat.kumas.dev/api/user/logout')
     .then(res => {
         console.log(res.data.message);
@@ -87,7 +85,7 @@ function App() {
     })
     .catch(err => {
       console.log(err);
-      console.log('401에러 대체 로그아웃.')
+      console.log('401에러 대체 로그아웃.');
       history.replace('/');
     })
   }
@@ -117,6 +115,7 @@ const [selectGender, setSelectGender] = useState(false);
       setGender(female);
     }
   }
+
   // 회원가입 함수.
   const signupFn = function() {
     if (name === '' || id === '' || password === '') {
@@ -185,20 +184,16 @@ const [selectGender, setSelectGender] = useState(false);
     )
   }
 
-// 채팅창 목록.
-const [chatRoomList, setChatRoomList] = useState([{
-  name: '',
-  img: '',
-  comments:'',
-  days: ''
-}]);
 // 채팅방 state.
-const [chatingRoom, setChatingRoom] = useState({
-  name: '',
-  img: '',
-  comments: '',
-  days: ''
-});
+const [chatingRoom, setChatingRoom] = useState([]);
+
+// 채팅방에 추가할 함수.
+const plusChatingRoom = async function(id) {
+  const users = user[id];
+  const arr = [...chatingRoom, users];
+  setChatingRoom(arr);
+  history.push(`/chatingroom/${id}`);
+}
 
 
   // 내 이름 state.
@@ -284,11 +279,11 @@ const [chatingRoom, setChatingRoom] = useState({
       </Route>
       {/* 채팅목록 */}
       <Route path="/chat">
-        <Chat history={history} />
+        <Chat history={history} chatingRoom={chatingRoom} />
       </Route>
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
-        <ChatingRoom history={history} />
+        <ChatingRoom chatingRoom={chatingRoom} history={history} />
       </Route>
 
       {/* 친구찾기 */}
@@ -332,7 +327,7 @@ const [chatingRoom, setChatingRoom] = useState({
       </Route>
 
       <Route path="/friends/friendsmodal/:id">
-        <FriendsModal history={history} user={user} />
+        <FriendsModal plusChatingRoom={plusChatingRoom} history={history} user={user} />
       </Route>
 
       </div>

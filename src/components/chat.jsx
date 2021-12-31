@@ -2,48 +2,22 @@ import '../styles/chat.scss';
 
 function Chat(props) {
     return <div className="chat">
-        <li onClick={()=>{
+        {
+            props.chatingRoom.map(({ name, img, comments, days })=>{
+                return <li onClick={()=>{
             props.history.push('./chatingroom/:id')
         }}>
             <div className="meta-data">
-                <img src="/images/happy.jpg" alt="#" />
+                <img src={img} alt={img} />
                 <div>
-                    <p>재홍</p>
-                    <span>hello world</span>
+                    <p>{name}</p>
+                    <span>{comments}</span>
                 </div>
             </div>
-            <div className="days">어제</div>
+            <div className="days">{days}</div>
         </li>
-        <li>
-            <div className="meta-data">
-                <img src="/images/happy.jpg" alt="#" />
-                <div>
-                    <p>재홍</p>
-                    <span>hello world</span>
-                </div>
-            </div>
-            <div className="days">어제</div>
-        </li>
-        <li>
-            <div className="meta-data">
-                <img src="/images/happy.jpg" alt="#" />
-                <div>
-                    <p>재홍</p>
-                    <span>hello world</span>
-                </div>
-            </div>
-            <div className="days">어제</div>
-        </li>
-        <li>
-            <div className="meta-data">
-                <img src="/images/happy.jpg" alt="#" />
-                <div>
-                    <p>재홍</p>
-                    <span>hello world</span>
-                </div>
-            </div>
-            <div className="days">어제</div>
-        </li>
+            })
+        }
     </div>
 }
 

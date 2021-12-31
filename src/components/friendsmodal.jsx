@@ -10,7 +10,9 @@ function FriendsModal(props) {
                 <p>{props.user[id].name}</p>
             </div>
             <div className="btns">
-                <button className="chating-btn">채팅</button>
+                <button onClick={()=>{
+                    props.plusChatingRoom(id);
+                }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
                     props.history.goBack();
                 }} className="cancel-btn">뒤로가기</button>

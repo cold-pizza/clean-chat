@@ -6,7 +6,7 @@ function Friends(props) {
             props.history.push('/myprofile');
         }} className="my-profile">
             <img src={props.basicImg} alt="#" />
-            <p>{props.myAccount.name}</p>
+            {/* <p>{props.myAccount.name}</p> */}
         </section>
         <div className="friends-number">
             <p>친구 4</p>
