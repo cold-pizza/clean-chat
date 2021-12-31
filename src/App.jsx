@@ -16,6 +16,9 @@ import './App.scss';
 
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import cookie from 'react-cookies';
+
+axios.defaults.withCredentials = true;
 
 function App() {
   const history = useHistory();
@@ -48,26 +51,20 @@ function App() {
         return false;
       }
     }
-    const config = {
-      headers: {
-        accept: "application/json",
-        Authorization: loginId
-      },
-  
-    }
+
     const data = {
       email: loginId, 
       password: loginPs
     }
      axios.post('https://clean-chat.kumas.dev/api/user/login',
-       data, config)
+       data, { credentials: 'include' })
      .then(res => {
        console.log(res)
        if (res.status === 200) {
-         setMyAccount(res.data.result);
+        //  setMyAccount(res.data.result);
          console.log(res.data.message);
-         history.push('/friends');
-         setIdInput({ loginId: '', loginPs: '' });
+        //  history.push('/friends');
+        //  setIdInput({ loginId: '', loginPs: '' });
         }
       })
       .catch(err => {
@@ -78,14 +75,17 @@ function App() {
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    axios.get('https://clean-chat.kumas.dev/api/user/logout')
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+    axios.post('https://clean-chat.kumas.dev/api/user/logout', headers)
     .then(res => {
         console.log(res.data.message);
         history.replace('/');
     })
     .catch(err => {
       console.log(err);
-      console.log('401에러 대체 로그아웃.');
+      console.log('에러 대체 로그아웃.');
       history.replace('/');
     })
   }
@@ -191,8 +191,8 @@ const [chatingRoom, setChatingRoom] = useState([]);
 const plusChatingRoom = async function(id) {
   const users = user[id];
   const arr = [...chatingRoom, users];
-  setChatingRoom(arr);
-  history.push(`/chatingroom/${id}`);
+  await setChatingRoom(arr);
+  await history.push(`/chatingroom/${id}`);
 }
 
 
