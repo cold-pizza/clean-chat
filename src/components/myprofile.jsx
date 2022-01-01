@@ -28,7 +28,7 @@ function MyProfile(props) {
                 props.history.push('/myprofile/profileimageedit');
             }} className="fas fa-edit image-edit"></i> : null }
 
-            <p>{props.names}</p>
+            <p>{props.myAccount !== null ? props.myAccount.name : 'state가 비어있습니다.'}</p>
             
             { onEdit ? <i onClick={()=>{
                 setOnNameInput(!onNameInput);
@@ -52,7 +52,7 @@ function NameInput(props) {
         onChange={props.onChange}
         name="names"
         type="text"
-        placeholder={props.names}
+        placeholder={props.myAccount === null ? '비어있습니다.' : props.myAccount.name }
         />
     </div>
 }

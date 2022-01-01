@@ -64,10 +64,11 @@
             .me {
                 display: flex;
                 flex-direction: row-reverse;
-            position: relative;
+                position: relative;
+                margin-bottom: 10px;
             .comment {
                 font-size: 16px;
-                padding: 6px 8px;
+                padding: 8px 10px;
                 background: $main-blue;
                 color: white;
                 border-radius: 5px 0 5px 5px;

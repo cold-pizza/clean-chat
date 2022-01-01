@@ -7,8 +7,12 @@ function Delete(props) {
         <div className="form">
         <p>{props.user[id].name} 님을 삭제하시겠습니까?</p>
         <div className="btns">
-            <button className="delete-btn">삭제</button>
             <button onClick={()=>{
+                props.friendsDelete(id);
+                props.history.push('/friends');
+            }} className="delete-btn">삭제</button>
+            <button onClick={()=>{
+                props.deleteCancel(id);
                 props.history.goBack();
             }} className="cancel-btn">취소</button>
             </div>

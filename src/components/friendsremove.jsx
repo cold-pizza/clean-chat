@@ -5,11 +5,11 @@ function FriendsRemove(props) {
     return <div className="friends-remove">
 
         {
-            props.user.map(({ name, id })=>{
+            props.user.map(({ name, id, img })=>{
                 return (
             <div className="item">
                 <div className="meta-data">
-                    <img src="/images/happy.jpg" alt="#" />
+                    <img src={img} alt={img} />
                     <p>{name}</p>
                 </div>
                 <i onClick={()=>{

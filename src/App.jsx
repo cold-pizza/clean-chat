@@ -16,7 +16,6 @@ import './App.scss';
 
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import cookie from 'react-cookies';
 
 axios.defaults.withCredentials = true;
 
@@ -51,21 +50,19 @@ function App() {
         return false;
       }
     }
-
     const data = {
       email: loginId, 
       password: loginPs
     }
-     axios.post('https://clean-chat.kumas.dev/api/user/login',
-       data, { credentials: 'include' })
+    axios.post('https://clean-chat.kumas.dev/api/user/login', data)
      .then(res => {
        console.log(res)
-       if (res.status === 200) {
-        //  setMyAccount(res.data.result);
-         console.log(res.data.message);
-        //  history.push('/friends');
-        //  setIdInput({ loginId: '', loginPs: '' });
-        }
+         if (res.status === 200) {
+            setMyAccount(res.data.result);
+            console.log(res.data.message);
+            history.push('/friends');
+           setIdInput({ loginId: '', loginPs: '' });
+          }
       })
       .catch(err => {
         console.log(err);
@@ -75,10 +72,7 @@ function App() {
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    const headers = {
-      'Content-Type': 'application/json'
-    }
-    axios.post('https://clean-chat.kumas.dev/api/user/logout', headers)
+    axios.get('https://clean-chat.kumas.dev/api/user/logout')
     .then(res => {
         console.log(res.data.message);
         history.replace('/');
@@ -178,21 +172,44 @@ const [selectGender, setSelectGender] = useState(false);
   // 삭제할 친구 선택 함수.
   const deleteModal = function(id) {
     setUser(
-      user.map((user)=>{
+      user.map((user) => {
         return user.id === id ? { ...user, active: !user.active } : user;
       })
     )
   }
+  // 친구 삭제 취소 함수.
+  const deleteCancel = function(id) {
+    if (user[id].active === true) {
+      let arr = [...user];
+      arr = arr[id].active = !arr[id].active;
+      return setUser(arr);
+  }
+  }
+  // 친구 식제 함수.
+  const friendsDelete = function(id) {
+    if (user[id].active === true) {
+      let arr = [...user];
+      arr = arr.splice(id, 1);
+      console.log('친구 삭제')
+      return setUser(arr);
+    } else {
+      console.log('취소')
+      return false;
+    }
+  }
+  console.log(user)
 
 // 채팅방 state.
 const [chatingRoom, setChatingRoom] = useState([]);
 
 // 채팅방에 추가할 함수.
-const plusChatingRoom = async function(id) {
+const plusChatingRoom = function(id) {
   const users = user[id];
   const arr = [...chatingRoom, users];
-  await setChatingRoom(arr);
-  await history.push(`/chatingroom/${id}`);
+  setChatingRoom(arr);
+  if (chatingRoom !== null) {
+    history.push(`/chatingroom/${id}`);
+  }
 }
 
 
@@ -247,7 +264,9 @@ const plusChatingRoom = async function(id) {
         history={history} 
         idInput={idInput}
         loginFn={loginFn} 
-        accountOnChange={accountOnChange} 
+        accountOnChange={accountOnChange}
+        loginId={loginId}
+        loginPs={loginPs}
         />
       </Route>
       {/* 회원가입 */}
@@ -257,7 +276,7 @@ const plusChatingRoom = async function(id) {
         genderSelectFn={genderSelectFn}
         signupFn={signupFn}
         selectGender={selectGender} 
-        setSelectGender={setSelectGender} 
+        setSelectGender={setSelectGender}
         history={history} 
         joinOnChange={joinOnChange} 
         joinAccount={joinAccount}
@@ -269,7 +288,9 @@ const plusChatingRoom = async function(id) {
       {/* navigation */}
       <Nav history={history} />
       {/* 액션버튼s */}
+      <Route path={['/', '/friends', '/chat', '/chatingroom/:id', '/search']}>
       <Action history={history} />
+      </Route>
       {/* 친구창 */}
       <Route path="/friends">
         <Friends myAccount={myAccount} basicImg={basicImg} names={names} user={user} history={history} />
@@ -305,7 +326,7 @@ const plusChatingRoom = async function(id) {
       </Route>
       {/* 친구삭제모달창 */}
         <Route path="/friendsremove/delete/:id">
-          <Delete user={user} history={history} />
+          <Delete user={user} history={history} deleteCancel={deleteCancel} deleteModal={deleteModal} friendsDelete={friendsDelete} />
         </Route>
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
@@ -315,6 +336,7 @@ const plusChatingRoom = async function(id) {
         history={history} 
         names={names} 
         onChange={onChange} 
+        myAccount={myAccount}
         />
       </Route>
       {/* 내 프로필 이미지 변경 */}
@@ -362,7 +384,7 @@ function Nav(props) {
       navSite.map(({ site, title, id })=>{
         return (<>
         <Route exact path={site}>
-        <div key={id}>{title}</div>
+        <div key={id} >{title}</div>
         <div>
           <i onClick={()=>{
             props.history.push('/friends/setting')

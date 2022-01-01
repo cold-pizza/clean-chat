@@ -3,9 +3,9 @@ import '../styles/chat.scss';
 function Chat(props) {
     return <div className="chat">
         {
-            props.chatingRoom.map(({ name, img, comments, days })=>{
+            props.chatingRoom.map(({ id, name, img, comments, days })=>{
                 return <li onClick={()=>{
-            props.history.push('./chatingroom/:id')
+            props.history.push(`/chatingroom/${id}`);
         }}>
             <div className="meta-data">
                 <img src={img} alt={img} />

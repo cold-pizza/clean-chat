@@ -7,6 +7,7 @@ function Login(props) {
             <input 
             onChange={props.accountOnChange} 
             name="loginId" 
+            value={props.loginId}
             className="email" 
             type="email" 
             placeholder="이메일" 
@@ -14,6 +15,7 @@ function Login(props) {
             <input 
             onChange={props.accountOnChange} 
             name="loginPs" 
+            value={props.loginPs}
             className="password" 
             type="password" 
             placeholder="비밀번호" 

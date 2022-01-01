@@ -20,7 +20,14 @@ function ChatingRoom(props) {
         setChatComments([...chatComments, item]);
         setTalk({ ment: '' });
     }
-    console.log(ment)
+    const onKeyDownCreateChat = function() {
+        const enter = 13;
+        if (window.event.keyCode === enter) {
+            const item = {ment};
+            setChatComments([...chatComments, item]);
+            setTalk({ ment: '' });
+        }
+    }
 
     return <div className="chating-room">
         <nav>
@@ -52,7 +59,7 @@ function ChatingRoom(props) {
             
         </section>
         <div className="chating-input">
-        <input onChange={chatingOnChange} value={ment} name="ment" id="chating" type="text" />
+        <input onChange={chatingOnChange} onKeyDown={onKeyDownCreateChat} value={ment} name="ment" id="chating" type="text" />
         <button><i onClick={()=>{
             onCreateChat();
         }} className="fas fa-arrow-up"></i></button>
