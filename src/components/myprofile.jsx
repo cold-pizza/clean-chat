@@ -52,7 +52,7 @@ function NameInput(props) {
         onChange={props.onChange}
         name="names"
         type="text"
-        placeholder={props.myAccount === null ? '비어있습니다.' : props.myAccount.name }
+        placeholder= "이름을 입력해주세요."
         />
     </div>
 }

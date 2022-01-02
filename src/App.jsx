@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './components/login';
 import Signup from './components/signup';
 import Friends from './components/friends';
@@ -57,11 +57,13 @@ function App() {
     axios.post('https://clean-chat.kumas.dev/api/user/login', data)
      .then(res => {
        console.log(res)
+       const user = res.data.result;
+       localStorage.setItem('myInfo', JSON.stringify(user));
          if (res.status === 200) {
-            setMyAccount(res.data.result);
+            setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
             console.log(res.data.message);
+            setIdInput({ loginId: '', loginPs: '' });
             history.push('/friends');
-           setIdInput({ loginId: '', loginPs: '' });
           }
       })
       .catch(err => {
@@ -69,6 +71,12 @@ function App() {
         alert('이메일 또는 비밀번호를 다시 입력해주세요.');
       }) 
   }
+
+  // 내 프로필 자동 업데이트.
+  // useEffect(()=>{
+  //   setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+  // }, [myAccount])
+
 
   // 로그아웃 함수.
   const logoutFn = function() {
@@ -182,22 +190,24 @@ const [selectGender, setSelectGender] = useState(false);
     if (user[id].active === true) {
       let arr = [...user];
       arr = arr[id].active = !arr[id].active;
-      return setUser(arr);
+      setUser(arr);
   }
   }
   // 친구 식제 함수.
   const friendsDelete = function(id) {
     if (user[id].active === true) {
       let arr = [...user];
-      arr = arr.splice(id, 1);
-      console.log('친구 삭제')
-      return setUser(arr);
+      arr.splice(id, 1);
+      // id값 수정.
+      for (let i = 0; i < arr.length; i++) {
+        arr[i].id = i;
+      }
+      setUser(arr);
     } else {
       console.log('취소')
       return false;
     }
   }
-  console.log(user)
 
 // 채팅방 state.
 const [chatingRoom, setChatingRoom] = useState([]);
@@ -213,10 +223,6 @@ const plusChatingRoom = function(id) {
 }
 
 
-  // 내 이름 state.
-  const [nickName, setNickName] = useState({ names: '재홍' });
-  const { names } = nickName;
-
   // 변경할 이름 받아올 state.
   const [nickNameEdit, setNickNameEdit] = useState({ names: '' });
 
@@ -227,7 +233,11 @@ const plusChatingRoom = function(id) {
 
   // 클릭시 이름 변경하는 함수.
   const nameChange = function() {
-    setNickName(nickNameEdit);
+    // 입력받은거 myAccount.name에 붙여넣기
+    const arr = { ...myAccount };
+    arr.name = nickNameEdit.names;
+    setMyAccount(arr);
+    // 수정하면 자동으로 로컬스토리지 업데이트.
     setNickNameEdit({ names: '' });
   }
 
@@ -293,7 +303,13 @@ const plusChatingRoom = function(id) {
       </Route>
       {/* 친구창 */}
       <Route path="/friends">
-        <Friends myAccount={myAccount} basicImg={basicImg} names={names} user={user} history={history} />
+        <Friends 
+        setMyAccount={setMyAccount} 
+        myAccount={myAccount} 
+        basicImg={basicImg} 
+        user={user} 
+        history={history} 
+        />
       </Route>
       <Route path="/friends/setting">
         <Setting history={history} logoutFn={logoutFn} />
@@ -326,7 +342,13 @@ const plusChatingRoom = function(id) {
       </Route>
       {/* 친구삭제모달창 */}
         <Route path="/friendsremove/delete/:id">
-          <Delete user={user} history={history} deleteCancel={deleteCancel} deleteModal={deleteModal} friendsDelete={friendsDelete} />
+          <Delete 
+          user={user} 
+          history={history} 
+          deleteCancel={deleteCancel} 
+          deleteModal={deleteModal} 
+          friendsDelete={friendsDelete} 
+          />
         </Route>
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
@@ -334,7 +356,6 @@ const plusChatingRoom = function(id) {
         basicImg={basicImg}
         nameChange={nameChange} 
         history={history} 
-        names={names} 
         onChange={onChange} 
         myAccount={myAccount}
         />
