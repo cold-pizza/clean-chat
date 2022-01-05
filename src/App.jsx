@@ -33,7 +33,7 @@ function App() {
     // 기본 이미지🌠
     const [myImage, setMyImage] = useState({ basicImg: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
     const { basicImg } = myImage;
-
+// console.log(idInput)
     // 로그인 input.value
   const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
@@ -54,7 +54,7 @@ function App() {
       email: loginId, 
       password: loginPs
     }
-    axios.post('https://clean-chat.kumas.dev/api/user/login', data)
+    axios.post('https://clean-chat.kumas.dev/api/users/login', data)
      .then(res => {
        console.log(res)
        const user = res.data.result;
@@ -80,7 +80,7 @@ function App() {
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    axios.get('https://clean-chat.kumas.dev/api/user/logout')
+    axios.get('https://clean-chat.kumas.dev/api/users/logout')
     .then(res => {
         console.log(res.data.message);
         history.replace('/');
@@ -137,7 +137,7 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('https://clean-chat.kumas.dev/api/user', {name, email: id, password, gender})
+      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender})
       .then((res)=>{
         console.log(res);
         console.log('회원가입 성공.');
@@ -265,6 +265,13 @@ const plusChatingRoom = function(id) {
     setMyImage(arr[id]);
   }
 
+  // 친구 검색결과 리스트.
+  const [searchList, setSearchList] = useState(null);
+
+  // 유저의 고유 id값을 검색. 
+  // 유저추가 버튼을 누르면 id가 일치한 유저의 데이터 호출.
+  // 친구 리스트에 저장.
+
   return (
     <div className="App">
       <div className="app-box">
@@ -334,7 +341,7 @@ const plusChatingRoom = function(id) {
       </Route>
       {/* 친구추가 */}
       <Route path="/searchemail">
-        <SearchEmail history={history} />
+        <SearchEmail history={history} basicImg={basicImg} />
       </Route>
       {/* 친구관리창 */}
       <Route path="/friendsremove">
