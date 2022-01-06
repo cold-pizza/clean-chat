@@ -4,18 +4,25 @@ import { useState, useRef } from 'react';
 import { useEffect } from 'react/cjs/react.development';
 
 function SearchEmail(props) {
+    // 리스트 지정.
     const listRef = useRef(null);
+
+    // 리스트 온오프 스위치.
     const [listRefSwitch, setListRefSwitch] = useState(false);
+    
+    // 친구추가 모달 스위치.
     const [plusModalSwitch, setPlusModalSwitch] = useState(false);
     
+    // 검색한 이메일.
     const [searchInput, setSearchInput] = useState({ searchEmail:'' });
     const { searchEmail } = searchInput;
 
+    // input value.
     const inputOnChange = function(e) {
         const { name, value } = e.target;
         setSearchInput({ ...searchInput, [name]: value })
     }
-    console.log(searchEmail)
+
     
       // 친구 검색결과 리스트.
       const [searchList, setSearchList] = useState(null);
@@ -27,11 +34,16 @@ function SearchEmail(props) {
         const user = res.data.result;
         setSearchList(user);
     })
+    .catch(err => {
+        console.log(err);
+    })
   }
 
   useEffect(()=> {
       if (searchList !== null) {
-        setListRefSwitch(!listRefSwitch);
+          if (listRefSwitch === false) {
+              setListRefSwitch(!listRefSwitch);
+            }
       }
   }, [searchList])
 
@@ -46,7 +58,6 @@ function SearchEmail(props) {
         />
         <i onClick={() => {
             userSearchFn(Number(searchEmail));
-            listRef.current.append()
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">
