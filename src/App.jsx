@@ -33,7 +33,16 @@ function App() {
     // 기본 이미지🌠
     const [myImage, setMyImage] = useState({ basicImg: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
     const { basicImg } = myImage;
-// console.log(idInput)
+
+    // 기본 이미지 설정 함수.
+    const basicImgChange = function() {
+      if (myAccount.imagePath !== basicImg) {
+        const arr = { ...myAccount };
+        arr.imagePath = basicImg;
+        setMyAccount(arr);
+      }
+    }
+
     // 로그인 input.value
   const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
@@ -61,6 +70,7 @@ function App() {
        localStorage.setItem('myInfo', JSON.stringify(user));
          if (res.status === 200) {
             setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+            setMyAccount({ ...myAccount, imagePath: basicImg });
             console.log(res.data.message);
             setIdInput({ loginId: '', loginPs: '' });
             history.push('/friends');
@@ -373,6 +383,7 @@ const plusChatingRoom = function(id) {
         selectBasicImage={selectBasicImage} 
         basicImage={basicImage} 
         history={history}
+        basicImgChange={basicImgChange}
         />
       </Route>
 

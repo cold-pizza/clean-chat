@@ -50,10 +50,17 @@ function ChatingRoom(props) {
             </div>
             {
                 chatComments.map(({ ment, days })=>{
-                    return <div className="me">
-                                <p className="comment">{ment}</p>
-                                <p className="time"></p>
-                            </div>
+                       return <div className="me">
+                           {
+                               ment !== '' ? 
+                               <div>
+                               <p className="comment">{ment}</p>
+                               <p className="time"></p>
+                               </div>
+                                : null
+                            }
+                        </div>
+                    
                 })
             }
             

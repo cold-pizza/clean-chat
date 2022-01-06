@@ -13,7 +13,7 @@ function Friends(props) {
             <p>{props.myAccount !== null ? props.myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
-            <p>친구 4</p>
+            <p>친구 {props.user.length}</p>
         </div>
         <ul className="friends-list">
         {

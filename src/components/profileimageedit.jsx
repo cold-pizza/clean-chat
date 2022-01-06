@@ -7,6 +7,7 @@ function ProfileImageEdit(props) {
         { imageEdit ? <BasicImageModal
         history={props.history}
         selectBasicImage={props.selectBasicImage}
+        basicImgChange={props.basicImgChange}
         basicImage={props.basicImage} /> : null }
         <div className="btns">
             <button onClick={()=>{
@@ -27,7 +28,9 @@ function BasicImageModal(props) {
     return <section className="basic-image-modal">
             <p>기본 이미지로 변경하시겠습니까?</p>
             <div>
-            <button className="yes-btn">Yes</button>
+            <button onClick={() => {
+                props.basicImgChange();
+            }} className="yes-btn">Yes</button>
             <button onClick={()=>{
                 props.history.goBack();
             }} className="no-btn">No</button>
