@@ -116,7 +116,6 @@ const [selectGender, setSelectGender] = useState(false);
   setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
 }
 
-
   // 성별 결졍 함수.
   const genderSelectFn = function(selectGender) {
     if (selectGender) {
@@ -147,7 +146,7 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender})
+      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath: basicImg})
       .then((res)=>{
         console.log(res);
         console.log('회원가입 성공.');
@@ -251,36 +250,13 @@ const plusChatingRoom = function(id) {
     setNickNameEdit({ names: '' });
   }
 
-  // 기본 이미지 state.
-  const [basicImage, setBasicImage] = useState([{
-    id: 0,
-    img: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg'
-  }, {
-    id: 1,
-    img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg'
-  }, {
-    id: 2,
-    img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg'
-  }, {
-    id: 3,
-    img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg'
-  }, {
-    id: 4,
-    img: 'https://cold-pizza.github.io/clean-chat/images/4.jpg'
-  }]);
 
-  // 기본 이미지 선택 함수.
-  const selectBasicImage = function(id) {
-    let arr = [...basicImage];
-    setMyImage(arr[id]);
+  // 친구 추가 함수.
+  const userAdd = function(users) {
+    const arr = [...user, users];
+    setUser(arr);
+    console.log('친구추가!')
   }
-
-  // 친구 검색결과 리스트.
-  const [searchList, setSearchList] = useState(null);
-
-  // 유저의 고유 id값을 검색. 
-  // 유저추가 버튼을 누르면 id가 일치한 유저의 데이터 호출.
-  // 친구 리스트에 저장.
 
   return (
     <div className="App">
@@ -351,7 +327,7 @@ const plusChatingRoom = function(id) {
       </Route>
       {/* 친구추가 */}
       <Route path="/searchemail">
-        <SearchEmail history={history} basicImg={basicImg} />
+        <SearchEmail history={history} basicImg={basicImg} userAdd={userAdd} />
       </Route>
       {/* 친구관리창 */}
       <Route path="/friendsremove">
@@ -380,8 +356,6 @@ const plusChatingRoom = function(id) {
       {/* 내 프로필 이미지 변경 */}
       <Route path="/myprofile/profileimageedit">
         <ProfileImageEdit 
-        selectBasicImage={selectBasicImage} 
-        basicImage={basicImage} 
         history={history}
         basicImgChange={basicImgChange}
         />

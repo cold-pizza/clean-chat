@@ -28,10 +28,11 @@ function SearchEmail(props) {
       const [searchList, setSearchList] = useState(null);
 
   // 친구 추가 요청 함수.
-  const userSearchFn = function(id) {
-    axios.get(`https://clean-chat.kumas.dev/api/users/${id}`)
+  const userSearchFn = function(email) {
+    axios.get(`https://clean-chat.kumas.dev/api/users/email/${email}`)
     .then(res => {
-        const user = res.data.result;
+        console.log(res.data.result[0])
+        const user = res.data.result[0];
         setSearchList(user);
     })
     .catch(err => {
@@ -57,7 +58,7 @@ function SearchEmail(props) {
         placeholder="이메일로 검색해주세요!" 
         />
         <i onClick={() => {
-            userSearchFn(Number(searchEmail));
+            userSearchFn(searchEmail);
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">
@@ -81,7 +82,9 @@ function SearchEmail(props) {
             plusModalSwitch === true ? <section className="plus-modal">
             <p>{searchList.name}님을 추가하시겠습니까?</p>
             <div>
-            <i className="fas fa-check"></i>
+            <i onClick={() => {
+                props.userAdd(searchList);
+            }} className="fas fa-check"></i>
             <i onClick={() => {
                    setPlusModalSwitch(!plusModalSwitch);
                }} className="fas fa-times"></i>
