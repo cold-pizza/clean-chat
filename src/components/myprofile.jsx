@@ -22,7 +22,7 @@ function MyProfile(props) {
 
         { onNameInput ? <NameInput onChange={props.onChange} names={props.names} /> : null }
         <section>
-            <img src={props.basicImg} alt="#" />
+            <img src={props.myAccount.imagePath} alt={props.myAccount.imagePath} />
 
             { onEdit ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');

@@ -356,6 +356,8 @@ const plusChatingRoom = function(id) {
       {/* 내 프로필 이미지 변경 */}
       <Route path="/myprofile/profileimageedit">
         <ProfileImageEdit 
+        myAccount={myAccount}
+        setMyAccount={setMyAccount}
         history={history}
         basicImgChange={basicImgChange}
         />

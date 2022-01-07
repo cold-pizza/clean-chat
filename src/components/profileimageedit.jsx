@@ -1,12 +1,13 @@
-
+import axios from 'axios';
 import { useState, useRef } from 'react';
 import '../styles/profileimageedit.scss';
 
 function ProfileImageEdit(props) {
+    // 기본 이미지 설정 스위치.
     const [imageEdit, setImageEdit] = useState(false);
 
+    // 불러온 이미지 url.
     const [imgUrl, setImgUrl] = useState('');
-
 
     // 이미지 선택 모달 스위치.
     const [selectImgSwitch, setSelectImgSwitch] = useState(false);
@@ -18,28 +19,36 @@ function ProfileImageEdit(props) {
     const viewImg = useRef(null);
 
     // 이미지 선택 함수.
-    const selectImg = function(url) {
-        const reader = new FileReader();
+    const selectImg = function(e) {
+        const reader = new FormData();
+        const upLoadFile = e.target.files[0]
+        reader.append('img', upLoadFile);
 
-        reader.onload = function(url) {
-            const previewImg = document.createElement('img');
-            previewImg.setAttribute('src', url.target.result);
-            viewImg.current.appendChild(previewImg);
-        }
-
-        reader.readAsDataURL(url.target.files[0]);
-        console.log(url.target.value)
-        setImgUrl(url.target.files[0]);
+        axios.post('https://clean-chat.kumas.dev/api/users/images', reader)
+        .then((res) => {
+            setImgUrl(`https://clean-chat.kumas.dev${res.data.result.url}`)
+            console.log(res.data)
+            console.log('이미지 업로드 성공')
+            
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
-
     // 이미지 변경 함수.
     const upLoadImg = function() {
-        // imgUrl을 내 계정 imagePath에 저장하기 
+       // myAccount.imagePath -> imgUrl 변경.
+       const arr = { ...props.myAccount };
+       arr.imagePath = imgUrl;
+       props.setMyAccount(arr);
+       setSelectImgSwitch(!selectImgSwitch);
+       console.log('변경 완료')
     }
+    
 
-    // 이미지 선택 취소 함수. done
+    // 이미지 선택 취소 함수.
     const selectImgCancel = function() {
-        imgFileRef.current.value = null;
+        setImgUrl('');
         setSelectImgSwitch(!selectImgSwitch);
 
     }
@@ -51,7 +60,7 @@ function ProfileImageEdit(props) {
         basicImage={props.basicImage} /> : null }
         {
             selectImgSwitch ?
-            <SelectImage viewImg={viewImg} selectImgCancel={selectImgCancel} /> : null
+            <SelectImage upLoadImg={upLoadImg} viewImg={viewImg} selectImgCancel={selectImgCancel} /> : null
         }
         <div className="btns">
             <button onClick={()=>{
@@ -66,7 +75,9 @@ function ProfileImageEdit(props) {
                 props.history.goBack();
             }} type="button">취소</button>
         </div>
+        <form action="https://clean-chat.kumas.dev/api/users/images" method="POST">
         <input type="file" id="image-file" ref={imgFileRef} onChange={selectImg} />
+        </form>
     </div>
 }
 
@@ -89,7 +100,9 @@ function SelectImage(props) {
         <div ref={props.viewImg} className="img-box"></div>
         <p>이미지를 변경하시겠습니까?</p>
         <div className="img-btns">
-            <button>Yes</button>
+            <button onClick={() => {
+                props.upLoadImg();
+            }}>Yes</button>
             <button onClick={() => {
                 props.selectImgCancel();
             }}>No</button>
