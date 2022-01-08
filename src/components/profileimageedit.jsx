@@ -26,10 +26,9 @@ function ProfileImageEdit(props) {
 
         axios.post('https://clean-chat.kumas.dev/api/users/images', reader)
         .then((res) => {
-            setImgUrl(`https://clean-chat.kumas.dev${res.data.result.url}`)
-            console.log(res.data)
-            console.log('이미지 업로드 성공')
-            
+            setImgUrl(`https://clean-chat.kumas.dev${res.data.result.url}`);
+            console.log(res.data);
+            console.log('이미지 업로드 성공');
         })
         .catch(err => {
             console.log(err);

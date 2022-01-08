@@ -27,17 +27,30 @@ function SearchEmail(props) {
       // 친구 검색결과 리스트.
       const [searchList, setSearchList] = useState(null);
 
-  // 친구 추가 요청 함수.
+  // 친구 검색 요청 함수.
   const userSearchFn = function(email) {
-    axios.get(`https://clean-chat.kumas.dev/api/users/email/${email}`)
+    axios.get(`https://clean-chat.kumas.dev/users/email/${email}`)
     .then(res => {
         console.log(res.data.result[0])
         const user = res.data.result[0];
         setSearchList(user);
     })
     .catch(err => {
+        alert('요청정보와 일치하지 않습니다.')
         console.log(err);
     })
+  }
+
+  // ************ test해야 함 ***************
+  // 친구 추가 요청 함수.
+  const userAddFn = function(id) {
+      axios.post(`https://clean-chat.kumas.dev/friends/${id}`)
+      .then(res => {
+          console.log(res.result.message);
+      })
+      .catch(err => {
+          console.log(err);
+      })
   }
 
   useEffect(()=> {

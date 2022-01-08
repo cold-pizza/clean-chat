@@ -63,7 +63,7 @@ function App() {
       email: loginId, 
       password: loginPs
     }
-    axios.post('https://clean-chat.kumas.dev/api/users/login', data)
+    axios.post('https://clean-chat.kumas.dev/auth/login', data)
      .then(res => {
        console.log(res)
        const user = res.data.result;
@@ -90,7 +90,7 @@ function App() {
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    axios.get('https://clean-chat.kumas.dev/api/users/logout')
+    axios.get('https://clean-chat.kumas.dev/auth/logout')
     .then(res => {
         console.log(res.data.message);
         history.replace('/');
@@ -146,7 +146,7 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath: basicImg})
+      axios.post('https://clean-chat.kumas.dev/users', {name, email: id, password, gender, imagePath: basicImg}, { withCredentials: true })
       .then((res)=>{
         console.log(res);
         console.log('회원가입 성공.');
@@ -194,6 +194,7 @@ const [selectGender, setSelectGender] = useState(false);
       })
     )
   }
+
   // 친구 삭제 취소 함수.
   const deleteCancel = function(id) {
     if (user[id].active === true) {
@@ -202,20 +203,29 @@ const [selectGender, setSelectGender] = useState(false);
       setUser(arr);
   }
   }
+
+  // **************** test ********************
   // 친구 식제 함수.
   const friendsDelete = function(id) {
-    if (user[id].active === true) {
-      let arr = [...user];
-      arr.splice(id, 1);
-      // id값 수정.
-      for (let i = 0; i < arr.length; i++) {
-        arr[i].id = i;
-      }
-      setUser(arr);
-    } else {
-      console.log('취소')
-      return false;
-    }
+    axios.delete(`https://clean-chat.kumas.dev/friends/${id}`)
+    .then(res => {
+      console.log(res.result.message);
+      // 메시지 확인하고 로직 돌아가면 삭제 요청한 결과 값 user state에 넣기.
+    })
+    .catch(err => console.log(err))
+
+    // if (user[id].active === true) {
+    //   let arr = [...user];
+    //   arr.splice(id, 1);
+    //   // id값 수정.
+    //   for (let i = 0; i < arr.length; i++) {
+    //     arr[i].id = i;
+    //   }
+    //   setUser(arr);
+    // } else {
+    //   console.log('취소')
+    //   return false;
+    // }
   }
 
 // 채팅방 state.
