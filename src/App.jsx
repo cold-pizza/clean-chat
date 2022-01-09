@@ -63,17 +63,19 @@ function App() {
       email: loginId, 
       password: loginPs
     }
-    axios.post('https://clean-chat.kumas.dev/auth/login', data)
+    axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
      .then(res => {
        console.log(res)
        const user = res.data.result;
-       localStorage.setItem('myInfo', JSON.stringify(user));
-         if (res.status === 200) {
-            setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-            setMyAccount({ ...myAccount, imagePath: basicImg });
-            console.log(res.data.message);
-            setIdInput({ loginId: '', loginPs: '' });
-            history.push('/friends');
+       if (res.status === 200 && user.imagePath === '') {
+         const item = { ...user };
+         item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
+         setMyAccount(item);
+         localStorage.setItem('myInfo', JSON.stringify(item));
+         setIdInput({ loginId: '', loginPs: '' });
+         setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+         console.log(res.data.message);
+         history.push('/friends');
           }
       })
       .catch(err => {
@@ -83,14 +85,14 @@ function App() {
   }
 
   // 내 프로필 자동 업데이트.
-  // useEffect(()=>{
-  //   setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-  // }, [myAccount])
+  useEffect(()=>{
+    setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+  }, [])
 
 
   // 로그아웃 함수.
   const logoutFn = function() {
-    axios.get('https://clean-chat.kumas.dev/auth/logout')
+    axios.post('https://clean-chat.kumas.dev/api/auth/logout', { withCredentials: true })
     .then(res => {
         console.log(res.data.message);
         history.replace('/');
@@ -106,9 +108,9 @@ function App() {
 const [selectGender, setSelectGender] = useState(false);
 
  // 회원가입 state & onChange.
- const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '', psCheck: '' });
- const { name, id, password } = joinAccount;
- const [gender, setGender] = useState('');
+ const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '', psCheck: '', gender: '', imagePath: basicImg });
+ const { name, id, password, imagePath, gender } = joinAccount;
+//  const [gender, setGender] = useState('');
  const joinOnChange = function(e) {
    setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
  }
@@ -119,11 +121,9 @@ const [selectGender, setSelectGender] = useState(false);
   // 성별 결졍 함수.
   const genderSelectFn = function(selectGender) {
     if (selectGender) {
-      let male = 'male';
-    setGender(male);
+      setJoinAccount({ ...joinAccount, gender: 'male' })
     } else {
-      let female = 'female';
-      setGender(female);
+      setJoinAccount({ ...joinAccount, gender: 'female' })
     }
   }
 
@@ -146,7 +146,7 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('https://clean-chat.kumas.dev/users', {name, email: id, password, gender, imagePath: basicImg}, { withCredentials: true })
+      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath })
       .then((res)=>{
         console.log(res);
         console.log('회원가입 성공.');
@@ -262,10 +262,16 @@ const plusChatingRoom = function(id) {
 
 
   // 친구 추가 함수.
-  const userAdd = function(users) {
-    const arr = [...user, users];
-    setUser(arr);
-    console.log('친구추가!')
+  const userAdd = function(id) {
+    axios.post(`https://clean-chat.kumas.dev/api/friends/${id}`)
+    .then(res => {
+      // setUser([...user, res.data.result]);
+      console.log(res.data)
+      console.log('친구추가!');
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   return (
@@ -285,7 +291,8 @@ const plusChatingRoom = function(id) {
       {/* 회원가입 */}
       <Route path="/signup">
         <Signup 
-        setGender={setGender}
+        // setGender={setGender}
+        gender={gender}
         genderSelectFn={genderSelectFn}
         signupFn={signupFn}
         selectGender={selectGender} 
@@ -293,6 +300,7 @@ const plusChatingRoom = function(id) {
         history={history} 
         joinOnChange={joinOnChange} 
         joinAccount={joinAccount}
+        setJoinAccount={setJoinAccount}
         joinPsOnChange={joinPsOnChange}
         />
       </Route>
@@ -361,6 +369,7 @@ const plusChatingRoom = function(id) {
         history={history} 
         onChange={onChange} 
         myAccount={myAccount}
+        setMyAccount={setMyAccount}
         />
       </Route>
       {/* 내 프로필 이미지 변경 */}

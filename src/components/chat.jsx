@@ -1,6 +1,7 @@
 import '../styles/chat.scss';
 
 function Chat(props) {
+    console.log(props.chatingRoom)
     return <div className="chat">
         {
             props.chatingRoom.map(({ id, name, img, comments, days })=>{
@@ -18,7 +19,12 @@ function Chat(props) {
         </li>
             })
         }
+        {
+            props.chatingRoom.length === 0 ? 
+            <p className="no-chat-modal">채팅방이 없습니다.</p> : null
+        }
     </div>
 }
+
 
 export default Chat;

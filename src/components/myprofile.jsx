@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../styles/myprofile.scss';
 
 function MyProfile(props) {
@@ -6,6 +6,11 @@ function MyProfile(props) {
     const [onNameInput, setOnNameInput] = useState(false);
     // 프로필 편집 모달 state.
     const [onEdit, setOnEdit] = useState(false);
+
+      // 내 프로필 자동 업데이트.
+  useEffect(()=>{
+    props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+  }, [])
 
     return <div className="my-profiles">
         <main>

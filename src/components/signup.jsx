@@ -4,8 +4,9 @@ import '../styles/signup.scss';
 function Signup(props) {
     // 첫 렌더링시 성별.
     useEffect(()=>{
-        let item = "male";
-        props.setGender(item);
+        const arr = { ...props.joinAccount }
+        arr.gender = 'male';
+        props.setJoinAccount(arr);
     }, [])
     return <div className="signup">
         <h1>회원가입</h1>
