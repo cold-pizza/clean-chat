@@ -1,7 +1,7 @@
 import '../styles/searchemail.scss';
 import axios from 'axios';
 import { useState, useRef } from 'react';
-import { useEffect } from 'react/cjs/react.development';
+import { useEffect } from 'react';
 
 function SearchEmail(props) {
     // 리스트 지정.
@@ -41,17 +41,6 @@ function SearchEmail(props) {
     })
   }
 
-  // ************ test해야 함 ***************
-  // 친구 추가 요청 함수.
-  const userAddFn = function(id) {
-      axios.post(`https://clean-chat.kumas.dev/api/friends/${id}`)
-      .then(res => {
-          console.log(res.result.message);
-      })
-      .catch(err => {
-          console.log(err);
-      })
-  }
 
   useEffect(()=> {
       if (searchList !== null) {
