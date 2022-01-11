@@ -59,29 +59,36 @@ function App() {
         return false;
       }
     }
-    const data = {
-      email: loginId, 
-      password: loginPs
-    }
-    axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
-     .then(res => {
-       console.log(res)
-       const user = res.data.result;
-       if (res.status === 200 && user.imagePath === '') {
-         const item = { ...user };
-         item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
-         setMyAccount(item);
-         localStorage.setItem('myInfo', JSON.stringify(item));
-         setIdInput({ loginId: '', loginPs: '' });
-         setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-         console.log(res.data.message);
-         history.push('/friends');
-          }
+    if (localStorage.length !== 0) {
+      if (JSON.parse(localStorage.myInfo).email === loginId) {
+        alert('이미 로그인된 아이디 입니다.')
+        return false;
+      }
+    } else {
+      const data = {
+        email: loginId, 
+        password: loginPs
+      }
+      axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
+      .then(res => {
+        console.log(res)
+        const user = res.data.result;
+        if (res.status === 200) {
+          const item = { ...user };
+          item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
+          setMyAccount(item);
+          localStorage.setItem('myInfo', JSON.stringify(item));
+          setIdInput({ loginId: '', loginPs: '' });
+          setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+          console.log(res.data.message);
+          history.push('/friends');
+        }
       })
       .catch(err => {
         console.log(err);
         alert('이메일 또는 비밀번호를 다시 입력해주세요.');
       }) 
+    }
   }
 
   // 내 프로필 자동 업데이트.
@@ -89,11 +96,11 @@ function App() {
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
   }, [])
 
-
   // 로그아웃 함수.
   const logoutFn = function() {
     axios.post('https://clean-chat.kumas.dev/api/auth/logout', { withCredentials: true })
     .then(res => {
+      localStorage.clear();
         console.log(res.data.message);
         history.replace('/');
     })
@@ -146,15 +153,21 @@ const [selectGender, setSelectGender] = useState(false);
     if (password !== joinAccount.psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath })
-      .then((res)=>{
-        console.log(res);
-        console.log('회원가입 성공.');
-        setJoinAccount({ name:'', id: '', password: '' });
-        history.push('/');
+      axios.get(`https://clean-chat.kumas.dev/api/users/email/${id}`)
+      .then(() => {
+        alert('중복된 이메일입니다.');
       })
-      .catch((error)=>{
-        console.log(error);
+      .catch(() => {
+        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath })
+        .then((res)=>{
+          console.log(res);
+          console.log('회원가입 성공.');
+          setJoinAccount({ name:'', id: '', password: '' });
+          history.push('/');
+        })
+        .catch((error)=>{
+          console.log(error);
+        })
       })
     }
   }
@@ -197,11 +210,11 @@ const [selectGender, setSelectGender] = useState(false);
 
   // 친구 삭제 취소 함수.
   const deleteCancel = function(id) {
-    if (user[id].active === true) {
-      let arr = [...user];
-      arr = arr[id].active = !arr[id].active;
-      setUser(arr);
-  }
+      if (user[id].active === true) {
+        let arr = [...user];
+        arr = arr[id].active = !arr[id].active;
+        setUser(arr);
+    }
   }
 
   // **************** test ********************
