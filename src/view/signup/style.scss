@@ -1,0 +1,76 @@
+@import "/src/App.scss";
+
+.signup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        margin: {
+            top: 200px;
+            bottom: 40px;
+        }
+        color: $main-gray;
+    }
+    .password-comment {
+        @include col;
+        align-items: center;
+        margin-bottom: 20px;
+        p {
+            font-size: 12px;
+            color: $main-gray;
+        }
+    }
+    #signup-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        input {
+            width: 200px;
+            height: 40px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid $main-gray;
+            padding: 0 10px;
+            color: $main-gray;
+            outline: none;
+        }
+        .password-comment {
+            font-size: 14px;
+            position: absolute;
+            bottom: 155px;
+            left: 20px;
+        }
+        .gender {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 15px;
+            button {
+                border: none;
+                font-size: 14px;
+                padding: 14px 50px;
+                color: $main-gray;
+            }
+            .male-btn {
+                border-radius: 5px 0 0 5px;
+            }
+            .female-btn {
+                border-radius: 0 5px 5px 0;
+            }
+        }
+        .signup-btn,
+        .cancel-btn {
+            width: 225px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            color: $main-gray;
+        }
+        .signup-btn {
+            margin-bottom: 15px;
+            background: $main-blue;
+            color: white;
+        }
+    }
+}

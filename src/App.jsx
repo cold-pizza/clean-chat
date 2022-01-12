@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Login from './components/login';
-import Signup from './components/signup';
-import Friends from './components/friends';
-import Chat from './components/chat';
-import Search from './components/search';
-import Setting from './components/setting';
-import SearchEmail from './components/searchemail';
-import FriendsRemove from './components/friendsremove';
-import Delete from './components/delete';
-import MyProfile from './components/myprofile';
-import ProfileImageEdit from './components/profileimageedit';
-import ChatingRoom from './components/chatingroom';
-import FriendsModal from './components/friendsmodal';
+import Login from './view/login';
+import Signup from './view/signup';
+import Friends from './view/friends';
+import Chat from './view/chat';
+import Search from './view/search';
+import Setting from './view/setting';
+import SearchEmail from './view/searchemail';
+import FriendsRemove from './view/friendsremove';
+import Delete from './view/delete';
+import MyProfile from './view/myprofile';
+import ProfileImageEdit from './view/profileimageedit';
+import ChatingRoom from './view/chatingroom';
+import FriendsModal from './view/friendsmodal';
 import './App.scss';
 
 import { Route, useHistory } from 'react-router-dom';
@@ -100,6 +100,8 @@ function App() {
   const logoutFn = function() {
     axios.post('https://clean-chat.kumas.dev/api/auth/logout', { withCredentials: true })
     .then(res => {
+      // 로컬스토리지 완전 삭제라서 부분삭제로 추후 변경.
+      // *** 한 브라우저에서 여러 명이 로그인 할 경우. ***
       localStorage.clear();
         console.log(res.data.message);
         history.replace('/');
@@ -254,7 +256,6 @@ const plusChatingRoom = function(id) {
   }
 }
 
-
   // 변경할 이름 받아올 state.
   const [nickNameEdit, setNickNameEdit] = useState({ names: '' });
 
@@ -287,9 +288,16 @@ const plusChatingRoom = function(id) {
     })
   }
 
+  // 설정 모달 스위치.
+  const [settingModalSwitch, setSettingModalSwitch] = useState(false);
+  const settingSwitch = function() {
+    setSettingModalSwitch(!settingModalSwitch);
+  }
+
   return (
     <div className="App">
       <div className="app-box">
+        
         {/* 로그인 */}
       <Route exact path="/">
         <Login 
@@ -301,6 +309,7 @@ const plusChatingRoom = function(id) {
         loginPs={loginPs}
         />
       </Route>
+
       {/* 회원가입 */}
       <Route path="/signup">
         <Signup 
@@ -318,11 +327,11 @@ const plusChatingRoom = function(id) {
         />
       </Route>
       
-
       {/* navigation */}
-      <Nav history={history} />
+      <Nav history={history} settingSwitch={settingSwitch}/>
+
       {/* 액션버튼s */}
-      <Route path={['/', '/friends', '/chat', '/chatingroom/:id', '/search']}>
+      <Route path={['/friends', '/chat', '/chatingroom/:id', '/search', '/searchemail', '/friendsremove']}>
       <Action history={history} />
       </Route>
       {/* 친구창 */}
@@ -335,13 +344,20 @@ const plusChatingRoom = function(id) {
         history={history} 
         />
       </Route>
-      <Route path="/friends/setting">
-        <Setting history={history} logoutFn={logoutFn} />
-      </Route>
+
+      {/* Setting */}
+      {
+        settingModalSwitch ?
+        <Setting history={history} logoutFn={logoutFn} settingSwitch={settingSwitch} />
+        : null
+      }
+
+
       {/* 채팅목록 */}
       <Route path="/chat">
         <Chat history={history} chatingRoom={chatingRoom} />
       </Route>
+
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
         <ChatingRoom chatingRoom={chatingRoom} history={history} />
@@ -356,14 +372,17 @@ const plusChatingRoom = function(id) {
         searchOnChange={searchOnChange} 
         />
       </Route>
+
       {/* 친구추가 */}
       <Route path="/searchemail">
         <SearchEmail history={history} basicImg={basicImg} userAdd={userAdd} />
       </Route>
+
       {/* 친구관리창 */}
       <Route path="/friendsremove">
         <FriendsRemove history={history} user={user} deleteModal={deleteModal} />
       </Route>
+
       {/* 친구삭제모달창 */}
         <Route path="/friendsremove/delete/:id">
           <Delete 
@@ -374,6 +393,7 @@ const plusChatingRoom = function(id) {
           friendsDelete={friendsDelete} 
           />
         </Route>
+
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
         <MyProfile 
@@ -385,6 +405,7 @@ const plusChatingRoom = function(id) {
         setMyAccount={setMyAccount}
         />
       </Route>
+
       {/* 내 프로필 이미지 변경 */}
       <Route path="/myprofile/profileimageedit">
         <ProfileImageEdit 
@@ -431,10 +452,10 @@ function Nav(props) {
       navSite.map(({ site, title, id })=>{
         return (<>
         <Route exact path={site}>
-        <div key={id} >{title}</div>
+        <div>{title}</div>
         <div>
           <i onClick={()=>{
-            props.history.push('/friends/setting')
+            props.settingSwitch();
           }} className="fas fa-cog"></i>
           </div>
         </Route>
@@ -457,11 +478,8 @@ function Action(props) {
     id: 2,
     site: '/search',
     logo: 'fas fa-search'
-  }, {
-    id: 3,
-    site: '/friends/setting',
-    logo: 'fas fa-cog'
-  }]);
+  }
+]);
   return <div className="action" key={site.id}>
     {
       site.map(({ site, logo })=>{
