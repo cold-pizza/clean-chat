@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 import './style.scss';
 
+import signupFn from '../../controller/signupFn';
+import changeGenderFn from '../../controller/changeGenderFn';
+import selectGenderFn from '../../controller/selectGenderFn';
+
+
 function Signup(props) {
     // 첫 렌더링시 성별.
     useEffect(()=>{
@@ -8,6 +13,7 @@ function Signup(props) {
         arr.gender = 'male';
         props.setJoinAccount(arr);
     }, [])
+    
     return <div className="signup">
         <h1>회원가입</h1>
         <div className="password-comment">
@@ -40,7 +46,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={props.joinPsOnChange} 
+            onChange={props.joinOnChange} 
             type="password" 
             name="psCheck" 
             placeholder="비밀번호 확인" 
@@ -53,8 +59,8 @@ function Signup(props) {
                     className="male-btn"
                     type="button"
                     onClick={()=>{
-                       props.setSelectGender(!props.selectGender);
-                       props.genderSelectFn(props.selectGender);
+                       changeGenderFn();
+                       selectGenderFn(props.selectGender);
                    }}>남</button>
                 <button 
                     style={{ background: props.selectGender ? "#2647ff" : "white",
@@ -62,13 +68,13 @@ function Signup(props) {
                     className="female-btn"
                     type="button"
                     onClick={()=>{
-                        props.setSelectGender(!props.selectGender);
-                        props.genderSelectFn(props.selectGender);
+                        changeGenderFn();
+                        selectGenderFn(props.selectGender);
                     }}
                 >여</button>
             </div>
             <button onClick={()=>{
-                props.signupFn();
+                signupFn(props.history);
             }} className="signup-btn" type="submit">완료</button>
             <button className="cancel-btn" onClick={()=>{
                 props.history.goBack();

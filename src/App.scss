@@ -1,6 +1,9 @@
+/* global style */
+
 $main-gray: #808080;
 $main-blue: #2647ff;
 $shadow: 0 3px 6px rgba(50, 50, 80, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+
 
 /* 뼈대 잡기 */
 @mixin main {
@@ -43,35 +46,5 @@ button, i {
     height: 844px;
     box-shadow: $shadow;
     border-radius: 8px;
-    .nav {
-      @include row;
-      justify-content: space-between;
-      padding: {
-        top: 60px;
-        right: 40px;
-        left: 40px;
-        bottom: 20px;
-      }
-      div {
-        font-size: 24px; 
-      }
-    }
-    .action {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      @include row;
-      align-items: center;
-      justify-content: space-between;
-      padding: {
-        top: 20px;
-        right: 40px;
-        left: 40px;
-      }
-      border-top: 1px solid $main-gray;
-      i {
-        font-size: 25px;
-      }
-    }
   }
 }

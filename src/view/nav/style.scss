@@ -1,0 +1,15 @@
+@import '/src/App.scss';
+
+.nav {
+    @include row;
+    justify-content: space-between;
+    padding: {
+      top: 60px;
+      right: 40px;
+      left: 40px;
+      bottom: 20px;
+    }
+    div {
+      font-size: 24px; 
+    }
+  }

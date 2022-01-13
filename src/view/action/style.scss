@@ -1,0 +1,19 @@
+@import '/src/App.scss';
+
+.action {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    @include row;
+    align-items: center;
+    justify-content: space-between;
+    padding: {
+      top: 20px;
+      right: 40px;
+      left: 40px;
+    }
+    border-top: 1px solid $main-gray;
+    i {
+      font-size: 25px;
+    }
+  }

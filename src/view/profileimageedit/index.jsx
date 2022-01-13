@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState, useRef } from 'react';
 import './style.scss';
 
+import basicImgChangeFn from '../../controller/basicImgChangeFn';
+
 function ProfileImageEdit(props) {
     // 기본 이미지 설정 스위치.
     const [imageEdit, setImageEdit] = useState(false);
@@ -85,7 +87,7 @@ function BasicImageModal(props) {
             <p>기본 이미지로 변경하시겠습니까?</p>
             <div>
             <button onClick={() => {
-                props.basicImgChange();
+                basicImgChangeFn();
             }} className="yes-btn">Yes</button>
             <button onClick={()=>{
                 props.history.goBack();

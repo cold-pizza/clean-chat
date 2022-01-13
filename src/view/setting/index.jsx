@@ -1,4 +1,5 @@
 import './style.scss';
+import logoutFn from '../../controller/logoutFn';
 
 function Setting(props) {
     return <div className="setting">
@@ -13,7 +14,7 @@ function Setting(props) {
             }} type="button">친구삭제</button>
             <button onClick={()=>{
                 props.settingSwitch();
-                props.logoutFn();
+                logoutFn(props.history);
             }}>로그아웃</button>
             <button onClick={()=>{
                 props.settingSwitch();

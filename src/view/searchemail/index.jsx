@@ -1,7 +1,10 @@
 import './style.scss';
-import axios from 'axios';
 import { useState, useRef } from 'react';
 import { useEffect } from 'react';
+
+import friendsAddFn from '../../controller/friendsAddFn';
+import friendsSearchFn from '../../controller/friendsSearchFn';
+import { searchList } from '../../model/friendsSearchList';
 
 function SearchEmail(props) {
     // 리스트 지정.
@@ -22,25 +25,7 @@ function SearchEmail(props) {
         const { name, value } = e.target;
         setSearchInput({ ...searchInput, [name]: value })
     }
-
     
-      // 친구 검색결과 리스트.
-      const [searchList, setSearchList] = useState(null);
-
-  // 친구 검색 요청 함수.
-  const userSearchFn = function(id) {
-    axios.get(`https://clean-chat.kumas.dev/api/users/id/${id}`)
-    .then(res => {
-        console.log(res.data.result[0])
-        const user = res.data.result[0];
-        setSearchList(user);
-    })
-    .catch(err => {
-        alert('요청정보와 일치하지 않습니다.')
-        console.log(err);
-    })
-  }
-
 
   useEffect(()=> {
       if (searchList !== null) {
@@ -60,7 +45,7 @@ function SearchEmail(props) {
         placeholder="이메일로 검색해주세요!" 
         />
         <i onClick={() => {
-            userSearchFn(Number(searchEmail));
+            friendsSearchFn(Number(searchEmail));
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">
@@ -85,7 +70,7 @@ function SearchEmail(props) {
             <p>{searchList.name}님을 추가하시겠습니까?</p>
             <div>
             <i onClick={() => {
-                props.userAdd(searchList.id);
+                friendsAddFn(searchList.id);
             }} className="fas fa-check"></i>
             <i onClick={() => {
                    setPlusModalSwitch(!plusModalSwitch);

@@ -1,7 +1,9 @@
-import { useParams } from 'react-router';
+import { useParams, useHistory } from 'react-router-dom';
 import './style.scss';
+import addChatingRoomFn from '../../controller/addChatingRoomFn';
 
 function FriendsModal(props) {
+    const history = useHistory();
     const { id } = useParams();
     return <div className="friends-modal">
         <section className="friends-profile">
@@ -11,10 +13,10 @@ function FriendsModal(props) {
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    props.plusChatingRoom(id);
+                    addChatingRoomFn(id, history);
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
-                    props.history.goBack();
+                    history.goBack();
                 }} className="cancel-btn">뒤로가기</button>
             </div>
         </section>

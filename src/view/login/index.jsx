@@ -1,11 +1,13 @@
 import './style.scss';
+import loginFn from '../../controller/loginFn';
+import accountOnChange from '../../controller/accountOnChange';
 
 function Login(props) {
     return <div className="login">
         <h1>클린챗</h1>
         <section id="login-form" action="#">
             <input 
-            onChange={props.accountOnChange} 
+            onChange={accountOnChange} 
             name="loginId" 
             value={props.loginId}
             className="email" 
@@ -13,7 +15,7 @@ function Login(props) {
             placeholder="이메일" 
             />
             <input 
-            onChange={props.accountOnChange} 
+            onChange={accountOnChange} 
             name="loginPs" 
             value={props.loginPs}
             className="password" 
@@ -21,7 +23,7 @@ function Login(props) {
             placeholder="비밀번호" 
             />
             <button onClick={()=>{
-                props.loginFn();
+                loginFn(props.loginId, props.loginPs, props.history);
             }} className="login-btn" type="submit">로그인</button>
             <button onClick={()=>{
                 props.history.push('/signup')

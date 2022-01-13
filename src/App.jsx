@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+// 컴포넌트
+import React, { useEffect } from 'react';
 import Login from './view/login';
 import Signup from './view/signup';
 import Friends from './view/friends';
@@ -12,287 +13,31 @@ import MyProfile from './view/myprofile';
 import ProfileImageEdit from './view/profileimageedit';
 import ChatingRoom from './view/chatingroom';
 import FriendsModal from './view/friendsmodal';
+import Nav from './view/nav';
+import Action from './view/action';
 import './App.scss';
 
+import { setMyAccount } from './model/myAccount';
+import { settingModalSwitch } from './model/settingModalSwitch';
+
+// 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// CORS 처리
 axios.defaults.withCredentials = true;
+
+
 
 function App() {
   const history = useHistory();
-
-
-
-  // 아이디 입력 state.
-  const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
-  const { loginId, loginPs } = idInput;
-
-  // 로그인한 계정.
-  const [myAccount, setMyAccount] = useState(null);
-    // 기본 이미지🌠
-    const [myImage, setMyImage] = useState({ basicImg: 'https://cold-pizza.github.io/clean-chat/images/happy.jpg' });
-    const { basicImg } = myImage;
-
-    // 기본 이미지 설정 함수.
-    const basicImgChange = function() {
-      if (myAccount.imagePath !== basicImg) {
-        const arr = { ...myAccount };
-        arr.imagePath = basicImg;
-        setMyAccount(arr);
-      }
-    }
-
-    // 로그인 input.value
-  const accountOnChange = function(e) {
-    setIdInput({ ...idInput, [e.target.name]: e.target.value });
-  }
-
-  // 로그인 함수.
-  const loginFn = function() {
-    if (loginId === '') {
-      alert('이메일을 입력해주세요.')
-      return false;
-    } else {
-      if (loginPs === '') {
-        alert('비밀번호를 입력해주세요.')
-        return false;
-      }
-    }
-    if (localStorage.length !== 0) {
-      if (JSON.parse(localStorage.myInfo).email === loginId) {
-        alert('이미 로그인된 아이디 입니다.')
-        return false;
-      }
-    } else {
-      const data = {
-        email: loginId, 
-        password: loginPs
-      }
-      axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
-      .then(res => {
-        console.log(res)
-        const user = res.data.result;
-        if (res.status === 200) {
-          const item = { ...user };
-          item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
-          setMyAccount(item);
-          localStorage.setItem('myInfo', JSON.stringify(item));
-          setIdInput({ loginId: '', loginPs: '' });
-          setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-          console.log(res.data.message);
-          history.push('/friends');
-        }
-      })
-      .catch(err => {
-        console.log(err);
-        alert('이메일 또는 비밀번호를 다시 입력해주세요.');
-      }) 
-    }
-  }
 
   // 내 프로필 자동 업데이트.
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
   }, [])
 
-  // 로그아웃 함수.
-  const logoutFn = function() {
-    axios.post('https://clean-chat.kumas.dev/api/auth/logout', { withCredentials: true })
-    .then(res => {
-      // 로컬스토리지 완전 삭제라서 부분삭제로 추후 변경.
-      // *** 한 브라우저에서 여러 명이 로그인 할 경우. ***
-      localStorage.clear();
-        console.log(res.data.message);
-        history.replace('/');
-    })
-    .catch(err => {
-      console.log(err);
-      console.log('에러 대체 로그아웃.');
-      history.replace('/');
-    })
-  }
 
-// 성별 button state.
-const [selectGender, setSelectGender] = useState(false);
-
- // 회원가입 state & onChange.
- const [joinAccount, setJoinAccount] = useState({ name: '', id: '', password: '', psCheck: '', gender: '', imagePath: basicImg });
- const { name, id, password, imagePath, gender } = joinAccount;
-//  const [gender, setGender] = useState('');
- const joinOnChange = function(e) {
-   setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
- }
- const joinPsOnChange = function(e) {
-  setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
-}
-
-  // 성별 결졍 함수.
-  const genderSelectFn = function(selectGender) {
-    if (selectGender) {
-      setJoinAccount({ ...joinAccount, gender: 'male' })
-    } else {
-      setJoinAccount({ ...joinAccount, gender: 'female' })
-    }
-  }
-
-  // 회원가입 함수.
-  const signupFn = function() {
-    if (name === '' || id === '' || password === '') {
-      alert('이름, 이메일 또는 비밀번호를 입력해주세요.')
-      return false;
-    }
-    const spe = password.search(/[!@#$%^&*]/gi);
-    const num = password.search(/[0-9]/g);
-    const eng = password.search(/[a-z]/ig);
-    if (password.length < 7 || password.length > 20) {
-      alert('비밀번호를 6자리 ~ 20자리 이내로 입력해주세요.');
-      return false;
-    } else if ((spe < 0 && num < 0) || (spe < 0 && eng < 0) || (num < 0 && eng < 0)) {
-      alert('영문, 숫자, 특수문자 중 2가지 이상 혼합하여 입력해주세요.');
-      return false;
-    }
-    if (password !== joinAccount.psCheck) {
-      alert('비밀번호가 일치하지 않습니다.');
-    } else {
-      axios.get(`https://clean-chat.kumas.dev/api/users/email/${id}`)
-      .then(() => {
-        alert('중복된 이메일입니다.');
-      })
-      .catch(() => {
-        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath })
-        .then((res)=>{
-          console.log(res);
-          console.log('회원가입 성공.');
-          setJoinAccount({ name:'', id: '', password: '' });
-          history.push('/');
-        })
-        .catch((error)=>{
-          console.log(error);
-        })
-      })
-    }
-  }
-
-  // 친구 계정.
-  const [user, setUser] = useState([{
-    id: 0,
-    name: '김재우',
-    img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg',
-    email: '',
-    active: false,
-  }, {
-    id: 1,
-    name: '강유진',
-    img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg', 
-    email: '',
-    active: false,
-  }, {
-    id: 2,
-    name: '강현수',
-    img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg',
-    email: '',
-    active: false,
-  }]);
-
-  // 친구 검색 input & onChange.
-  const [search, setSearch] = useState('');
-  const searchOnChange = function(e) {
-    setSearch(e.target.value);
-  }
-
-  // 삭제할 친구 선택 함수.
-  const deleteModal = function(id) {
-    setUser(
-      user.map((user) => {
-        return user.id === id ? { ...user, active: !user.active } : user;
-      })
-    )
-  }
-
-  // 친구 삭제 취소 함수.
-  const deleteCancel = function(id) {
-      if (user[id].active === true) {
-        let arr = [...user];
-        arr = arr[id].active = !arr[id].active;
-        setUser(arr);
-    }
-  }
-
-  // **************** test ********************
-  // 친구 식제 함수.
-  const friendsDelete = function(id) {
-    axios.delete(`https://clean-chat.kumas.dev/friends/${id}`)
-    .then(res => {
-      console.log(res.result.message);
-      // 메시지 확인하고 로직 돌아가면 삭제 요청한 결과 값 user state에 넣기.
-    })
-    .catch(err => console.log(err))
-
-    // if (user[id].active === true) {
-    //   let arr = [...user];
-    //   arr.splice(id, 1);
-    //   // id값 수정.
-    //   for (let i = 0; i < arr.length; i++) {
-    //     arr[i].id = i;
-    //   }
-    //   setUser(arr);
-    // } else {
-    //   console.log('취소')
-    //   return false;
-    // }
-  }
-
-// 채팅방 state.
-const [chatingRoom, setChatingRoom] = useState([]);
-
-// 채팅방에 추가할 함수.
-const plusChatingRoom = function(id) {
-  const users = user[id];
-  const arr = [...chatingRoom, users];
-  setChatingRoom(arr);
-  if (chatingRoom !== null) {
-    history.push(`/chatingroom/${id}`);
-  }
-}
-
-  // 변경할 이름 받아올 state.
-  const [nickNameEdit, setNickNameEdit] = useState({ names: '' });
-
-  // 변경할 이름 input.value 받아오는 함수.
-  const onChange = function(e) {
-    setNickNameEdit({ ...nickNameEdit, [e.target.name]: e.target.value })
-  }
-
-  // 클릭시 이름 변경하는 함수.
-  const nameChange = function() {
-    // 입력받은거 myAccount.name에 붙여넣기
-    const arr = { ...myAccount };
-    arr.name = nickNameEdit.names;
-    setMyAccount(arr);
-    // 수정하면 자동으로 로컬스토리지 업데이트.
-    setNickNameEdit({ names: '' });
-  }
-
-
-  // 친구 추가 함수.
-  const userAdd = function(id) {
-    axios.post(`https://clean-chat.kumas.dev/api/friends/${id}`)
-    .then(res => {
-      // setUser([...user, res.data.result]);
-      console.log(res.data)
-      console.log('친구추가!');
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  // 설정 모달 스위치.
-  const [settingModalSwitch, setSettingModalSwitch] = useState(false);
-  const settingSwitch = function() {
-    setSettingModalSwitch(!settingModalSwitch);
-  }
 
   return (
     <div className="App">
@@ -302,11 +47,9 @@ const plusChatingRoom = function(id) {
       <Route exact path="/">
         <Login 
         history={history} 
-        idInput={idInput}
-        loginFn={loginFn} 
-        accountOnChange={accountOnChange}
-        loginId={loginId}
-        loginPs={loginPs}
+        // idInput={idInput}
+        // loginId={loginId}
+        // loginPs={loginPs}
         />
       </Route>
 
@@ -314,21 +57,19 @@ const plusChatingRoom = function(id) {
       <Route path="/signup">
         <Signup 
         // setGender={setGender}
-        gender={gender}
-        genderSelectFn={genderSelectFn}
-        signupFn={signupFn}
-        selectGender={selectGender} 
-        setSelectGender={setSelectGender}
-        history={history} 
-        joinOnChange={joinOnChange} 
-        joinAccount={joinAccount}
-        setJoinAccount={setJoinAccount}
-        joinPsOnChange={joinPsOnChange}
+        // gender={gender}
+        // selectGender={selectGender} 
+        // setSelectGender={setSelectGender}
+        // joinOnChange={joinOnChange} 
+        // joinPsOnChange={joinPsOnChange}
         />
       </Route>
       
       {/* navigation */}
-      <Nav history={history} settingSwitch={settingSwitch}/>
+      <Nav 
+      history={history} 
+      // settingSwitch={settingSwitch}
+      />
 
       {/* 액션버튼s */}
       <Route path={['/friends', '/chat', '/chatingroom/:id', '/search', '/searchemail', '/friendsremove']}>
@@ -337,10 +78,10 @@ const plusChatingRoom = function(id) {
       {/* 친구창 */}
       <Route path="/friends">
         <Friends 
-        setMyAccount={setMyAccount} 
-        myAccount={myAccount} 
-        basicImg={basicImg} 
-        user={user} 
+        // setMyAccount={setMyAccount} 
+        // myAccount={myAccount} 
+        // basicImg={basicImg} 
+        // user={user} 
         history={history} 
         />
       </Route>
@@ -348,149 +89,97 @@ const plusChatingRoom = function(id) {
       {/* Setting */}
       {
         settingModalSwitch ?
-        <Setting history={history} logoutFn={logoutFn} settingSwitch={settingSwitch} />
+        <Setting 
+        history={history} 
+        // settingSwitch={settingSwitch} 
+        />
         : null
       }
 
 
       {/* 채팅목록 */}
       <Route path="/chat">
-        <Chat history={history} chatingRoom={chatingRoom} />
+        <Chat history={history} 
+        // chatingRoom={chatingRoom} 
+        />
       </Route>
 
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
-        <ChatingRoom chatingRoom={chatingRoom} history={history} />
+        <ChatingRoom 
+        // chatingRoom={chatingRoom} 
+        history={history} 
+        />
       </Route>
 
       {/* 친구찾기 */}
       <Route path="/search">
         <Search 
         history={history}
-        user={user}  
-        search={search} 
-        searchOnChange={searchOnChange} 
+        // user={user}  
+        // search={search} 
+        // searchOnChange={searchOnChange} 
         />
       </Route>
 
       {/* 친구추가 */}
       <Route path="/searchemail">
-        <SearchEmail history={history} basicImg={basicImg} userAdd={userAdd} />
+        <SearchEmail 
+        history={history} 
+        // basicImg={basicImg} 
+        />
       </Route>
 
       {/* 친구관리창 */}
       <Route path="/friendsremove">
-        <FriendsRemove history={history} user={user} deleteModal={deleteModal} />
+        <FriendsRemove 
+        history={history} 
+        // user={user} 
+        // deleteModal={deleteModal} 
+        />
       </Route>
 
       {/* 친구삭제모달창 */}
         <Route path="/friendsremove/delete/:id">
           <Delete 
-          user={user} 
+          // user={user} 
           history={history} 
-          deleteCancel={deleteCancel} 
-          deleteModal={deleteModal} 
-          friendsDelete={friendsDelete} 
+          // deleteCancel={deleteCancel} 
+          // deleteModal={deleteModal} 
           />
         </Route>
 
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
         <MyProfile 
-        basicImg={basicImg}
-        nameChange={nameChange} 
+        // basicImg={basicImg}
+        // nameChange={nameChange} 
         history={history} 
-        onChange={onChange} 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
+        // onChange={onChange} 
+        // myAccount={myAccount}
+        // setMyAccount={setMyAccount}
         />
       </Route>
 
       {/* 내 프로필 이미지 변경 */}
       <Route path="/myprofile/profileimageedit">
         <ProfileImageEdit 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
+        // myAccount={myAccount}
+        // setMyAccount={setMyAccount}
         history={history}
-        basicImgChange={basicImgChange}
         />
       </Route>
 
       <Route path="/friends/friendsmodal/:id">
-        <FriendsModal plusChatingRoom={plusChatingRoom} history={history} user={user} />
+        <FriendsModal 
+        history={history} 
+        // user={user} 
+        />
       </Route>
 
       </div>
     </div>
   );
-}
-
-function Nav(props) {
-  const [navSite, setNavSite] = useState([{
-    id: 0,
-    site: '/friends',
-    title: '친구'
-  },{
-    id: 1,
-    site: '/chat',
-    title: '채팅'
-  }, {
-    id: 2,
-    site: '/searchemail',
-    title: '친구검색'
-  }, {
-    id: 3,
-    site: '/search',
-    title: '친구찾기'
-  }, {
-    id: 4,
-    site: '/friendsremove',
-    title: '친구관리'
-  }]);
-  return <div className="nav" key={navSite.id}>
-    {
-      navSite.map(({ site, title, id })=>{
-        return (<>
-        <Route exact path={site}>
-        <div>{title}</div>
-        <div>
-          <i onClick={()=>{
-            props.settingSwitch();
-          }} className="fas fa-cog"></i>
-          </div>
-        </Route>
-        </>)
-      })
-    }
-  </div>
-}
-
-function Action(props) {
-  const [site, setSite] = useState([{
-    id: 0,
-    site: '/friends',
-    logo: 'fas fa-user',
-  }, {
-    id: 1,
-    site: '/chat',
-    logo: 'fas fa-comment'
-  }, {
-    id: 2,
-    site: '/search',
-    logo: 'fas fa-search'
-  }
-]);
-  return <div className="action" key={site.id}>
-    {
-      site.map(({ site, logo })=>{
-        return (
-          <i onClick={()=>{
-      props.history.push(site);
-    }} className={logo}></i>
-        )
-      })
-    }
-    </div>
 }
 
 export default App;

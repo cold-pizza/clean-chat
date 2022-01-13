@@ -1,6 +1,8 @@
 import './style.scss';
 import { useParams } from 'react-router-dom';
 
+import friendsDeleteFn from '../../controller/friendsDeleteFn';
+
 function Delete(props) {
     const { id } = useParams();
     return <div className="delete">
@@ -8,7 +10,7 @@ function Delete(props) {
         <p>{props.user[id].name} 님을 삭제하시겠습니까?</p>
         <div className="btns">
             <button onClick={()=>{
-                props.friendsDelete(id);
+                friendsDeleteFn(id);
                 props.history.push('/friends');
             }} className="delete-btn">삭제</button>
             <button onClick={()=>{
