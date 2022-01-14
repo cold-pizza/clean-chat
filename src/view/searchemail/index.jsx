@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
-import { searchList } from '../../model/friendsSearchList';
 
 function SearchEmail(props) {
     // 리스트 지정.
@@ -13,6 +12,8 @@ function SearchEmail(props) {
     // 리스트 온오프 스위치.
     const [listRefSwitch, setListRefSwitch] = useState(false);
     
+    const [searchList, setSearchList] = useState(null);
+
     // 친구추가 모달 스위치.
     const [plusModalSwitch, setPlusModalSwitch] = useState(false);
     
@@ -42,10 +43,10 @@ function SearchEmail(props) {
         name="searchEmail" 
         value={searchEmail} 
         type="text" 
-        placeholder="이메일로 검색해주세요!" 
+        placeholder="넘버를 입력해주세요" 
         />
         <i onClick={() => {
-            friendsSearchFn(Number(searchEmail));
+            friendsSearchFn(Number(searchEmail), setSearchList);
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">

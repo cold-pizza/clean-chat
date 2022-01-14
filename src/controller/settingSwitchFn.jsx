@@ -1,7 +1,6 @@
-import { settingModalSwitch, setSettingModalSwitch } from "../model/settingModalSwitch";
 
- const settingSwitchFn = function() {
+ const settingSwitchFn = function(settingModalSwitch, setSettingModalSwitch) {
     setSettingModalSwitch(!settingModalSwitch);
   }
-
+ 
 export default settingSwitchFn

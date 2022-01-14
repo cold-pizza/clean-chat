@@ -1,10 +1,8 @@
 import axios from 'axios';
-import { joinAccount, setJoinAccount } from '../model/joinAccount';
-import { myAccount } from '../model/myAccount';
 
   // 회원가입 함수.
-  const signupFn = function(history) {
-    const { name, id, password, gender, imagePath, psCheck } = myAccount;
+  const signupFn = function(joinAccount, setJoinAccount, history) {
+    const { name, id, password, psCheck, gender } = joinAccount;
     if (name === '' || id === '' || password === '') {
       alert('이름, 이메일 또는 비밀번호를 입력해주세요.')
       return false;
@@ -27,7 +25,7 @@ import { myAccount } from '../model/myAccount';
         alert('중복된 이메일입니다.');
       })
       .catch(() => {
-        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender, imagePath })
+        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender })
         .then((res)=>{
           console.log(res);
           console.log('회원가입 성공.');

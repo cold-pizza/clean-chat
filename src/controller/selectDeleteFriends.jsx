@@ -1,7 +1,6 @@
-import { user, setUser } from '../model/user';
 
   // 삭제할 친구 선택 함수.
-  const selectDeleteFriends = function(id) {
+  const selectDeleteFriends = function(id, user, setUser) {
     setUser(
       user.map((user) => {
         return user.id === id ? { ...user, active: !user.active } : user;

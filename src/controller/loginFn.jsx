@@ -1,9 +1,7 @@
 import axios from 'axios';
-import { setIdInput } from '../model/loginInput';
-import { setMyAccount } from '../model/myAccount';
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs, history) {
+  const loginFn = function(loginId, loginPs, setIdInput, setMyAccount, history) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;

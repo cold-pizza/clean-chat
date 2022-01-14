@@ -1,6 +1,6 @@
-import { joinAccount, setJoinAccount } from '../model/joinAccount';
 
-const joinOnChange = function(e) {
+
+const joinOnChange = function(e, joinAccount, setJoinAccount) {
     setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
   }
 

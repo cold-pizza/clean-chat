@@ -1,7 +1,5 @@
-import { genderSwitch, setGenderSwitch } from '../model/genderSwitch';
 
-
-  const changeGenderFn = function() {
+  const changeGenderFn = function(genderSwitch, setGenderSwitch) {
     setGenderSwitch(!genderSwitch);
   }
 

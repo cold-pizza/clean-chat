@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { setSearchList } from '../model/friendsSearchList';
+
 
  // 친구 검색 요청 함수.
- const friendsSearchFn = function(id) {
+ const friendsSearchFn = function(id, setSearchList) {
     axios.get(`https://clean-chat.kumas.dev/api/users/id/${id}`)
     .then(res => {
         console.log(res.data.result[0])

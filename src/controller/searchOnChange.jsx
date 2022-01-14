@@ -1,6 +1,6 @@
-import { setSearch } from '../model/search';
 
-  const searchOnChange = function(e) {
+
+  const searchOnChange = function(e, setSearch) {
     setSearch(e.target.value);
   }
 

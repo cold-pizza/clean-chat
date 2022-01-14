@@ -1,8 +1,6 @@
-import { user } from '../model/user';
-import { chatingRoom, setChatingRoom } from '../model/chatingRoom';
 
 // 채팅방에 추가할 함수.
-const addChatingRoomFn = function(id, history) {
+const addChatingRoomFn = function(id, user, chatingRoom, setChatingRoom, history) {
     const users = user[id];
     const arr = [...chatingRoom, users];
     setChatingRoom(arr);

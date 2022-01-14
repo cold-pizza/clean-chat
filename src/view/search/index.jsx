@@ -1,17 +1,26 @@
+import { useState } from 'react';
 import './style.scss';
 
+
 function Search(props) {
+
+    const [search, setSearch] = useState('');
+
+    const searchOnChange = function(e) {
+        setSearch(e.target.value);
+      }
+    
     return <div className="search">
         <section className="search-form">
-        <input value={props.search} onChange={props.searchOnChange} type="text" placeholder="검색" />
+        <input value={search} onChange={searchOnChange} type="text" placeholder="검색" />
         <i className="fas fa-times cancel-btn"></i>
         </section>
         <ul>
             {
             props.user.filter(user => {
-                if (props.search === '') {
+                if (search === '') {
                     return user;
-                } else if (user.name.includes(props.search)) {
+                } else if (user.name.includes(search)) {
                     return user;
                }
             }).map(({ name, img, id })=>{

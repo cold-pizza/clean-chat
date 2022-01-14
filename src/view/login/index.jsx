@@ -1,8 +1,17 @@
+import { useState } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
-import accountOnChange from '../../controller/accountOnChange';
 
 function Login(props) {
+
+const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
+const { loginId, loginPs } = idInput;
+
+// 로그인 input.value
+const accountOnChange = function(e) {
+    setIdInput({ ...idInput, [e.target.name]: e.target.value });
+  }
+
     return <div className="login">
         <h1>클린챗</h1>
         <section id="login-form" action="#">
@@ -15,7 +24,7 @@ function Login(props) {
             placeholder="이메일" 
             />
             <input 
-            onChange={accountOnChange} 
+            onChange={accountOnChange}  
             name="loginPs" 
             value={props.loginPs}
             className="password" 
@@ -23,7 +32,13 @@ function Login(props) {
             placeholder="비밀번호" 
             />
             <button onClick={()=>{
-                loginFn(props.loginId, props.loginPs, props.history);
+                loginFn(
+                    loginId, 
+                    loginPs, 
+                    setIdInput, 
+                    props.setMyAccount, 
+                    props.history
+                    );
             }} className="login-btn" type="submit">로그인</button>
             <button onClick={()=>{
                 props.history.push('/signup')

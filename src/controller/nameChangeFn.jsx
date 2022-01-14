@@ -1,9 +1,6 @@
-import { myAccount, setMyAccount } from '../model/myAccount';
-import { nickNameEdit, setNickNameEdit } from '../model/nickName';
-
 
   // 클릭시 이름 변경하는 함수.
-  const nameChange = function() {
+  const nameChange = function(myAccount, setMyAccount, nickNameEdit, setNickNameEdit) {
     // 입력받은거 myAccount.name에 붙여넣기
     const arr = { ...myAccount };
     arr.name = nickNameEdit.names;

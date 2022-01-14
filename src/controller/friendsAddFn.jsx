@@ -1,6 +1,7 @@
 import axios from 'axios';
 
   // 친구 추가 함수.
+  // 수정해야 함.
   const friendsAddFn = function(id) {
     axios.post(`https://clean-chat.kumas.dev/api/friends/${id}`)
     .then(res => {

@@ -2,6 +2,7 @@ import { Route } from 'react-router-dom';
 import './style.scss';
 
 function Nav(props) {
+
     const navSite = [{
       id: 0,
       site: '/friends',
@@ -23,6 +24,7 @@ function Nav(props) {
       site: '/friendsremove',
       title: '친구관리'
     }];
+
     return <div className="nav">
       {
         navSite.map(({ site, title, id })=>{
@@ -31,7 +33,7 @@ function Nav(props) {
           <div>{title}</div>
           <div>
             <i onClick={()=>{
-              props.settingSwitch();
+              props.setSettingModalSwitch(!props.settingModalSwitch)
             }} className="fas fa-cog"></i>
             </div>
           </Route>
