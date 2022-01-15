@@ -1,12 +1,16 @@
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './style.scss';
-
-import basicImgChangeFn from '../../controller/basicImgChangeFn';
+import BasicImageModal from '../basicImageModal'
+import SelectImage from '../selectImage';
 
 function ProfileImageEdit(props) {
     // 기본 이미지 설정 스위치.
-    const [imageEdit, setImageEdit] = useState(false);
+    const [basicModalSwitch, setBasicModalSwtich] = useState(false);
+
+    const basicModalSwitchFn = function() {
+        setBasicModalSwtich(!basicModalSwitch);
+    }
 
     // 불러온 이미지 url.
     const [imgUrl, setImgUrl] = useState('');
@@ -22,13 +26,23 @@ function ProfileImageEdit(props) {
 
     // 이미지 선택 함수.
     const selectImg = function(e) {
-        const reader = new FormData();
-        const upLoadFile = e.target.files[0]
-        reader.append('img', upLoadFile);
+        const reader = new FileReader();
+        reader.onload = function(url) {
+            const previewImg = document.createElement('img');
+            previewImg.setAttribute('src', url.target.result);
+            viewImg.current.appendChild(previewImg);
+        };
+        reader.readAsDataURL(e.target.files[0]);
 
-        axios.post('https://clean-chat.kumas.dev/api/users/images', reader)
+        const dataFile = new FormData();
+        const upLoadFile = e.target.files[0];
+        dataFile.append('img', upLoadFile);
+
+        axios.post('https://clean-chat.kumas.dev/api/users/images', dataFile)
         .then((res) => {
             setImgUrl(`https://clean-chat.kumas.dev${res.data.result.imagePath}`);
+            
+
             console.log(res.data);
             console.log('이미지 업로드 성공');
         })
@@ -38,13 +52,20 @@ function ProfileImageEdit(props) {
     }
     // 이미지 변경 함수.
     const upLoadImg = function() {
-       // myAccount.imagePath -> imgUrl 변경.
-       const arr = { ...props.myAccount };
-       arr.imagePath = imgUrl;
-       props.setMyAccount(arr);
-       setSelectImgSwitch(!selectImgSwitch);
-       console.log('변경 완료')
+        axios.patch('https://clean-chat.kumas.dev/api/users')
+        .then(res => {
+            console.log("이미지가 " + res.data.message);
+            const arr = { ...props.myAccount };
+            arr.imagePath = imgUrl;
+            localStorage.setItem('myInfo', JSON.stringify(arr));
+            props.setMyAccount(arr);
+            setSelectImgSwitch(!selectImgSwitch);
+        })
     }
+
+    useEffect(() => {
+        props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+    }, [])
     
 
     // 이미지 선택 취소 함수.
@@ -54,18 +75,26 @@ function ProfileImageEdit(props) {
 
     }
     return <div className="profile-image-edit">
-        { imageEdit ? <BasicImageModal
+        { basicModalSwitch ? 
+        <BasicImageModal
+        basicModalSwitchFn={basicModalSwitchFn}
+        myAccount={props.myAccount}
+        setMyAccount={props.setMyAccount}
         history={props.history}
-        selectBasicImage={props.selectBasicImage}
-        basicImgChange={props.basicImgChange}
-        basicImage={props.basicImage} /> : null }
+        basicImg={props.basicImg}
+       /> : null }
         {
             selectImgSwitch ?
-            <SelectImage upLoadImg={upLoadImg} viewImg={viewImg} selectImgCancel={selectImgCancel} /> : null
+            <SelectImage 
+            history={props.history}
+            upLoadImg={upLoadImg} 
+            viewImg={viewImg} 
+            selectImgCancel={selectImgCancel} 
+            /> : null
         }
         <div className="btns">
             <button onClick={()=>{
-                setImageEdit(!imageEdit);
+                setBasicModalSwtich(!basicModalSwitch);
             }} type="button">기본 이미지 설정</button>
             <label htmlFor="image-file">
             <p onClick={() => {
@@ -80,35 +109,6 @@ function ProfileImageEdit(props) {
         <input type="file" id="image-file" ref={imgFileRef} onChange={selectImg} />
         </form>
     </div>
-}
-
-function BasicImageModal(props) {
-    return <section className="basic-image-modal">
-            <p>기본 이미지로 변경하시겠습니까?</p>
-            <div>
-            <button onClick={() => {
-                basicImgChangeFn();
-            }} className="yes-btn">Yes</button>
-            <button onClick={()=>{
-                props.history.goBack();
-            }} className="no-btn">No</button>
-            </div>
-        </section>
-}
-
-function SelectImage(props) {
-    return <section className="select-image">
-        <div ref={props.viewImg} className="img-box"></div>
-        <p>이미지를 변경하시겠습니까?</p>
-        <div className="img-btns">
-            <button onClick={() => {
-                props.upLoadImg();
-            }}>Yes</button>
-            <button onClick={() => {
-                props.selectImgCancel();
-            }}>No</button>
-        </div>
-    </section>
 }
 
 export default ProfileImageEdit;

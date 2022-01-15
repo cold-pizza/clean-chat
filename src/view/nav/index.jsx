@@ -29,7 +29,7 @@ function Nav(props) {
       {
         navSite.map(({ site, title, id })=>{
           return (<>
-          <Route exact path={site}>
+          <Route path={site}>
           <div>{title}</div>
           <div>
             <i onClick={()=>{

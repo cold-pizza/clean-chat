@@ -7,6 +7,6 @@
       arr = arr[id].active = !arr[id].active;
       setUser(arr);
   }
-}
+} 
 
 export default deleteFriendsCancelFn

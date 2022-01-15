@@ -1,0 +1,22 @@
+@import '../../App.scss';
+    .basic-image-modal {
+        @include col;
+        align-items: center;
+        p {
+            color: white;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        div {
+            @include row;
+            button {
+                font-size: 18px;
+                padding: 8px 14px;
+                border:none;
+                border-radius: 5px;
+            }
+            .yes-btn {
+                margin-right: 6px;
+            }
+        }
+    }

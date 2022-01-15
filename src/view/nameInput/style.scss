@@ -1,0 +1,14 @@
+        /* name input */
+        .name-input {
+            position: absolute;
+            top: 180px;
+            input {
+                width: 250px;
+                height: 40px;
+                border: none;
+                outline: none;
+                border-bottom: 1px solid white;
+                background: transparent;
+                padding: 4px;
+            }
+        }

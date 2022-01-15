@@ -18,13 +18,13 @@ function SearchEmail(props) {
     const [plusModalSwitch, setPlusModalSwitch] = useState(false);
     
     // 검색한 이메일.
-    const [searchInput, setSearchInput] = useState({ searchEmail:'' });
-    const { searchEmail } = searchInput;
+    const [searchInput, setSearchInput] = useState({ userSearch:'' });
+    const { userSearch } = searchInput;
 
     // input value.
     const inputOnChange = function(e) {
         const { name, value } = e.target;
-        setSearchInput({ ...searchInput, [name]: value })
+        setSearchInput({ ...searchInput, [name]: value });
     }
     
 
@@ -40,13 +40,12 @@ function SearchEmail(props) {
         <div className="search-form">
         <input 
         onChange={inputOnChange}
-        name="searchEmail" 
-        value={searchEmail} 
+        name="userSearch" 
         type="text" 
-        placeholder="넘버를 입력해주세요" 
+        placeholder="번호(id)를 입력해주세요" 
         />
         <i onClick={() => {
-            friendsSearchFn(Number(searchEmail), setSearchList);
+            friendsSearchFn(userSearch, setSearchList);
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">
@@ -71,7 +70,8 @@ function SearchEmail(props) {
             <p>{searchList.name}님을 추가하시겠습니까?</p>
             <div>
             <i onClick={() => {
-                friendsAddFn(searchList.id);
+                friendsAddFn(searchList.id, props.user, props.setUser);
+                setPlusModalSwitch(!plusModalSwitch);
             }} className="fas fa-check"></i>
             <i onClick={() => {
                    setPlusModalSwitch(!plusModalSwitch);

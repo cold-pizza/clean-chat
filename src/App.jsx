@@ -20,7 +20,6 @@ import './App.scss';
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { basicImg } from './model/basicImg';
 
 
 // CORS 처리
@@ -32,7 +31,7 @@ function App() {
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
   }, [])
-
+  const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
   const [chatingRoom, setChatingRoom] = useState([]);
 
   const [myAccount, setMyAccount] = useState(null);
@@ -58,6 +57,20 @@ function App() {
     email: '',
     active: false,
   }]);
+
+  // 비 로그인시 URL접근 제한.
+  useEffect(() => {
+    const routeLimitFn = function() {
+      const host = window.location.host;
+      const loginUrl = `${host}/clean-chat/`;
+      if (localStorage.length === 0 && window.location.href !== loginUrl) {
+          alert('로그인시 이용 가능합니다.');
+          history.replace('/');
+          return false;
+        }
+    }
+    routeLimitFn();
+  }, [])
 
   return (
     <div className="App">
@@ -148,6 +161,8 @@ function App() {
         <SearchEmail 
         history={history} 
         basicImg={basicImg} 
+        user={user}
+        setUser={setUser}
         />
       </Route>
 
@@ -156,13 +171,15 @@ function App() {
         <FriendsRemove 
         history={history} 
         user={user}
+        setUser={setUser}
         />
       </Route>
 
       {/* 친구삭제모달창 */}
         <Route path="/friendsremove/delete/:id">
           <Delete 
-          user={user} 
+          user={user}
+          setUser={setUser}
           history={history} 
           />
         </Route>
@@ -170,10 +187,11 @@ function App() {
       {/* 내 프로필 설정 */}
       <Route path="/myprofile">
         <MyProfile 
-        basicImg={basicImg}
         history={history} 
         myAccount={myAccount}
         setMyAccount={setMyAccount}
+        settingModalSwitch={settingModalSwitch}
+        setSettingModalSwitch={setSettingModalSwitch}
         />
       </Route>
 
@@ -183,6 +201,7 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history}
+        basicImg={basicImg}
         />
       </Route>
 

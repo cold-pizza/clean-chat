@@ -1,10 +1,22 @@
+import axios from "axios";
 
 // 기본 이미지 설정 함수.
 const basicImgChangeFn = function(myAccount, setMyAccount, basicImg) {
     if (myAccount.imagePath !== basicImg) {
-        const arr = { ...myAccount };
-        arr.imagePath = basicImg;
-        setMyAccount(arr);
+        const data = {
+            imagePath: basicImg
+        }
+        axios.patch('https://clean-chat.kumas.dev/api/users', data)
+        .then(res => {
+            console.log(res.data.message);
+            const arr = { ...myAccount };
+            arr.imagePath = basicImg;
+            localStorage.setItem('myInfo', JSON.stringify(arr));
+            setMyAccount(arr);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
     }
 

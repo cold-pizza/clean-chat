@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
+import nameChangeFn from '../../controller/nameChangeFn';
+import NameInput from '../nameInput';
 import './style.scss';
 
 function MyProfile(props) {
     // 이름 변경 모달 state.
     const [onNameInput, setOnNameInput] = useState(false);
+
     // 프로필 편집 모달 state.
     const [onEdit, setOnEdit] = useState(false);
 
@@ -12,20 +15,32 @@ function MyProfile(props) {
     props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
   }, [])
 
+  // 입력받은 닉네임.
+  const [nickNameEdit, setNickNameEdit] = useState('');
+
+    // 변경할 이름 input.value 받아오는 함수.
+    const nameOnChange = function(e) {
+        setNickNameEdit({ ...nickNameEdit, [e.target.name]: e.target.value })
+      };
+    
+
     return <div className="my-profiles">
         <main>
             <nav>
             <i onClick={()=>{
                 props.history.push('/friends');
             }} className="fas fa-chevron-left"></i>
-            { !onNameInput ? <i className="fas fa-cog"></i> : <i onClick={()=>{
-            props.nameChange();
+            { !onNameInput ? <i onClick={() => {
+                props.setSettingModalSwitch(!props.settingModalSwitch);
+            }} className="fas fa-cog"></i> : <i onClick={()=>{
+            nameChangeFn(props.myAccount, props.setMyAccount, nickNameEdit);
             setOnEdit(!onEdit);
             setOnNameInput(!onNameInput);
+            setNickNameEdit({ names: '' });
         }} className="fas fa-check"></i> }
             </nav>
 
-        { onNameInput ? <NameInput onChange={props.onChange} names={props.names} /> : null }
+        { onNameInput ? <NameInput nameOnChange={nameOnChange} name={props.myAccount.name} /> : null }
         <section>
             <img src={props.myAccount.imagePath} alt={props.myAccount.imagePath} />
 
@@ -51,16 +66,6 @@ function MyProfile(props) {
     </div>
 }
 
-function NameInput(props) {
-    return <div className="name-input">
-        <input
-        onChange={props.onChange}
-        name="names"
-        type="text"
-        placeholder= "이름을 입력해주세요."
-        />
-    </div>
-}
 
 
 export default MyProfile;

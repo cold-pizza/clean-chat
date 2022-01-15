@@ -1,12 +1,22 @@
+import axios from "axios";
 
   // 클릭시 이름 변경하는 함수.
-  const nameChange = function(myAccount, setMyAccount, nickNameEdit, setNickNameEdit) {
+  const nameChangeFn = function(myAccount, setMyAccount, nickNameEdit) {
     // 입력받은거 myAccount.name에 붙여넣기
-    const arr = { ...myAccount };
-    arr.name = nickNameEdit.names;
-    setMyAccount(arr);
-    // 수정하면 자동으로 로컬스토리지 업데이트.
-    setNickNameEdit({ names: '' });
+    const data = {
+      name: nickNameEdit.names
+    }
+    axios.patch('https://clean-chat.kumas.dev/api/users', data)
+    .then(res => {
+      console.log(res.data.message);
+      const arr = { ...myAccount };
+      arr.name = nickNameEdit.names;
+      localStorage.setItem('myInfo', JSON.stringify(arr));
+      setMyAccount(arr);
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
-export default nameChange
+export default nameChangeFn

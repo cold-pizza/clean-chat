@@ -2,9 +2,11 @@ import './style.scss';
 import { useEffect } from 'react';
 
 function Friends(props) {
+    
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
       }, [])
+
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
