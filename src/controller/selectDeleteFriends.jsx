@@ -1,11 +1,10 @@
 
   // 삭제할 친구 선택 함수.
-  const selectDeleteFriends = function(id, user, setUser) {
-    setUser(
-      user.map((user) => {
-        return user.id === id ? { ...user, active: !user.active } : user;
-      })
-    )
+  const selectDeleteFriends = function(id, user) {
+    if (user.id === id) {
+      console.log(id)
+      return id;
+    }
   }
 
 export default selectDeleteFriends

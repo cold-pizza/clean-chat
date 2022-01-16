@@ -1,7 +1,7 @@
 import axios from 'axios';
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs, setIdInput, setMyAccount, history) {
+  const loginFn = function(loginId, loginPs, setIdInput, setMyAccount, setUser, history) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;
@@ -22,10 +22,18 @@ import axios from 'axios';
         password: loginPs
       }
       axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
-      .then(res => {
+      .then(async res => {
         console.log(res)
         const user = res.data.result;
         if (res.status === 200) {
+          await axios.get('https://clean-chat.kumas.dev/api/friends')
+          .then(res => {
+            console.log(res.data.message);
+            localStorage.setItem('user', JSON.stringify(res.data.result));
+            setUser(JSON.parse(localStorage.getItem('user')));
+          })
+          .catch(err => console.log(err));
+          
           const item = { ...user };
           item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
           setMyAccount(item);

@@ -37,6 +37,7 @@ const accountOnChange = function(e) {
                     loginPs, 
                     setIdInput, 
                     props.setMyAccount, 
+                    props.setUser,
                     props.history
                     );
             }} className="login-btn" type="submit">로그인</button>

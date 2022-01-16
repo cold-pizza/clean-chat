@@ -8,11 +8,14 @@ function FriendsModal(props) {
 
     const history = useHistory(); 
     const { id } = useParams();
+    const idx = props.user.length - 1;
     return <div className="friends-modal">
-        <section className="friends-profile">
+        {
+            props.user !== null ? 
+            <section className="friends-profile">
             <div className="meta-info">
-                <img src={props.user[id].img} alt={props.user[id].img} />
-                <p>{props.user[id].name}</p>
+                <img src={props.basicImg} alt={props.basicImg} />
+                <p>{props.user[idx].name}</p>
             </div>
             <div className="btns">
                 <button onClick={()=>{
@@ -22,7 +25,8 @@ function FriendsModal(props) {
                     history.goBack();
                 }} className="cancel-btn">뒤로가기</button>
             </div>
-        </section>
+        </section> : '다시 로그인해 주세요'
+            }
     </div>
 }
 

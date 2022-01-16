@@ -30,7 +30,9 @@ function App() {
   // 내 프로필 자동 업데이트.
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-  }, [])
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, []);
+
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
   const [chatingRoom, setChatingRoom] = useState([]);
 
@@ -38,25 +40,26 @@ function App() {
 
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
-  const [user, setUser] = useState([{
-    id: 0,
-    name: '김재우',
-    img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg',
-    email: '',
-    active: false,
-  }, {
-    id: 1,
-    name: '강유진',
-    img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg', 
-    email: '',
-    active: false,
-  }, {
-    id: 2,
-    name: '강현수',
-    img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg',
-    email: '',
-    active: false,
-  }]);
+  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState([{
+  //   id: 0,
+  //   name: '김재우',
+  //   img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg',
+  //   email: '',
+  //   active: false,
+  // }, {
+  //   id: 1,
+  //   name: '강유진',
+  //   img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg', 
+  //   email: '',
+  //   active: false,
+  // }, {
+  //   id: 2,
+  //   name: '강현수',
+  //   img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg',
+  //   email: '',
+  //   active: false,
+  // }]);
 
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
@@ -72,6 +75,15 @@ function App() {
     routeLimitFn();
   }, [])
 
+  // 로그인 중 다시 로그인 화면 돌아가기 방지.
+  useEffect(() => {
+    if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
+      alert('로그인을 원하시면 로그아웃하시기 바랍니다.');
+      history.goBack();
+    }
+  }, [])
+
+
   return (
     <div className="App">
       <div className="app-box">
@@ -81,6 +93,7 @@ function App() {
         <Login 
         history={history} 
         setMyAccount={setMyAccount}
+        setUser={setUser}
         />
       </Route>
 
@@ -117,6 +130,7 @@ function App() {
         myAccount={myAccount} 
         basicImg={basicImg} 
         user={user} 
+        setUser={setUser}
         history={history} 
         />
       </Route>
@@ -172,6 +186,7 @@ function App() {
         history={history} 
         user={user}
         setUser={setUser}
+        basicImg={basicImg}
         />
       </Route>
 
@@ -209,6 +224,7 @@ function App() {
         <FriendsModal 
         history={history} 
         user={user} 
+        basicImg={basicImg}
         />
       </Route>
 
