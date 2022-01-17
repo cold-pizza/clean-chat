@@ -14,7 +14,7 @@ function Nav(props) {
     }, {
       id: 2,
       site: '/searchemail',
-      title: '친구검색'
+      title: '유저검색'
     }, {
       id: 3,
       site: '/search',

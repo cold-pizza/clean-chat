@@ -7,7 +7,6 @@ function Friends(props) {
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
       }, [])
-
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -16,11 +15,11 @@ function Friends(props) {
             <p>{props.myAccount !== null ? props.myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
-            <p>친구 {props.user.length !== 0 ? props.user.length : 0 }</p>
+            <p>친구 {props.user !== null ? props.user.length : 0 }</p>
         </div>
         <ul className="friends-list">
         {
-            props.user.length !== 0 ?
+            props.user !== null ?
             props.user.map(({ id, name })=>{
                 return (
                 <li onClick={()=>{
@@ -30,7 +29,7 @@ function Friends(props) {
                     <p>{name}</p>
                 </li>
                 )
-            }) : '다시 로그인해 주세요'
+            }) : '친구가 없습니다.'
         }
         </ul>
         

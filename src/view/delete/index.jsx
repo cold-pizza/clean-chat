@@ -5,13 +5,15 @@ import friendsDeleteFn from '../../controller/friendsDeleteFn';
 import deleteFriendsCancelFn from '../../controller/deleteFriendsCancelFn';
 
 function Delete(props) {
-    const id = props.user.length - 1;
     return <div className="delete">
         <div className="form">
-        <p>{props.user[id].name} 님을 삭제하시겠습니까?</p>
+        <p>{props.user[0].name} 님을 삭제하시겠습니까?</p>
         <div className="btns">
             <button onClick={()=>{
-                friendsDeleteFn(id);
+                props.user.forEach((id) => {
+                    // friendsDeleteFn(id);
+                    console.log(id)
+                })
                 props.history.push('/friends');
             }} className="delete-btn">삭제</button>
             <button onClick={()=>{

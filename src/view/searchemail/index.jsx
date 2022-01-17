@@ -36,6 +36,7 @@ function SearchEmail(props) {
       }
   }, [searchList])
 
+
     return <div className="search-email">
         <div className="search-form">
         <input 
@@ -70,7 +71,7 @@ function SearchEmail(props) {
             <p>{searchList.name}님을 추가하시겠습니까?</p>
             <div>
             <i onClick={() => {
-                friendsAddFn(searchList.id, props.user, props.setUser);
+                friendsAddFn(searchList.id);
                 setPlusModalSwitch(!plusModalSwitch);
             }} className="fas fa-check"></i>
             <i onClick={() => {
