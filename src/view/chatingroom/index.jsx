@@ -39,7 +39,7 @@ function ChatingRoom(props) {
         </nav>
         <section className="chating-form">
             <div className="you">
-                <img src={props.chatingRoom[id].img} alt={props.chatingRoom[id].img} />
+                <img src={props.basicImg} alt={props.basicImg} />
                 <div className="meta-info">
                     <div className="info">
                         <p>{props.chatingRoom[id].name}</p>
@@ -49,7 +49,7 @@ function ChatingRoom(props) {
                     <p className="times"></p>
             </div>
             {
-                chatComments.map(({ ment, days })=>{
+                chatComments.map(({ ment })=>{
                        return <div className="me">
                            {
                                ment !== '' ? 

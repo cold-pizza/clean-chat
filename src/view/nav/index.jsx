@@ -13,7 +13,7 @@ function Nav(props) {
       title: '채팅'
     }, {
       id: 2,
-      site: '/searchemail',
+      site: '/searchuser',
       title: '유저검색'
     }, {
       id: 3,

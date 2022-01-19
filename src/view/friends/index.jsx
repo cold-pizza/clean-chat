@@ -17,6 +17,7 @@ function Friends(props) {
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
+        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
       }, [])
 
     return <div className="friends">
@@ -31,7 +32,7 @@ function Friends(props) {
         </div>
         <ul className="friends-list">
         {
-            props.user.length !== 0 ?
+            props.user !== null ?
             props.user.map(({ name, imagePath }, i)=>{
                 return (
                 <li onClick={()=>{

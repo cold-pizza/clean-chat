@@ -27,12 +27,26 @@ import axios from 'axios';
         if (res.status === 200) {
           await axios.get('https://clean-chat.kumas.dev/api/friends')
           .then(res => {
-            console.log(res.data.message);
+            console.log("친구가 " + res.data.message);
             console.log(res.data.result);
             localStorage.setItem('user', JSON.stringify(res.data.result));
             setUser(JSON.parse(localStorage.getItem('user')));
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            console.log('친구 에러');
+            console.log(err);
+          });
+
+          await axios.get('https://clean-chat.kumas.dev/api/chats')
+          .then(res => {
+            console.log('채팅방이 ' + res.data.message);
+            const cr = res.data.result;
+            localStorage.setItem('chatingRoom', JSON.stringify(cr));
+          })
+          .catch(err => {
+            console.log('채팅방 에러');
+            console.log(err);
+          })
           
           const item = { ...user };
           item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';

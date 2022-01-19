@@ -35,14 +35,13 @@ function App() {
 
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
   
-  const [chatingRoom, setChatingRoom] = useState([]);
+  const [chatingRoom, setChatingRoom] = useState(null);
 
   const [myAccount, setMyAccount] = useState(null);
 
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
   const [user, setUser] = useState(null);
-
 
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
@@ -101,7 +100,7 @@ function App() {
         '/chat', 
         '/chatingroom/:id', 
         '/search', 
-        '/searchemail', 
+        '/searchuser', 
         '/friendsremove'
         ]}>
       <Action history={history} />
@@ -116,6 +115,7 @@ function App() {
         user={user} 
         setUser={setUser}
         history={history} 
+        setChatingRoom={setChatingRoom}
         />
       </Route>
 
@@ -133,8 +133,11 @@ function App() {
 
       {/* 채팅목록 */}
       <Route path="/chat">
-        <Chat history={history} 
+        <Chat 
+        history={history} 
         chatingRoom={chatingRoom} 
+        setChatingRoom={setChatingRoom}
+        basicImg={basicImg}
         />
       </Route>
 
@@ -143,6 +146,7 @@ function App() {
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         history={history} 
+        basicImg={basicImg}
         />
       </Route>
 
@@ -155,7 +159,7 @@ function App() {
       </Route>
 
       {/* 친구추가 */}
-      <Route path="/searchemail">
+      <Route path="/searchuser">
         <SearchUser
         history={history} 
         />

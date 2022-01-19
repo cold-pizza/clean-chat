@@ -1,14 +1,19 @@
 @import '/src/App.scss';
 .chat {
     @include main;
+    @include col;
+    width: 100%;
+    align-items: center;
     li {
+        width: 100%;
         @include row;
         cursor: pointer;
         justify-content: space-between;
+        align-items: center;
         padding: 10px 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        .days {
-            font-size: 10px;
+        .minus {
+            font-size: 14px;
             color: rgba(0, 0, 0, .5);
         }
         .meta-data {
@@ -29,6 +34,32 @@
                     color: $main-gray;
                 }
             }
+        }
+    }
+
+    .chat-remove-modal {
+        position: absolute;
+        bottom: 20%;
+        padding: 10px 20px;
+        background: #eee;
+        border-radius: 5px;
+        @include col;
+        align-items: center;
+        p {
+            font-size: 16px;
+        }
+        .chat-title {
+            margin-bottom: 5px;
+        }
+        p:nth-child(2) {
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+        button:nth-child(1) {
+            margin-right: 12px;
         }
     }
 }
