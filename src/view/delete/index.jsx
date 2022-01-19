@@ -2,22 +2,18 @@ import './style.scss';
 import { useParams } from 'react-router-dom';
 
 import friendsDeleteFn from '../../controller/friendsDeleteFn';
-import deleteFriendsCancelFn from '../../controller/deleteFriendsCancelFn';
 
 function Delete(props) {
+    const { id } = useParams();
     return <div className="delete">
         <div className="form">
-        <p>{props.user[0].name} 님을 삭제하시겠습니까?</p>
+        <p>{props.user[id].name} 님을 삭제하시겠습니까?</p>
         <div className="btns">
             <button onClick={()=>{
-                props.user.forEach((id) => {
-                    // friendsDeleteFn(id);
-                    console.log(id)
-                })
+                    friendsDeleteFn(props.user[id].id);
                 props.history.push('/friends');
             }} className="delete-btn">삭제</button>
             <button onClick={()=>{
-                // deleteFriendsCancelFn(id, props.user, props.setUser);
                 props.history.goBack();
             }} className="cancel-btn">취소</button>
             </div>

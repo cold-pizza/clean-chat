@@ -2,11 +2,23 @@ import './style.scss';
 import { useEffect } from 'react';
 
 function Friends(props) {
+    const imgUrl = "https://clean-chat.kumas.dev/api/users/images/";
+    useEffect(() => {
+      const item = JSON.parse(localStorage.getItem('user'));
+      for (let i = 0; i < item.length; i++) {
+          if (item[i].imagePath === '') {
+              item[i].imagePath = props.basicImg;
+              props.setUser(item);
+          }
+      }
+      localStorage.setItem('user', JSON.stringify(item));
+    }, [])
     
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
       }, [])
+
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -19,13 +31,13 @@ function Friends(props) {
         </div>
         <ul className="friends-list">
         {
-            props.user !== null ?
-            props.user.map(({ id, name })=>{
+            props.user.length !== 0 ?
+            props.user.map(({ name, imagePath }, i)=>{
                 return (
                 <li onClick={()=>{
-                    props.history.push(`/friends/friendsmodal/${id}`)
+                    props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
-                    <img src={props.basicImg} alt={props.basicImg} />
+                    <img src={imagePath} alt={imagePath} />
                     <p>{name}</p>
                 </li>
                 )

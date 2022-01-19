@@ -25,7 +25,7 @@ import axios from 'axios';
         alert('중복된 이메일입니다.');
       })
       .catch(() => {
-        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender })
+        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender }, { withCredentials: true })
         .then((res)=>{
           console.log(res);
           console.log('회원가입 성공.');

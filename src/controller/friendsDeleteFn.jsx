@@ -2,8 +2,8 @@ import axios from 'axios';
 
   // **************** test ********************
   // 친구 식제 함수.
-  const friendsDeleteFn = function(id, user) {
-    axios.delete(`https://clean-chat.kumas.dev/api/friends/${user[id].id}`)
+  const friendsDeleteFn = function(id) {
+    axios.delete(`https://clean-chat.kumas.dev/api/friends/${id}`)
     .then(res => {
       console.log(res);
       console.log(res.data.message);

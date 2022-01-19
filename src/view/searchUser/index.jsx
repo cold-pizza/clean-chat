@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
 
-function SearchEmail(props) {
+function SearchUser(props) {
     // 리스트 지정.
     const listRef = useRef(null);
 
@@ -54,7 +54,7 @@ function SearchEmail(props) {
                 listRefSwitch ? 
                 <li className="item">
                 <div className="meta-data">
-                <img src={props.basicImg} alt={props.basicImg} />
+                <img src={searchList.imagePath} alt={searchList.imagePath} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }
@@ -84,4 +84,4 @@ function SearchEmail(props) {
     </div>
 }
 
-export default SearchEmail;
+export default SearchUser;

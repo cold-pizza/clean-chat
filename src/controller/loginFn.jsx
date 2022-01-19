@@ -23,12 +23,12 @@ import axios from 'axios';
       }
       axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
       .then(async res => {
-        console.log(res)
         const user = res.data.result;
         if (res.status === 200) {
           await axios.get('https://clean-chat.kumas.dev/api/friends')
           .then(res => {
             console.log(res.data.message);
+            console.log(res.data.result);
             localStorage.setItem('user', JSON.stringify(res.data.result));
             setUser(JSON.parse(localStorage.getItem('user')));
           })

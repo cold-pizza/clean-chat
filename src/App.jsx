@@ -6,7 +6,7 @@ import Friends from './view/friends';
 import Chat from './view/chat';
 import Search from './view/search';
 import Setting from './view/setting';
-import SearchEmail from './view/searchemail';
+import SearchUser from './view/searchUser';
 import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
@@ -42,25 +42,7 @@ function App() {
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
   const [user, setUser] = useState(null);
-  // const [user, setUser] = useState([{
-  //   id: 0,
-  //   name: '김재우',
-  //   img: 'https://cold-pizza.github.io/clean-chat/images/1.jpg',
-  //   email: '',
-  //   active: false,
-  // }, {
-  //   id: 1,
-  //   name: '강유진',
-  //   img: 'https://cold-pizza.github.io/clean-chat/images/2.jpg', 
-  //   email: '',
-  //   active: false,
-  // }, {
-  //   id: 2,
-  //   name: '강현수',
-  //   img: 'https://cold-pizza.github.io/clean-chat/images/3.jpg',
-  //   email: '',
-  //   active: false,
-  // }]);
+
 
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
@@ -95,6 +77,7 @@ function App() {
         history={history} 
         setMyAccount={setMyAccount}
         setUser={setUser}
+        basicImg={basicImg}
         />
       </Route>
 
@@ -173,11 +156,8 @@ function App() {
 
       {/* 친구추가 */}
       <Route path="/searchemail">
-        <SearchEmail 
+        <SearchUser
         history={history} 
-        basicImg={basicImg} 
-        user={user}
-        setUser={setUser}
         />
       </Route>
 

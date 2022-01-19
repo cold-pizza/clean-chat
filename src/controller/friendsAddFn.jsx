@@ -4,8 +4,9 @@ import axios from 'axios';
   // 수정해야 함.
   const friendsAddFn = function(id) {
     const body = {
+      userId: id
     }
-    axios.post(`https://clean-chat.kumas.dev/api/friends/${id}`)
+    axios.post('https://clean-chat.kumas.dev/api/friends', body)
     .then(res => {
       console.log(res.data.message);
       axios.get('https://clean-chat.kumas.dev/api/friends')

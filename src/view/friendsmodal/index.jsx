@@ -8,14 +8,13 @@ function FriendsModal(props) {
 
     const history = useHistory(); 
     const { id } = useParams();
-    const idx = props.user.length - 1;
     return <div className="friends-modal">
         {
             props.user !== null ? 
             <section className="friends-profile">
             <div className="meta-info">
-                <img src={props.basicImg} alt={props.basicImg} />
-                <p>{props.user[idx].name}</p>
+                <img src={props.user[id].imagePath} alt={props.user[id].imagePath} />
+                <p>{props.user[id].name}</p>
             </div>
             <div className="btns">
                 <button onClick={()=>{
