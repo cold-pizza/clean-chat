@@ -28,13 +28,14 @@ function ChatingRoom(props) {
             setTalk({ ment: '' });
         }
     }
+    const userName = props.chatingRoom[id].chatUsers[0].name;
 
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
-        <p className="name">{props.chatingRoom[id].name}</p>
+        <p className="name">{userName}</p>
         <div></div>
         </nav>
         <section className="chating-form">
@@ -42,7 +43,7 @@ function ChatingRoom(props) {
                 <img src={props.basicImg} alt={props.basicImg} />
                 <div className="meta-info">
                     <div className="info">
-                        <p>{props.chatingRoom[id].name}</p>
+                        <p>{userName}</p>
                         <span className="comments">안녕하세요~</span>
                     </div>
                 </div>

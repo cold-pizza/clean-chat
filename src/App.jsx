@@ -138,6 +138,7 @@ function App() {
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
         basicImg={basicImg}
+        user={user}
         />
       </Route>
 

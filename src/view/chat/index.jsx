@@ -15,31 +15,31 @@ function Chat(props) {
     return <div className="chat">
         {
             props.chatingRoom !== null ?
-            props.chatingRoom.map(({ id, chatUsers })=>{
+            props.chatingRoom.map(({ chatUsers }, i)=>{
                 return <li>
             <div onClick={()=>{
-            props.history.push(`/chatingroom/${id-1}`);
+            props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">
                 <img src={props.basicImg} alt={props.basicImg} />
                 <div>
                     <p>{chatUsers[0].name}</p>
-                    <span>null</span>
+                    <span></span>
                 </div>
             </div>
             <i onClick={() => {
                 setChatRemoveSwitch(!chatRemoveSwitch);
-                setRemoveNum(id-1);
+                setRemoveNum(i);
             }} className="fas fa-minus minus"></i>
         </li>
             }) : <p className="no-chat-modal">채팅방이 없습니다.</p>
         }
         {
             chatRemoveSwitch ? <div className="chat-remove-modal">
-                <p className="chat-title">채팅방 이름</p>
-                <p>나가시겠습니까?</p>
+                <p className="chat-title">{props.chatingRoom[removeNum].chatUsers[0].name}</p>
+                <p>방을 나가시겠습니까?</p>
                 <div className="btns">
                     <button onClick={() => {
-                        chatRoomRemoveFn(removeNum);
+                        chatRoomRemoveFn(props.chatingRoom[removeNum].id);
                         setChatRemoveSwitch(!chatRemoveSwitch);
                     }}>Yes</button>
                     <button onClick={() => {
@@ -48,7 +48,6 @@ function Chat(props) {
                 </div>
             </div> : null
         }
-
     </div>
 }
 
