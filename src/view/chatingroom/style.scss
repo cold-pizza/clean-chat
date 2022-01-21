@@ -25,7 +25,7 @@
     /* 채팅란 */
     .chating-form {
         @include col;
-        height: 84.5%;
+        height: 79%;
         overflow: scroll;
         .you {
             @include row;

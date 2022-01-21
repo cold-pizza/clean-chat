@@ -14,7 +14,7 @@ function Chat(props) {
 
     return <div className="chat">
         {
-            props.chatingRoom !== null ?
+            props.chatingRoom.length !== 0 ?
             props.chatingRoom.map(({ chatUsers }, i)=>{
                 return <li>
             <div onClick={()=>{

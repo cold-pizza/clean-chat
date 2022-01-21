@@ -42,7 +42,6 @@ function App() {
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
   const [user, setUser] = useState(null);
-
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
     const routeLimitFn = function() {

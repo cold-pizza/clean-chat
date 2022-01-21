@@ -6,7 +6,7 @@ function SelectImage(props) {
         <p>이미지를 변경하시겠습니까?</p>
         <div className="img-btns">
             <button onClick={() => {
-                props.upLoadImg();
+                props.upLoadImgFn();
                 props.history.push('/myprofile');
             }}>Yes</button>
             <button onClick={() => {

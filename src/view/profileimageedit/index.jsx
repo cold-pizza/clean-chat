@@ -13,14 +13,13 @@ function ProfileImageEdit(props) {
     }
 
     // 불러온 이미지 url.
-    const [imgUrl, setImgUrl] = useState('');
+    const [imgUrl, setImgUrl] = useState(null);
 
     // 이미지 선택 모달 스위치.
     const [selectImgSwitch, setSelectImgSwitch] = useState(false);
 
     // input file dom.
     const imgFileRef = useRef(null);
-
     // 이미지 넣을 dom.
     const viewImg = useRef(null);
 
@@ -39,20 +38,25 @@ function ProfileImageEdit(props) {
         dataFile.append('img', upLoadFile);
 
         axios.post('https://clean-chat.kumas.dev/api/users/images', dataFile)
-        .then((res) => {
-            setImgUrl(`https://clean-chat.kumas.dev${res.data.result.imagePath}`);
-            
+        .then(async res => {
+            const url = `https://clean-chat.kumas.dev${res.data.result.imagePath}`;
 
-            console.log(res.data);
-            console.log('이미지 업로드 성공');
+            await console.log(res.data.message);
+            await localStorage.setItem('image', String(url));
+            await console.log('이미지 업로드 성공');
+            await setImgUrl(localStorage.getItem('image'));
         })
         .catch(err => {
+            console.log("이미지 업로드 에러");
             console.log(err);
         })
     }
     // 이미지 변경 함수.
-    const upLoadImg = function() {
-        axios.patch('https://clean-chat.kumas.dev/api/users')
+    const upLoadImgFn = function() {
+        const data = {
+            imagePath: imgUrl
+        }
+        axios.patch('https://clean-chat.kumas.dev/api/users', data)
         .then(res => {
             console.log("이미지가 " + res.data.message);
             const arr = { ...props.myAccount };
@@ -87,7 +91,7 @@ function ProfileImageEdit(props) {
             selectImgSwitch ?
             <SelectImage 
             history={props.history}
-            upLoadImg={upLoadImg} 
+            upLoadImgFn={upLoadImgFn} 
             viewImg={viewImg} 
             selectImgCancel={selectImgCancel} 
             /> : null
