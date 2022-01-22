@@ -1,3 +1,4 @@
+import React from 'react';
 import './style.scss';
 import logoutFn from '../../controller/logoutFn';
 
@@ -23,4 +24,4 @@ function Setting(props) {
     </div>
 }
 
-export default Setting;
+export default React.memo(Setting);

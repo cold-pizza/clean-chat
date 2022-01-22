@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import './style.scss';
 
 
@@ -8,7 +8,7 @@ function Search(props) {
 
     const searchOnChange = function(e) {
         setSearch(e.target.value);
-      }
+      };
     
     return <div className="search">
         <section className="search-form">
@@ -17,13 +17,13 @@ function Search(props) {
         </section>
         <ul>
             {
-            props.user.filter(user => {
+            props.user.filter(useCallback(user => {
                 if (search === '') {
                     return user;
                 } else if (user.name.includes(search)) {
                     return user;
                }
-            }).map(({ name, imagePath, id })=>{
+            }, [])).map(({ name, imagePath, id })=>{
                 return <li onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${id}`)
                 }}>

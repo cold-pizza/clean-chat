@@ -1,4 +1,5 @@
 import { Route } from 'react-router-dom';
+import React from 'react';
 import './style.scss';
 
 function Nav(props) {
@@ -27,7 +28,7 @@ function Nav(props) {
 
     return <div className="nav">
       {
-        navSite.map(({ site, title, id })=>{
+        navSite.map(({ site, title })=>{
           return (<>
           <Route path={site}>
           <div>{title}</div>
@@ -43,4 +44,4 @@ function Nav(props) {
     </div>
   }
 
-export default Nav;
+export default React.memo(Nav);

@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import './style.scss';
 import addChatingRoomFn from '../../controller/addChatingRoomFn';
 
 function FriendsModal(props) {
     const [chatingRoom, setChatingRoom] = useState([]);
+    // const userImg = props.user[id].imagePath;
 
     const history = useHistory(); 
     const { id } = useParams();
@@ -13,7 +14,7 @@ function FriendsModal(props) {
             props.user !== null ? 
             <section className="friends-profile">
             <div className="meta-info">
-                <img src={props.user[id].imagePath} alt={props.user[id].imagePath} />
+                <img src={props.basicImg} alt={props.basicImg} />
                 <p>{props.user[id].name}</p>
             </div>
             <div className="btns">
@@ -29,4 +30,4 @@ function FriendsModal(props) {
     </div>
 }
 
-export default FriendsModal;
+export default React.memo(FriendsModal);

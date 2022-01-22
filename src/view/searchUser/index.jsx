@@ -1,6 +1,5 @@
 import './style.scss';
-import { useState, useRef } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
@@ -22,10 +21,10 @@ function SearchUser(props) {
     const { userSearch } = searchInput;
 
     // input value.
-    const inputOnChange = function(e) {
+    const inputOnChange = useCallback(function(e) {
         const { name, value } = e.target;
         setSearchInput({ ...searchInput, [name]: value });
-    }
+    }, []);
     
 
   useEffect(()=> {
@@ -54,7 +53,7 @@ function SearchUser(props) {
                 listRefSwitch ? 
                 <li className="item">
                 <div className="meta-data">
-                <img src={searchList.imagePath} alt={searchList.imagePath} />
+                <img src={props.basicImg} alt={searchList.imagePath} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }

@@ -21,6 +21,9 @@ import './App.scss';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+// 에러 대비 로그아웃 import.
+// import logoutFn from './controller/logoutFn';
+
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -31,6 +34,7 @@ function App() {
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
     setUser(JSON.parse(localStorage.getItem('user')));
+    // logoutFn(history);
   }, []);
 
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
@@ -47,7 +51,7 @@ function App() {
     const routeLimitFn = function() {
       const host = window.location.host;
       const loginUrl = `${host}/clean-chat/`;
-      if (localStorage.length === 0 && window.location.href !== loginUrl) {
+      if (!localStorage.getItem('user') && window.location.href !== loginUrl) {
           alert('로그인시 이용 가능합니다.');
           history.replace('/');
           return false;
@@ -61,14 +65,15 @@ function App() {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
       alert('로그인을 원하시면 로그아웃하시기 바랍니다.');
       history.goBack();
+      return false;
     }
-  }, [])
+  }, []);
+
 
 
   return (
     <div className="App">
       <div className="app-box">
-        
         {/* 로그인 */}
       <Route exact path="/">
         <Login 
@@ -162,6 +167,7 @@ function App() {
       <Route path="/searchuser">
         <SearchUser
         history={history} 
+        basicImg={basicImg}
         />
       </Route>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
 
@@ -10,7 +10,7 @@ const { loginId, loginPs } = idInput;
 // 로그인 input.value
 const accountOnChange = function(e) {
     setIdInput({ ...idInput, [e.target.name]: e.target.value });
-  }
+  };
 
     return <div className="login">
         <h1>클린챗</h1>

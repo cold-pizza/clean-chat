@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './style.scss';
 import BasicImageModal from '../basicImageModal'
 import SelectImage from '../selectImage';
@@ -50,7 +50,7 @@ function ProfileImageEdit(props) {
             console.log("이미지 업로드 에러");
             console.log(err);
         })
-    }
+    };
     // 이미지 변경 함수.
     const upLoadImgFn = function() {
         const data = {
@@ -115,4 +115,4 @@ function ProfileImageEdit(props) {
     </div>
 }
 
-export default ProfileImageEdit;
+export default React.memo(ProfileImageEdit);

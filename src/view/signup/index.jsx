@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import './style.scss';
 
 import signupFn from '../../controller/signupFn';
-import changeGenderFn from '../../controller/changeGenderFn';
+// import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
+import React, { useCallback } from 'react';
 
 
 function Signup(props) {
@@ -19,9 +20,9 @@ function Signup(props) {
         imagePath: '' 
     });
     
-    const joinOnChange = function(e) {
+    const joinOnChange = useCallback(function(e) {
         setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
-      }
+      }, []);
     
     // 첫 렌더링시 성별.
     useEffect(()=>{
@@ -29,7 +30,7 @@ function Signup(props) {
         arr.gender = 'male';
         setJoinAccount(arr);
     }, [])
-    
+
     return <div className="signup">
         <h1>회원가입</h1>
         <div className="password-comment">
@@ -99,4 +100,4 @@ function Signup(props) {
     </div>
 }
 
-export default Signup;
+export default React.memo(Signup);

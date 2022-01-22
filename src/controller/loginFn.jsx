@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
   // 로그인 함수.
   const loginFn = function(loginId, loginPs, setIdInput, setMyAccount, setUser, history) {
     if (loginId === '') {
@@ -22,11 +23,11 @@ import axios from 'axios';
         password: loginPs
       }
       axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
-      .then(async res => {
+      .then(res => {
         console.log(res);
         const user = res.data.result;
         if (res.status === 200) {
-          await axios.get('https://clean-chat.kumas.dev/api/friends')
+          axios.get('https://clean-chat.kumas.dev/api/friends')
           .then(res => {
             console.log("친구가 " + res.data.message);
             console.log(res.data.result);
@@ -38,7 +39,7 @@ import axios from 'axios';
             console.log(err);
           });
 
-          await axios.get('https://clean-chat.kumas.dev/api/chats')
+          axios.get('https://clean-chat.kumas.dev/api/chats')
           .then(res => {
             console.log('채팅방이 ' + res.data.message);
             const cr = res.data.result;
@@ -54,7 +55,6 @@ import axios from 'axios';
           setMyAccount(item);
           localStorage.setItem('myInfo', JSON.stringify(item));
           setIdInput({ loginId: '', loginPs: '' });
-          setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
           console.log(res.data.message);
           history.push('/friends');
         }
@@ -64,6 +64,6 @@ import axios from 'axios';
         alert('이메일 또는 비밀번호를 다시 입력해주세요.');
       }) 
     }
-  }
+  };
 
 export default loginFn

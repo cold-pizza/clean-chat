@@ -10,15 +10,18 @@ const addChatingRoomFn = function(id, user, history) {
     const room = res.data.result;
     console.log(res.data.message);
     const item = localStorage.getItem('chatingRoom');
-    if (JSON.parse(item) !== null) {
-      const cr = [...item, room];
+    if (item !== null) {
+      const cr = [...JSON.parse(item), room];
       localStorage.setItem('chatingRoom', JSON.stringify(cr));
     } else {
       localStorage.setItem('chatingRoom', JSON.stringify(room));
     }
     history.push(`/chatingroom/${id}`);
   })
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.log(err);
+    console.log("채팅방 생성 에러");
+  });
   }
   
 // export friendsmodal

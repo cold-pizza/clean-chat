@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
 
@@ -14,7 +15,7 @@ function Chat(props) {
 
     return <div className="chat">
         {
-            props.chatingRoom.length !== 0 ?
+            props.chatingRoom !== null ?
             props.chatingRoom.map(({ chatUsers }, i)=>{
                 return <li>
             <div onClick={()=>{
@@ -52,4 +53,4 @@ function Chat(props) {
 }
 
 
-export default Chat;
+export default React.memo(Chat);

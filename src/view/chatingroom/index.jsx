@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { useParams } from 'react-router';
 import { useState } from 'react/cjs/react.development';
 import './style.scss';
@@ -75,4 +76,4 @@ function ChatingRoom(props) {
     </div>
 }
 
-export default ChatingRoom;
+export default React.memo(ChatingRoom);

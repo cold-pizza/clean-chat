@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import nameChangeFn from '../../controller/nameChangeFn';
 import NameInput from '../nameInput';
 import './style.scss';
@@ -68,4 +68,4 @@ function MyProfile(props) {
 
 
 
-export default MyProfile;
+export default React.memo(MyProfile);
