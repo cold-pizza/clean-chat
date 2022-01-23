@@ -1,14 +1,29 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { useState } from 'react/cjs/react.development';
 import './style.scss';
 
+import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
+import onKeyDownCreateChat from '../../controller/onKeyDownCreateChatFn';
+import createChatContent from '../../controller/createChatContentFn';
+
+
 function ChatingRoom(props) {
+
+
     const { id } = useParams();
 
-    const [chatComments, setChatComments] = useState([{ ment: ''}]);
+    useEffect(() => {
+        chatMsgSearchFn(props.chatingRoom[id].id);
+        const chatContent = JSON.parse(localStorage.getItem('chatContents'));
+        setChatComments(chatContent);
+    }, [])
 
+
+    // 나의 채팅 내용.
+    const [chatComments, setChatComments] = useState(null);
+
+    // input 이벤트 내용.
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
 
@@ -16,19 +31,6 @@ function ChatingRoom(props) {
         setTalk({...talk, [e.target.name]: e.target.value})
     }
 
-    const onCreateChat = function() {
-        const item = {ment};
-        setChatComments([...chatComments, item]);
-        setTalk({ ment: '' });
-    }
-    const onKeyDownCreateChat = function() {
-        const enter = 13;
-        if (window.event.keyCode === enter) {
-            const item = {ment};
-            setChatComments([...chatComments, item]);
-            setTalk({ ment: '' });
-        }
-    }
     const userName = props.chatingRoom[id].chatUsers[0].name;
 
     return <div className="chating-room">
@@ -51,6 +53,7 @@ function ChatingRoom(props) {
                     <p className="times"></p>
             </div>
             {
+                chatComments ?
                 chatComments.map(({ ment })=>{
                        return <div className="me">
                            {
@@ -63,15 +66,25 @@ function ChatingRoom(props) {
                             }
                         </div>
                     
-                })
+                }) : null
             }
             
         </section>
         <div className="chating-input">
-        <input onChange={chatingOnChange} onKeyDown={onKeyDownCreateChat} value={ment} name="ment" id="chating" type="text" />
-        <button><i onClick={()=>{
-            onCreateChat();
-        }} className="fas fa-arrow-up"></i></button>
+        <input 
+        onChange={chatingOnChange} 
+        onKeyDown={onKeyDownCreateChat(props.chatingRoom[id].id)} 
+        value={ment} 
+        name="ment" 
+        id="chating" 
+        type="text" 
+        />
+        <button>
+            <i 
+            onClick={()=>{
+            createChatContent(props.chatingRoom[id].id, ment);
+        }} className="fas fa-arrow-up"></i>
+        </button>
         </div>
     </div>
 }

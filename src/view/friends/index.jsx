@@ -1,6 +1,8 @@
 import './style.scss';
 import React, { useEffect } from 'react';
 
+// import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
+
 function Friends(props) {
     // const imgUrl = "https://clean-chat.kumas.dev/api/users/images/";
     // useEffect(() => {
@@ -17,7 +19,7 @@ function Friends(props) {
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
-        
+        // chatMsgSearchFn(6);
       }, [])
 
     return <div className="friends">
