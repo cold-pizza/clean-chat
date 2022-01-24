@@ -3,7 +3,7 @@ import axios from 'axios';
     const onKeyDownCreateChat = function(id) {
         const enter = 13;
         if (window.event.keyCode === enter) {
-            axios.post(`https://clean-chat.kumas.dev/api/chats/${id}/messages`)
+            axios.post(`${axios.defaults.baseURL}/api/chats/${id}/messages`)
         .then(res => {
             console.log(res.data.message);
             console.log(res);

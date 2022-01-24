@@ -6,7 +6,7 @@ const basicImgChangeFn = function(myAccount, setMyAccount, basicImg) {
         const data = {
             imagePath: basicImg
         }
-        axios.patch('https://clean-chat.kumas.dev/api/users', data)
+        axios.patch(`${axios.defaults.baseURL}/api/users`, data)
         .then(res => {
             console.log(res.data.message);
             const arr = { ...myAccount };

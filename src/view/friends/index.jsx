@@ -19,7 +19,7 @@ function Friends(props) {
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
-        // chatMsgSearchFn(6);
+        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
       }, [])
 
     return <div className="friends">

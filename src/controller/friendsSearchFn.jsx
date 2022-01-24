@@ -3,7 +3,7 @@ import axios from 'axios';
 
  // 친구 검색 요청 함수.
  const friendsSearchFn = function(id, setSearchList) {
-    axios.get(`https://clean-chat.kumas.dev/api/users/id/${id}`, { withCredentials: true })
+    axios.get(`${axios.defaults.baseURL}/api/users/id/${id}`, { withCredentials: true })
     .then(res => {
         console.log(res.data.message);
         console.log(res.data.result);

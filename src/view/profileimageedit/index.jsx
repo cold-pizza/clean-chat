@@ -37,14 +37,14 @@ function ProfileImageEdit(props) {
         const upLoadFile = e.target.files[0];
         dataFile.append('img', upLoadFile);
 
-        axios.post('https://clean-chat.kumas.dev/api/users/images', dataFile)
-        .then(async res => {
-            const url = `https://clean-chat.kumas.dev${res.data.result.imagePath}`;
+        axios.post(`${axios.defaults.baseURL}/api/users/images`, dataFile)
+        .then(res => {
+            const url = `${axios.defaults.baseURL}${res.data.result.imagePath}`;
 
-            await console.log(res.data.message);
-            await localStorage.setItem('image', String(url));
-            await console.log('이미지 업로드 성공');
-            await setImgUrl(localStorage.getItem('image'));
+            console.log(res.data.message);
+            localStorage.setItem('image', String(url));
+            console.log('이미지 업로드 성공');
+            setImgUrl(localStorage.getItem('image'));
         })
         .catch(err => {
             console.log("이미지 업로드 에러");
@@ -53,16 +53,16 @@ function ProfileImageEdit(props) {
     };
     // 이미지 변경 함수.
     const upLoadImgFn = function() {
-        const data = {
-            imagePath: imgUrl
-        }
-        axios.patch('https://clean-chat.kumas.dev/api/users', data)
-        .then(res => {
-            console.log("이미지가 " + res.data.message);
-            const arr = { ...props.myAccount };
+        const arr = { ...props.myAccount };
             arr.imagePath = imgUrl;
             localStorage.setItem('myInfo', JSON.stringify(arr));
             props.setMyAccount(arr);
+        const data = {
+            imagePath: localStorage.getItem('image')
+        }
+        axios.patch(`${axios.defaults.baseURL}/api/users`, data)
+        .then(res => {
+            console.log("이미지가 " + res.data.message);
             setSelectImgSwitch(!selectImgSwitch);
         })
     }
@@ -109,9 +109,7 @@ function ProfileImageEdit(props) {
                 props.history.goBack();
             }} type="button">취소</button>
         </div>
-        <form action="https://clean-chat.kumas.dev/api/users/images" method="POST">
         <input type="file" id="image-file" ref={imgFileRef} onChange={selectImg} />
-        </form>
     </div>
 }
 

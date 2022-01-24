@@ -1,8 +1,17 @@
 import axios from 'axios';
+import chatMsgSearchFn from './chatMsgSearchFn';
 
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs, setIdInput, setMyAccount, setUser, history) {
+  const loginFn = function(
+    loginId, 
+    loginPs, 
+    setIdInput, 
+    setMyAccount, 
+    setUser, 
+    chatingRoom,
+    setChatingRoom, 
+    history) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;
@@ -22,12 +31,12 @@ import axios from 'axios';
         email: loginId, 
         password: loginPs
       }
-      axios.post('https://clean-chat.kumas.dev/api/auth/login', data)
+      axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
       .then(res => {
         console.log(res);
         const user = res.data.result;
         if (res.status === 200) {
-          axios.get('https://clean-chat.kumas.dev/api/friends')
+          axios.get(`${axios.defaults.baseURL}/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
             console.log(res.data.result);
@@ -39,11 +48,12 @@ import axios from 'axios';
             console.log(err);
           });
 
-          axios.get('https://clean-chat.kumas.dev/api/chats')
+          axios.get(`${axios.defaults.baseURL}/api/chats`)
           .then(res => {
             console.log('채팅방이 ' + res.data.message);
             const cr = res.data.result;
             localStorage.setItem('chatingRoom', JSON.stringify(cr));
+            setChatingRoom(cr);
           })
           .catch(err => {
             console.log('채팅방 에러');
@@ -58,6 +68,8 @@ import axios from 'axios';
           console.log(res.data.message);
           history.push('/friends');
         }
+
+        chatMsgSearchFn(chatingRoom);
       })
       .catch(err => {
         console.log(err);

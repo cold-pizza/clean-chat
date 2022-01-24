@@ -23,10 +23,11 @@ import axios from 'axios';
 
 // 에러 대비 로그아웃 import.
 // import logoutFn from './controller/logoutFn';
-
+import msgRemoveFn from './controller/msgRemoveFn';
 
 // CORS 처리
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
   const history = useHistory();
@@ -35,11 +36,15 @@ function App() {
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
     setUser(JSON.parse(localStorage.getItem('user')));
     // logoutFn(history);
+    // msgRemoveFn(7, 15, null);
   }, []);
 
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
   
   const [chatingRoom, setChatingRoom] = useState(null);
+
+      // 나의 채팅 내용.
+  const [chatComments, setChatComments] = useState(null);
 
   const [myAccount, setMyAccount] = useState(null);
 
@@ -81,6 +86,8 @@ function App() {
         setMyAccount={setMyAccount}
         setUser={setUser}
         basicImg={basicImg}
+        chatingRoom={chatingRoom}
+        setChatingRoom={setChatingRoom}
         />
       </Route>
 
@@ -143,6 +150,7 @@ function App() {
         setChatingRoom={setChatingRoom}
         basicImg={basicImg}
         user={user}
+        setChatComments={setChatComments}
         />
       </Route>
 
@@ -150,8 +158,11 @@ function App() {
       <Route path="/chatingroom/:id">
         <ChatingRoom 
         chatingRoom={chatingRoom} 
+        setChatingRoom={setChatingRoom}
         history={history} 
         basicImg={basicImg}
+        chatComments={chatComments}
+        setChatComments={setChatComments}
         />
       </Route>
 

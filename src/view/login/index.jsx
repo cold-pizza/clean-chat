@@ -38,6 +38,8 @@ const accountOnChange = function(e) {
                     setIdInput, 
                     props.setMyAccount, 
                     props.setUser,
+                    props.chatingRoom,
+                    props.setChatingRoom,
                     props.history
                     );
             }} className="login-btn" type="submit">로그인</button>

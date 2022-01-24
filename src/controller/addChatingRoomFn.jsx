@@ -5,7 +5,7 @@ const addChatingRoomFn = function(id, user, history) {
   const body = {
     userId: user[id].id
   }
-  axios.post('https://clean-chat.kumas.dev/api/chats', body)
+  axios.post(`${axios.defaults.baseURL}/api/chats`, body)
   .then(res => {
     const room = res.data.result;
     console.log(res.data.message);

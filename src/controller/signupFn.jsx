@@ -21,12 +21,12 @@ import React from 'react';
     if (password !== psCheck) {
       alert('비밀번호가 일치하지 않습니다.');
     } else {
-      axios.get(`https://clean-chat.kumas.dev/api/users/email/${id}`)
+      axios.get(`${axios.defaults.baseURL}/api/users/email/${id}`)
       .then(() => {
         alert('중복된 이메일입니다.');
       })
       .catch(() => {
-        axios.post('https://clean-chat.kumas.dev/api/users', {name, email: id, password, gender }, { withCredentials: true })
+        axios.post(`${axios.defaults.baseURL}/api/users`, {name, email: id, password, gender }, { withCredentials: true })
         .then((res)=>{
           console.log(res);
           console.log('회원가입 성공.');
