@@ -10,8 +10,7 @@ const chatMsgSearchFn = function(chatingRoom) {
             localStorage.setItem(`chatContents_${i}`, JSON.stringify(chatContents.reverse()));
         })
         .catch(err => {
-            console.log(err);
-            console.log('채팅조회 에러');
+            console.log("채팅조회 에러\n" + err);
         })
     }
 }

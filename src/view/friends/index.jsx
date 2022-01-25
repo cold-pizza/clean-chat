@@ -3,25 +3,23 @@ import React, { useEffect } from 'react';
 
 // import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
 
-function Friends(props) {
-    // const imgUrl = "https://clean-chat.kumas.dev/api/users/images/";
-    // useEffect(() => {
-    //   const item = JSON.parse(localStorage.getItem('user'));
-    //   for (let i = 0; i < item.length; i++) {
-    //       if (item[i].imagePath === '') {
-    //           item[i].imagePath = props.basicImg;
-    //           props.setUser(item);
-    //       }
-    //   }
-    //   localStorage.setItem('user', JSON.stringify(item));
-    // }, [])
-    
+function Friends(props) {    
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-        props.setUser(JSON.parse(localStorage.getItem('user')));
-        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-      }, [])
+        return console.log('내 계정이 업데이트 되었습니다.');
+      }, []);
 
+    useEffect(() => {
+        props.setUser(JSON.parse(localStorage.getItem('user')));
+        return console.log('친구리스트가 업데이트 되었습니다');
+    }, []);
+
+    useEffect(() => {
+        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        return console.log('채팅방이 업데이트 되었습니다');
+    }, []);
+
+console.log(props.myAccount.imagePath)
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');

@@ -3,7 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import './style.scss';
 
-import createChatContent from '../../controller/createChatContentFn';
+import createChatContent from '../../controller/createMsgFn';
+import createMsgFn from '../../controller/createMsgFn';
+import msgSearchFn from '../../controller/msgSearchFn';
 
 function ChatingRoom(props) {
     const { id } = useParams();
@@ -20,12 +22,13 @@ function ChatingRoom(props) {
     const { ment } = talk;
 
     const chatingOnChange = function(e) {
-        setTalk({...talk, [e.target.name]: e.target.value})
+        setTalk({...talk, [e.target.name]: e.target.value});
     }
 
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{
+            msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
         <p className="name">{props.chatingRoom[id].chatUsers[0].name}</p>
@@ -72,7 +75,13 @@ function ChatingRoom(props) {
         <button>
             <i 
             onClick={()=>{
-            createChatContent(props.chatingRoom[id].id, ment, setTalk, props.chatComments, props.setChatComments);
+            createMsgFn(
+                props.chatingRoom[id].id, 
+                ment, 
+                setTalk, 
+                props.chatComments, 
+                props.setChatComments
+                );
         }} className="fas fa-arrow-up"></i>
         </button>
         </div>

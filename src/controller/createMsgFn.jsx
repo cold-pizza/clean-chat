@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-    const createChatContent = function(id, ment, setTalk, chatComments, setChatComments) {
+    const createMsgFn = function(id, ment, setTalk, chatComments, setChatComments) {
         const data = {
             message: ment
         }
@@ -12,17 +12,19 @@ import axios from 'axios';
             axios.get(`${axios.defaults.baseURL}/api/chats/${id}/messages`)
             .then(res => {
                 console.log(res.data.message);
-                console.log(res.data.result);
+                console.log(res.data.result[0].ChatContents[0]);
+                setChatComments([...chatComments, res.data.result[0].ChatContents[0]]);
+                setTalk({ ment: '' });
             })
-            .catch(console.log)
+            .catch(err => {
+                console.log(err);
+                console.log('메시지 조회 에러');
+            })
         })
         .catch(err => {
             console.log(err);
-            console.log('메세지 전송 에러');
+            console.log('메시지 전송 에러');
         })
-        
-        setChatComments([...chatComments, ment]);
-        setTalk({ ment: '' });
     };
 
-    export default createChatContent
+export default createMsgFn

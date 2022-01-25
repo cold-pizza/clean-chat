@@ -1,11 +1,11 @@
 import axios from "axios"
 
 
-const msgRemoveFn = function(chatId, msgId, msg) {
-    const data = {
-        message: msg
-    }
-    axios.post(`${axios.defaults.baseURL}/api/chats/${chatId}/messages/${msgId}`, data)
+const msgRemoveFn = function(chatId, msgId) {
+    // const data = {
+    //     message: msg
+    // }
+    axios.post(`${axios.defaults.baseURL}/api/chats/${chatId}/messages/${msgId}`)
     .then(res => {
         console.log(res.data.message);
     })

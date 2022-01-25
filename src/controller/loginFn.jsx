@@ -31,11 +31,15 @@ import chatMsgSearchFn from './chatMsgSearchFn';
         email: loginId, 
         password: loginPs
       }
+
+      // 로그인 요청.
       axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
       .then(res => {
-        console.log(res);
         const user = res.data.result;
+        user.imagePath = `${axios.defaults.baseURL + res.data.result.imagePath}`;
+        console.log(user);
         if (res.status === 200) {
+          // 친구리스트 요청.
           axios.get(`${axios.defaults.baseURL}/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
@@ -48,6 +52,7 @@ import chatMsgSearchFn from './chatMsgSearchFn';
             console.log(err);
           });
 
+          // 채팅방 요청.
           axios.get(`${axios.defaults.baseURL}/api/chats`)
           .then(res => {
             console.log('채팅방이 ' + res.data.message);
@@ -59,11 +64,9 @@ import chatMsgSearchFn from './chatMsgSearchFn';
             console.log('채팅방 에러');
             console.log(err);
           })
-          
-          const item = { ...user };
-          item.imagePath = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
-          setMyAccount(item);
-          localStorage.setItem('myInfo', JSON.stringify(item));
+          // 내 계정 업로드.
+          setMyAccount(user);
+          localStorage.setItem('myInfo', JSON.stringify(user));
           setIdInput({ loginId: '', loginPs: '' });
           console.log(res.data.message);
           history.push('/friends');

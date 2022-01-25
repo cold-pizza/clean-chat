@@ -39,12 +39,11 @@ function ProfileImageEdit(props) {
 
         axios.post(`${axios.defaults.baseURL}/api/users/images`, dataFile)
         .then(res => {
-            const url = `${axios.defaults.baseURL}${res.data.result.imagePath}`;
-
-            console.log(res.data.message);
+            const url = res.data.result.imagePath;
+            // console.log(url);
             localStorage.setItem('image', String(url));
-            console.log('이미지 업로드 성공');
             setImgUrl(localStorage.getItem('image'));
+            console.log("이미지가 " + res.data.message);
         })
         .catch(err => {
             console.log("이미지 업로드 에러");
@@ -54,13 +53,14 @@ function ProfileImageEdit(props) {
     // 이미지 변경 함수.
     const upLoadImgFn = function() {
         const arr = { ...props.myAccount };
-            arr.imagePath = imgUrl;
+            arr.imagePath = axios.defaults.baseURL + imgUrl;
             localStorage.setItem('myInfo', JSON.stringify(arr));
             props.setMyAccount(arr);
-        const data = {
-            imagePath: localStorage.getItem('image')
+            // console.log(imgUrl);
+        const body = {
+            imagePath: imgUrl
         }
-        axios.patch(`${axios.defaults.baseURL}/api/users`, data)
+        axios.patch(`${axios.defaults.baseURL}/api/users`, body)
         .then(res => {
             console.log("이미지가 " + res.data.message);
             setSelectImgSwitch(!selectImgSwitch);
