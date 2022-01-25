@@ -1,4 +1,5 @@
 import './style.scss';
+import upLoadImgFn from '../../controller/upLoadImgFn';
 
 function SelectImage(props) {
     return <section className="select-image">
@@ -6,7 +7,13 @@ function SelectImage(props) {
         <p>이미지를 변경하시겠습니까?</p>
         <div className="img-btns">
             <button onClick={() => {
-                props.upLoadImgFn();
+                upLoadImgFn(
+                    props.imgUrl, 
+                    props.myAccount, 
+                    props.setMyAccount, 
+                    props.selectImgswitch, 
+                    props.setSelectImgSwitch
+                    );
                 props.history.push('/myprofile');
             }}>Yes</button>
             <button onClick={() => {

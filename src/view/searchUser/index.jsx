@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
+import inputOnChange from '../../controller/inputOnChange';
 
 function SearchUser(props) {
     // 리스트 지정.
@@ -20,13 +21,6 @@ function SearchUser(props) {
     const [searchInput, setSearchInput] = useState({ userSearch:'' });
     const { userSearch } = searchInput;
 
-    // input value.
-    const inputOnChange = useCallback(function(e) {
-        const { name, value } = e.target;
-        setSearchInput({ ...searchInput, [name]: value });
-    }, []);
-    
-
   useEffect(()=> {
       if (searchList !== null) {
           if (listRefSwitch === false) {
@@ -39,7 +33,7 @@ function SearchUser(props) {
     return <div className="search-email">
         <div className="search-form">
         <input 
-        onChange={inputOnChange}
+        onChange={(e) => inputOnChange(e, searchInput, setSearchInput)}
         name="userSearch" 
         type="text" 
         placeholder="번호(id)를 입력해주세요" 

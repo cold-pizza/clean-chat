@@ -4,6 +4,7 @@ import './style.scss';
 import signupFn from '../../controller/signupFn';
 // import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
+import joinOnChange from '../../controller/joinOnChange';
 import React, { useCallback } from 'react';
 
 
@@ -20,10 +21,6 @@ function Signup(props) {
         imagePath: '' 
     });
     
-    const joinOnChange = useCallback(function(e) {
-        setJoinAccount({ ...joinAccount, [e.target.name]: e.target.value })
-      }, []);
-    
     // 첫 렌더링시 성별.
     useEffect(()=>{
         const arr = { ...joinAccount }
@@ -39,7 +36,7 @@ function Signup(props) {
         </div>
         <section id="signup-form">
             <input 
-            onChange={joinOnChange} 
+            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
             name="name" 
             type="text" 
             id="name" 
@@ -47,7 +44,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={joinOnChange} 
+            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
             name="id" 
             type="email" 
             id="email" 
@@ -55,7 +52,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={joinOnChange} 
+            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
             name="password" 
             type="password" 
             id="password" 
@@ -63,7 +60,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={joinOnChange} 
+            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
             type="password" 
             name="psCheck" 
             placeholder="비밀번호 확인" 

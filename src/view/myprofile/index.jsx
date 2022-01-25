@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import nameChangeFn from '../../controller/nameChangeFn';
+import nameOnChange from '../../controller/nameOnChange';
 import NameInput from '../nameInput';
 import './style.scss';
 
@@ -16,13 +17,7 @@ function MyProfile(props) {
   }, [])
 
   // 입력받은 닉네임.
-  const [nickNameEdit, setNickNameEdit] = useState('');
-
-    // 변경할 이름 input.value 받아오는 함수.
-    const nameOnChange = function(e) {
-        setNickNameEdit({ ...nickNameEdit, [e.target.name]: e.target.value })
-      };
-    
+  const [nickNameEdit, setNickNameEdit] = useState('');    
 
     return <div className="my-profiles">
         <main>
@@ -40,7 +35,10 @@ function MyProfile(props) {
         }} className="fas fa-check"></i> }
             </nav>
 
-        { onNameInput ? <NameInput nameOnChange={nameOnChange} name={props.myAccount.name} /> : null }
+        { onNameInput ? 
+        <NameInput 
+        nameOnChange={(e) => nameOnChange(e, nickNameEdit, setNickNameEdit)} 
+        name={props.myAccount.name} /> : null }
         <section>
             <img src={props.myAccount.imagePath} alt={props.myAccount.imagePath} />
 

@@ -1,18 +1,14 @@
 import { useState, useCallback } from 'react';
+import searchOnChange from '../../controller/searchOnChange';
 import './style.scss';
 
 
 function Search(props) {
-
     const [search, setSearch] = useState('');
 
-    const searchOnChange = function(e) {
-        setSearch(e.target.value);
-      };
-    
     return <div className="search">
         <section className="search-form">
-        <input value={search} onChange={searchOnChange} type="text" placeholder="검색" />
+        <input value={search} onChange={(e) => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
         <i className="fas fa-times cancel-btn"></i>
         </section>
         <ul>

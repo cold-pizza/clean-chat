@@ -4,7 +4,6 @@ import './style.scss';
 import addChatingRoomFn from '../../controller/addChatingRoomFn';
 
 function FriendsModal(props) {
-    const [chatingRoom, setChatingRoom] = useState([]);
     // const userImg = props.user[id].imagePath;
 
     const history = useHistory(); 
@@ -19,7 +18,7 @@ function FriendsModal(props) {
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    addChatingRoomFn(id, props.user, chatingRoom, setChatingRoom, history);
+                    addChatingRoomFn(id, props.user, props.chatingRoom, props.setChatingRoom, history);
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
                     history.goBack();

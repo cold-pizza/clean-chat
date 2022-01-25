@@ -21,7 +21,8 @@ import './App.scss';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-// 에러 대비 로그아웃 import.
+// 강제 로그아웃 하기
+// import⬇️, line78번 열기.
 // import logoutFn from './controller/logoutFn';
 
 import msgRemoveFn from './controller/msgRemoveFn';
@@ -230,6 +231,8 @@ function App() {
         history={history} 
         user={user} 
         basicImg={basicImg}
+        chatingRoom={chatingRoom}
+        setChatingRoom={setChatingRoom}
         />
       </Route>
 

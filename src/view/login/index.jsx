@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
+import accountOnChange from '../../controller/accountOnChange';
 
 function Login(props) {
 
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 
-// 로그인 input.value
-const accountOnChange = function(e) {
-    setIdInput({ ...idInput, [e.target.name]: e.target.value });
-  };
-
     return <div className="login">
         <h1>클린챗</h1>
         <section id="login-form" action="#">
             <input 
-            onChange={accountOnChange} 
+            onChange={(e) => accountOnChange(e, idInput, setIdInput)} 
             name="loginId" 
             value={props.loginId}
             className="email" 
@@ -24,7 +20,7 @@ const accountOnChange = function(e) {
             placeholder="이메일" 
             />
             <input 
-            onChange={accountOnChange}  
+            onChange={(e) => accountOnChange(e, idInput, setIdInput)}  
             name="loginPs" 
             value={props.loginPs}
             className="password" 

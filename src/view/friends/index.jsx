@@ -19,7 +19,7 @@ function Friends(props) {
         return console.log('채팅방이 업데이트 되었습니다');
     }, []);
 
-console.log(props.myAccount.imagePath)
+
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
