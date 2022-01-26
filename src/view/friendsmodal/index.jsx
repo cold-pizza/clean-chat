@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import './style.scss';
 import addChatingRoomFn from '../../controller/addChatingRoomFn';
+import axios from 'axios';
 
 function FriendsModal(props) {
-    // const userImg = props.user[id].imagePath;
-
     const history = useHistory(); 
     const { id } = useParams();
     return <div className="friends-modal">
@@ -13,12 +12,16 @@ function FriendsModal(props) {
             props.user !== null ? 
             <section className="friends-profile">
             <div className="meta-info">
-                <img src={props.basicImg} alt={props.basicImg} />
+                <img 
+                src={props.user[id].imagePath !== '' ? axios.defaults.baseURL + props.user[id].imagePath : props.basicImg} 
+                alt={props.user[id].imagePath !== '' ? axios.defaults.baseURL + props.user[id].imagePath : props.basicImg} 
+                />
                 <p>{props.user[id].name}</p>
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    addChatingRoomFn(id, props.user, props.chatingRoom, props.setChatingRoom, history);
+                    addChatingRoomFn(id, props.user, props.chatingRoom, props.setChatingRoom);
+                    history.push(`/chatingroom/${id}`);
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
                     history.goBack();

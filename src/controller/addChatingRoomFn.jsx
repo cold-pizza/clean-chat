@@ -16,7 +16,6 @@ const addChatingRoomFn = function(id, user, history) {
     } else {
       localStorage.setItem('chatingRoom', JSON.stringify(room));
     }
-    history.push(`/chatingroom/${id}`);
   })
   .catch(err => {
     console.log(err);

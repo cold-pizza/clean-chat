@@ -69,7 +69,12 @@ function ProfileImageEdit(props) {
                 props.history.goBack();
             }} type="button">취소</button>
         </div>
-        <input type="file" id="image-file" ref={imgFileRef} onChange={(e)=> selectImgFn(e, viewImg, setImgUrl)} />
+        <input 
+        type="file" 
+        id="image-file" 
+        ref={imgFileRef} 
+        onChange={(e)=> selectImgFn(e, viewImg, setImgUrl)} 
+        />
     </div>
 }
 

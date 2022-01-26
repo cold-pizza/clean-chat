@@ -3,20 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import './style.scss';
 
-import createChatContent from '../../controller/createMsgFn';
 import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
 
 function ChatingRoom(props) {
     const { id } = useParams();
+    const [otherChat, setOtherChat] = useState(null);
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        const chatContent = JSON.parse(localStorage.getItem(`chatContents_${id}`));
+        const chatContent = JSON.parse(localStorage.getItem(`myChatContents_${id}`));
         props.setChatComments(chatContent);
+        setOtherChat(JSON.parse(localStorage.getItem(`otherChatContents_${id}`)));
+        console.log(otherChat)
     }, [])
 
-
+    
     // input 이벤트 내용.
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
@@ -35,16 +37,22 @@ function ChatingRoom(props) {
         <div></div>
         </nav>
         <section className="chating-form">
-            <div className="you">
-                <img src={props.basicImg} alt={props.basicImg} />
-                <div className="meta-info">
+            {
+                otherChat !== null ? 
+                otherChat.map(({ content, User }) => {
+                    return <div className="you">
+                    <img src={props.basicImg} alt={props.basicImg} />
+                    <div className="meta-info">
                     <div className="info">
-                        <p>{props.chatingRoom[id].chatUsers[0].name}</p>
-                        <span className="comments">안녕하세요~</span>
+                    <p>{User.name}</p>
+                    <span className="comments">{content}</span>
                     </div>
-                </div>
+                    </div>
                     <p className="times"></p>
-            </div>
+                
+                    </div>
+                }) : null}
+                    
             {
                 props.chatComments !== null ?
                 props.chatComments.map(({ content })=>{

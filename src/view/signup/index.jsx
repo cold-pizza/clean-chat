@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './style.scss';
 
 import signupFn from '../../controller/signupFn';
 // import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
 import joinOnChange from '../../controller/joinOnChange';
-import React, { useCallback } from 'react';
 
 
 function Signup(props) {
@@ -20,7 +19,7 @@ function Signup(props) {
         gender: '', 
         imagePath: '' 
     });
-    
+    console.log(joinAccount)
     // 첫 렌더링시 성별.
     useEffect(()=>{
         const arr = { ...joinAccount }

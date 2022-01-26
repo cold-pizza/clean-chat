@@ -15,6 +15,7 @@ import ChatingRoom from './view/chatingroom';
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
 import Action from './view/action';
+import ChatModal from './view/chatModal';
 import './App.scss';
 
 // 라이브러리
@@ -22,10 +23,8 @@ import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // 강제 로그아웃 하기
-// import⬇️, line78번 열기.
+// import⬇️, line80~86사이 logoutFn() 열기.
 // import logoutFn from './controller/logoutFn';
-
-import msgRemoveFn from './controller/msgRemoveFn';
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -36,13 +35,16 @@ function App() {
 
 
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
+
+  const [chatAlarmSwitch, setChatAlarmSwitch] = useState(false);
   
   const [chatingRoom, setChatingRoom] = useState(null);
 
       // 나의 채팅 내용.
   const [chatComments, setChatComments] = useState(null);
-
+// console.log(chatComments);
   const [myAccount, setMyAccount] = useState(null);
+
 
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
@@ -58,7 +60,7 @@ function App() {
           return alert('로그인시 이용 가능합니다.');
         }
     }
-    routeLimitFn();
+    return routeLimitFn();
   }, [])
 
   // 로그인 중 다시 로그인 화면 돌아가기 방지.
@@ -69,13 +71,24 @@ function App() {
     }
   }, []);
 
+  // const deleteChatContent = function() {
+  //   const chatId = 12;
+  //   const msgId = 34;
+  //   axios.delete(`${axios.defaults.baseURL}/chats/${chatId}/messages/${msgId}`, { withCredentials: true })
+  //   .then(res => {
+  //     console.log(res);
+  //   })
+  //   .catch(err => console.log(err));
+  // }
+
   // 내 프로필 자동 업데이트.
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
     setUser(JSON.parse(localStorage.getItem('user')));
-    return console.log('친구리스트, 내 계정 업데이트');
     // 강제 로그아웃 해야할 때⬇️
     // logoutFn(history);
+    // deleteChatContent();
+    return console.log('친구리스트, 내 계정 업데이트');
     // msgRemoveFn(7, 14);
   }, []);
 
@@ -163,6 +176,7 @@ function App() {
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
+        myAccount={myAccount}
         history={history} 
         basicImg={basicImg}
         chatComments={chatComments}
@@ -226,6 +240,7 @@ function App() {
         />
       </Route>
 
+      {/* 친구프로필 */}
       <Route path="/friends/friendsmodal/:id">
         <FriendsModal 
         history={history} 
@@ -235,6 +250,9 @@ function App() {
         setChatingRoom={setChatingRoom}
         />
       </Route>
+
+      {/* 채팅알림창 */}
+      <ChatModal style={{ display: chatAlarmSwitch ? "block" : "none" }} basicImg ={basicImg} />
 
       </div>
     </div>

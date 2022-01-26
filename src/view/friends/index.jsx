@@ -1,4 +1,5 @@
 import './style.scss';
+import axios from 'axios';
 import React, { useEffect } from 'react';
 
 // import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
@@ -38,7 +39,10 @@ function Friends(props) {
                 <li onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
-                    <img src={props.basicImg} alt={props.basicImg} />
+                    <img 
+                    src={imagePath !== "" ? axios.defaults.baseURL + imagePath : props.basicImg} 
+                    alt={imagePath !== "" ? axios.defaults.baseURL + imagePath : props.basicImg} 
+                    />
                     <p>{name}</p>
                 </li>
                 )

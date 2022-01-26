@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react';
 
   // 회원가입 함수.
   const signupFn = function(joinAccount, setJoinAccount, history) {
@@ -40,4 +39,4 @@ import React from 'react';
     }
   }
 
-  export default React.memo(signupFn)
+  export default signupFn

@@ -1,5 +1,6 @@
 import './style.scss';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import axios from 'axios';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
@@ -47,7 +48,9 @@ function SearchUser(props) {
                 listRefSwitch ? 
                 <li className="item">
                 <div className="meta-data">
-                <img src={props.basicImg} alt={searchList.imagePath} />
+                <img 
+                src={searchList.imagePath !== '' ? axios.defaults.baseURL + searchList.imagePath : props.basicImg} 
+                alt={searchList.imagePath !== '' ? axios.defaults.baseURL + searchList.imagePath : props.basicImg} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }

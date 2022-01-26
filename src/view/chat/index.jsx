@@ -2,13 +2,11 @@ import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
 
-import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        // chatMsgSearchFn(props.chatingRoom);
     }, [])
 
     const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
@@ -26,7 +24,7 @@ function Chat(props) {
                 <img src={props.basicImg} alt={props.basicImg} />
                 <div>
                     <p>{chatUsers[0].name}</p>
-                    <span>{ChatContent.content}</span>
+                    <span>{ChatContent ? ChatContent.content : null}</span>
                 </div>
             </div>
             <i onClick={() => {

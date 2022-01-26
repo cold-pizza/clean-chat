@@ -11,6 +11,8 @@ const upLoadImgFn = function(imgUrl, myAccount, setMyAccount, selectImgSwitch, s
     }
     axios.patch(`${axios.defaults.baseURL}/api/users`, body)
     .then(res => {
+        console.log(res);
+        console.log(res.data.result.imagePath);
         console.log("이미지가 " + res.data.message);
         setSelectImgSwitch(!selectImgSwitch);
     })

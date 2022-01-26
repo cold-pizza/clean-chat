@@ -11,6 +11,7 @@ import chatMsgSearchFn from './chatMsgSearchFn';
     setUser, 
     chatingRoom,
     setChatingRoom, 
+    basicImg,
     history) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
@@ -36,7 +37,11 @@ import chatMsgSearchFn from './chatMsgSearchFn';
       axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
       .then(res => {
         const user = res.data.result;
-        user.imagePath = `${axios.defaults.baseURL + res.data.result.imagePath}`;
+        if (!res.data.result.imagePath) {
+          user.imagePath = basicImg;
+        } else {
+          user.imagePath = `${axios.defaults.baseURL + res.data.result.imagePath}`;
+        }
         console.log(user);
         if (res.status === 200) {
           // 친구리스트 요청.
@@ -72,7 +77,7 @@ import chatMsgSearchFn from './chatMsgSearchFn';
           history.push('/friends');
         }
 
-        chatMsgSearchFn(chatingRoom);
+        chatMsgSearchFn(chatingRoom, user);
       })
       .catch(err => {
         console.log(err);

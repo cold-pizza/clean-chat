@@ -36,6 +36,7 @@ const { loginId, loginPs } = idInput;
                     props.setUser,
                     props.chatingRoom,
                     props.setChatingRoom,
+                    props.basicImg,
                     props.history
                     );
             }} className="login-btn" type="submit">로그인</button>

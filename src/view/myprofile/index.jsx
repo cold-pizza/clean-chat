@@ -14,6 +14,7 @@ function MyProfile(props) {
       // 내 프로필 자동 업데이트.
   useEffect(()=>{
     props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+    return console.log('내 계정 업데이트');
   }, [])
 
   // 입력받은 닉네임.
