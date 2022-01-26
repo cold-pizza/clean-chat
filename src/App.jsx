@@ -71,23 +71,12 @@ function App() {
     }
   }, []);
 
-  // const deleteChatContent = function() {
-  //   const chatId = 12;
-  //   const msgId = 34;
-  //   axios.delete(`${axios.defaults.baseURL}/chats/${chatId}/messages/${msgId}`, { withCredentials: true })
-  //   .then(res => {
-  //     console.log(res);
-  //   })
-  //   .catch(err => console.log(err));
-  // }
-
   // 내 프로필 자동 업데이트.
   useEffect(()=>{
     setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
     setUser(JSON.parse(localStorage.getItem('user')));
     // 강제 로그아웃 해야할 때⬇️
     // logoutFn(history);
-    // deleteChatContent();
     return console.log('친구리스트, 내 계정 업데이트');
     // msgRemoveFn(7, 14);
   }, []);
