@@ -15,9 +15,9 @@ function Chat(props) {
     const [chatImgs, setChatImgs] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        chatImg(props.user, props.chatingRoom, props.basicImg);
-        setChatImgs(searchImageFn(props.user, props.chatingRoom, props.basicImg));
-        console.log(chatImgs);
+        // chatImg(props.user, props.chatingRoom, props.basicImg);
+        // setChatImgs(searchImageFn(props.user, props.chatingRoom, props.basicImg));
+        // console.log(chatImgs);
     }, [])
     return <div className="chat">
         {
@@ -27,7 +27,7 @@ function Chat(props) {
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">
-                <img src={chatImgs} alt={chatImgs} />
+                <img src={props.basicImg} alt={chatImgs} />
                 <div>
                     <p>{chatUsers[0].name}</p>
                     <span>{ChatContent ? ChatContent.content : null}</span>

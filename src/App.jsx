@@ -41,7 +41,7 @@ function App() {
 
       // 나의 채팅 내용.
   const [chatComments, setChatComments] = useState(null);
-// console.log(chatComments);
+
   const [myAccount, setMyAccount] = useState(null);
 
 
