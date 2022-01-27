@@ -23,7 +23,7 @@ import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // 강제 로그아웃 하기
-// import⬇️, line80~86사이 logoutFn() 열기.
+// import⬇️, line59~60사이 logoutFn() 열기.
 // import logoutFn from './controller/logoutFn';
 
 // CORS 처리
@@ -32,7 +32,6 @@ axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
   const history = useHistory();
-
 
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
 
@@ -54,9 +53,11 @@ function App() {
     const routeLimitFn = function() {
       const host = window.location.host;
       const loginUrl = `${host}/clean-chat/`;
-      if (!localStorage.getItem('user') && window.location.href !== loginUrl) {
+      if (localStorage.getItem('user') === null && window.location.href !== loginUrl) {
           alert('로그인시 이용 가능합니다.');
           history.replace('/');
+              // 강제 로그아웃 해야할 때⬇️
+              // logoutFn(history);
           return alert('로그인시 이용 가능합니다.');
         }
     }
@@ -69,16 +70,6 @@ function App() {
       history.goBack();
       return alert('로그인을 원하시면 로그아웃하시기 바랍니다.');
     }
-  }, []);
-
-  // 내 프로필 자동 업데이트.
-  useEffect(()=>{
-    setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-    setUser(JSON.parse(localStorage.getItem('user')));
-    // 강제 로그아웃 해야할 때⬇️
-    // logoutFn(history);
-    return console.log('친구리스트, 내 계정 업데이트');
-    // msgRemoveFn(7, 14);
   }, []);
 
   return (

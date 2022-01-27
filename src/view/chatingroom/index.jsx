@@ -15,7 +15,6 @@ function ChatingRoom(props) {
         const chatContent = JSON.parse(localStorage.getItem(`myChatContents_${id}`));
         props.setChatComments(chatContent);
         setOtherChat(JSON.parse(localStorage.getItem(`otherChatContents_${id}`)));
-        console.log(otherChat)
     }, [])
 
     

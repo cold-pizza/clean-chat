@@ -3,16 +3,22 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
 
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
+import chatImg from '../../controller/chatImg';
+import searchImageFn from '../../controller/searchImageFn';
 
 function Chat(props) {
+    
+    const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
+    
+    const [removeNum, setRemoveNum] = useState(null);
+    
+    const [chatImgs, setChatImgs] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        chatImg(props.user, props.chatingRoom, props.basicImg);
+        setChatImgs(searchImageFn(props.user, props.chatingRoom, props.basicImg));
+        console.log(chatImgs);
     }, [])
-
-    const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
-
-    const [removeNum, setRemoveNum] = useState(null);
-
     return <div className="chat">
         {
             props.chatingRoom !== null ?
@@ -21,7 +27,7 @@ function Chat(props) {
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">
-                <img src={props.basicImg} alt={props.basicImg} />
+                <img src={chatImgs} alt={chatImgs} />
                 <div>
                     <p>{chatUsers[0].name}</p>
                     <span>{ChatContent ? ChatContent.content : null}</span>
