@@ -36,14 +36,13 @@ function App() {
   const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
 
   const [chatAlarmSwitch, setChatAlarmSwitch] = useState(false);
-  
+
   const [chatingRoom, setChatingRoom] = useState(null);
 
       // 나의 채팅 내용.
-  const [chatComments, setChatComments] = useState(null);
+  const [myChatComments, setMyChatComments] = useState(null);
 
   const [myAccount, setMyAccount] = useState(null);
-
 
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
@@ -144,10 +143,11 @@ function App() {
         <Chat 
         history={history} 
         chatingRoom={chatingRoom} 
+        setMyAccount={setMyAccount}
         setChatingRoom={setChatingRoom}
         basicImg={basicImg}
         user={user}
-        setChatComments={setChatComments}
+        setMyChatComments={setMyChatComments}
         />
       </Route>
 
@@ -157,10 +157,11 @@ function App() {
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
         myAccount={myAccount}
+        setMyAccount={setMyAccount}
         history={history} 
         basicImg={basicImg}
-        chatComments={chatComments}
-        setChatComments={setChatComments}
+        myChatComments={myChatComments}
+        setMyChatComments={setMyChatComments}
         />
       </Route>
 

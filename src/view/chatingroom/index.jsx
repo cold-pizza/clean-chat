@@ -5,6 +5,8 @@ import './style.scss';
 
 import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
+import myChatClassifyFn from '../../controller/chatClassifyFn';
+import otherChatClassifyFn from '../../controller/otherChatClassifyFn';
 
 function ChatingRoom(props) {
     const { id } = useParams();
@@ -12,9 +14,9 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        const chatContent = JSON.parse(localStorage.getItem(`myChatContents_${id}`));
-        props.setChatComments(chatContent);
-        setOtherChat(JSON.parse(localStorage.getItem(`otherChatContents_${id}`)));
+        const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
+        setOtherChat(chatContents);
+        return console.log('채팅기록 로딩 끝');
     }, [])
 
     
@@ -38,23 +40,22 @@ function ChatingRoom(props) {
         <section className="chating-form">
             {
                 otherChat !== null ? 
-                otherChat.map(({ content, User }) => {
+                otherChatClassifyFn(otherChat, props.myAccount).map(({ content, User }) => {
                     return <div className="you">
                     <img src={props.basicImg} alt={props.basicImg} />
-                    <div className="meta-info">
+                            <div className="meta-info">
                     <div className="info">
                     <p>{User.name}</p>
                     <span className="comments">{content}</span>
                     </div>
                     </div>
                     <p className="times"></p>
-                
                     </div>
                 }) : null}
                     
             {
-                props.chatComments !== null ?
-                props.chatComments.map(({ content })=>{
+                otherChat !== null ?
+                myChatClassifyFn(otherChat, props.myAccount).map(({ content })=>{
                        return <div className="me">
                            {
                                content !== null ? 
@@ -83,11 +84,11 @@ function ChatingRoom(props) {
             <i 
             onClick={()=>{
             createMsgFn(
-                props.chatingRoom[id].id, 
+                props.myChatingRoom[id].id, 
                 ment, 
                 setTalk, 
-                props.chatComments, 
-                props.setChatComments
+                props.myChatComments, 
+                props.setMyChatComments
                 );
         }} className="fas fa-arrow-up"></i>
         </button>
