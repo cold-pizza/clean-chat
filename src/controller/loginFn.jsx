@@ -1,5 +1,7 @@
 import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
+import socketCallFn from './socketCallFn';
+import io from 'socket.io-client';
 
 
   // 로그인 함수.
@@ -76,7 +78,11 @@ import chatMsgSearchFn from './chatMsgSearchFn';
           console.log(res.data.message);
           history.push('/friends');
         }
-
+        const socketio = io('wss://clean-chat.kumas.dev');
+        socketio.on('connect', () => {
+            console.log('연결되었습니다.');
+            socketCallFn(socketio.id);
+        })
         chatMsgSearchFn(chatingRoom, user);
       })
       .catch(err => {

@@ -7,18 +7,10 @@ import React, { useEffect } from 'react';
 function Friends(props) {    
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-        return console.log('내 계정이 업데이트 되었습니다.');
-      }, []);
-
-    useEffect(() => {
         props.setUser(JSON.parse(localStorage.getItem('user')));
-        return console.log('친구리스트가 업데이트 되었습니다');
-    }, []);
-
-    useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        return console.log('채팅방이 업데이트 되었습니다');
-    }, []);
+        return console.log('업데이트 되었습니다.');
+      }, []);
 
 
     return <div className="friends">

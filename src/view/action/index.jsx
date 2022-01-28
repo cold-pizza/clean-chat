@@ -1,7 +1,9 @@
 
+import { useState } from 'react';
 import './style.scss';
 
 function Action(props) {
+  const [chatBubble, setChatBubble] = useState(false);
     const site = [{
       id: 0,
       site: '/friends',
@@ -18,14 +20,16 @@ function Action(props) {
   ];
     return <div className="action">
       {
-        site.map(({ site, logo })=>{
+        site.map(({ site, logo, dot })=>{
           return (
             <i onClick={()=>{
         props.history.push(site);
-      }} className={logo}></i>
+      }} className={logo}>
+      </i>
           )
         })
       }
+      { chatBubble ? <div className="red-dot">1</div> : null}
       </div>
   }
 

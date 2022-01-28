@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
 
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
-import chatImg from '../../controller/chatImg';
-import searchImageFn from '../../controller/searchImageFn';
 
 function Chat(props) {
     
@@ -16,9 +14,6 @@ function Chat(props) {
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-        // chatImg(props.user, props.chatingRoom, props.basicImg);
-        // setChatImgs(searchImageFn(props.user, props.chatingRoom, props.basicImg));
-        // console.log(chatImgs);
         return console.log('로딩 끝');
     }, [])
     return <div className="chat">

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router';
 import './style.scss';
 
@@ -11,7 +11,6 @@ import otherChatClassifyFn from '../../controller/otherChatClassifyFn';
 function ChatingRoom(props) {
     const { id } = useParams();
     const [otherChat, setOtherChat] = useState(null);
-
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
@@ -20,6 +19,8 @@ function ChatingRoom(props) {
     }, [])
 
     
+    
+    
     // input 이벤트 내용.
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
@@ -27,7 +28,6 @@ function ChatingRoom(props) {
     const chatingOnChange = function(e) {
         setTalk({...talk, [e.target.name]: e.target.value});
     }
-
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{
@@ -40,6 +40,7 @@ function ChatingRoom(props) {
         <section className="chating-form">
             {
                 otherChat !== null ? 
+                // eslint-disable-next-line react-hooks/rules-of-hooks
                 otherChatClassifyFn(otherChat, props.myAccount).map(({ content, User }) => {
                     return <div className="you">
                     <img src={props.basicImg} alt={props.basicImg} />
@@ -51,20 +52,17 @@ function ChatingRoom(props) {
                     </div>
                     <p className="times"></p>
                     </div>
-                }) : null}
+                }) : null
+                }
                     
             {
                 otherChat !== null ?
                 myChatClassifyFn(otherChat, props.myAccount).map(({ content })=>{
                        return <div className="me">
-                           {
-                               content !== null ? 
                                <div>
                                <p className="comment">{content}</p>
                                <p className="time"></p>
                                </div>
-                                : null
-                            }
                         </div>
                     
                 }) : null
@@ -84,11 +82,11 @@ function ChatingRoom(props) {
             <i 
             onClick={()=>{
             createMsgFn(
-                props.myChatingRoom[id].id, 
+                props.chatingRoom[id].id, 
                 ment, 
                 setTalk, 
-                props.myChatComments, 
-                props.setMyChatComments
+                otherChat,
+                setOtherChat
                 );
         }} className="fas fa-arrow-up"></i>
         </button>
