@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useCallback } from 'react';
 import searchOnChange from '../../controller/searchOnChange';
 import './style.scss';
@@ -23,7 +24,9 @@ function Search(props) {
                 return <li onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${id}`)
                 }}>
-                <img src={imagePath} alt={imagePath} />
+                <img 
+                src={imagePath !== '' ? axios.defaults.baseURL + imagePath : props.basicImg} 
+                alt={imagePath !== '' ? axios.defaults.baseURL + imagePath : props.basicImg} />
                 <p>{name}</p>
             </li>
             })

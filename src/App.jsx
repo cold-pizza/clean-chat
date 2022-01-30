@@ -169,6 +169,7 @@ function App() {
         <Search 
         history={history}
         user={user}  
+        basicImg={basicImg}
         />
       </Route>
 
