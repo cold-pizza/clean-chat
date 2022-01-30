@@ -7,12 +7,10 @@ import axios from 'axios';
         }
             axios.post(`${axios.defaults.baseURL}/api/chats/${id}/messages`, data)
             .then(res => {
-                console.log(res.data.message);
-                console.log(res);
+                console.log(`${res.data.message}\n${res}`);
                 axios.get(`${axios.defaults.baseURL}/api/chats/${id}/messages`)
                 .then(res => {
-                    console.log(res.data.message);
-                    console.log(res.data.result[0].ChatContents[0]);
+                    console.log(`${res.data.message}\n${res.data.result[0].ChatContents[0]}`);
                     setOhterChat([...otherChat, res.data.result[0].ChatContents[0]]);
                     setTalk({ ment: '' });
                 })

@@ -53,11 +53,10 @@ function App() {
       const host = window.location.host;
       const loginUrl = `${host}/clean-chat/`;
       if (localStorage.getItem('user') === null && window.location.href !== loginUrl) {
-          alert('로그인시 이용 가능합니다.');
           history.replace('/');
               // 강제 로그아웃 해야할 때⬇️
               // logoutFn(history);
-          return alert('로그인시 이용 가능합니다.');
+          alert('로그인시 이용 가능합니다.');
         }
     }
     return routeLimitFn();
