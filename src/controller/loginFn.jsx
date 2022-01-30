@@ -79,11 +79,11 @@ import io from 'socket.io-client';
           history.push('/friends');
         }
         const socketio = io('wss://clean-chat.kumas.dev');
-        socketio.on('connect', () => {
+        socketio.on('conn', () => {
             console.log('연결되었습니다.');
             socketCallFn(socketio.id);
         })
-        chatMsgSearchFn(chatingRoom, user);
+        chatMsgSearchFn(chatingRoom);
       })
       .catch(err => {
         console.log(err);

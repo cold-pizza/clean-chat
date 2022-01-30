@@ -15,7 +15,7 @@ import ChatingRoom from './view/chatingroom';
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
 import Action from './view/action';
-import ChatModal from './view/chatModal';
+import ChatingAlarm from './view/chatingAlarm';
 import './App.scss';
 
 // 라이브러리
@@ -46,12 +46,14 @@ function App() {
 
   const [settingModalSwitch, setSettingModalSwitch] = useState(false);
 
+  const [chatBubbleSwitch, setChatBubbleSwitch] = useState(false);
+
   const [user, setUser] = useState(null);
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
     const routeLimitFn = function() {
       const host = window.location.host;
-      const loginUrl = `${host}/clean-chat/`;
+      const loginUrl = `http://${host}/clean-chat/`;
       if (localStorage.getItem('user') === null && window.location.href !== loginUrl) {
           history.replace('/');
               // 강제 로그아웃 해야할 때⬇️
@@ -108,7 +110,7 @@ function App() {
         '/searchuser', 
         '/friendsremove'
         ]}>
-      <Action history={history} />
+      <Action history={history} chatBubbleSwitch={chatBubbleSwitch} />
       </Route>
 
       {/* 친구창 */}
@@ -122,6 +124,10 @@ function App() {
         history={history} 
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
+        chatAlarmSwitch={chatAlarmSwitch}
+        setChatAlarmSwitch={setChatAlarmSwitch}
+        chatBubbleSwitch={chatBubbleSwitch}
+        setChatBubbleSwitch={setChatBubbleSwitch}
         />
       </Route>
 
@@ -233,8 +239,11 @@ function App() {
       </Route>
 
       {/* 채팅알림창 */}
-      <ChatModal style={{ display: chatAlarmSwitch ? "block" : "none" }} basicImg ={basicImg} />
-
+      {
+        chatAlarmSwitch ? 
+        <ChatingAlarm basicImg ={basicImg} />
+        : null
+      }
       </div>
     </div>
   );

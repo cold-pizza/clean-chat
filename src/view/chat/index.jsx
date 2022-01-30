@@ -16,6 +16,24 @@ function Chat(props) {
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         return console.log('로딩 끝');
     }, [])
+
+    const [bubbleNum, setBubbleNum] = useState([
+        {
+            id: '',
+            number: '3',
+            active: false
+        },
+        {
+            id: '',
+            number: '4',
+            active: false
+        },
+        {
+            id: '',
+            number: '5',
+            active: false
+        }
+    ]);
     return <div className="chat">
         {
             props.chatingRoom !== null ?
@@ -25,10 +43,18 @@ function Chat(props) {
             props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">
                 <img src={props.basicImg} alt={chatImgs} />
-                <div>
-                    <p>{chatUsers[0].name}</p>
-                    <span>{ChatContent ? ChatContent.content : null}</span>
-                </div>
+                <section>
+                    <div>
+                    <span className="name">{chatUsers[0].name}</span>
+                    {
+                        bubbleNum !== null ?
+                        (!bubbleNum ?
+                        <span className="alarm">{bubbleNum[0].number}</span>
+                        : null) : null
+                    }
+                    </div>
+                    <p className="content">{ChatContent ? ChatContent.content : null}</p>
+                </section>
             </div>
             <i onClick={() => {
                 setChatRemoveSwitch(!chatRemoveSwitch);

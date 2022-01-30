@@ -41,7 +41,13 @@ function Friends(props) {
             }) : '친구가 없습니다.'
         }
         </ul>
-        
+        <button onClick={() => {
+            props.setChatAlarmSwitch(!props.chatAlarmSwitch);
+            console.log(props.chatAlarmSwitch);
+        }}>채팅알림</button>
+        <button onClick={() => {
+            props.setChatBubbleSwitch(!props.chatBubbleSwitch);
+        }}>채팅풍선알림</button>
     </div>
 }
 

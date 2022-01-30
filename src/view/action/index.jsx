@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './style.scss';
 
 function Action(props) {
-  const [chatBubble, setChatBubble] = useState(false);
+  
     const site = [{
       id: 0,
       site: '/friends',
@@ -29,7 +29,7 @@ function Action(props) {
           )
         })
       }
-      { chatBubble ? <div className="red-dot">1</div> : null}
+      { props.chatBubbleSwitch ? <div className="red-dot">1</div> : null}
       </div>
   }
 

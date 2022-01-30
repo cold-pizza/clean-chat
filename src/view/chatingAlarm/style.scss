@@ -1,7 +1,7 @@
 
 .chat-modal {
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 0;
     background: #828282;
     display: flex;
@@ -31,10 +31,14 @@
             margin-right: 10px;
             border-radius: 4px;
         }
-        p {
-            font-size: 14px;
-            color: white;
+        .chat-info {
+            p:first-child {
+                margin-bottom: 4px;
+            }
+            p {
+                font-size: 14px;
+                color: white;
+            }
         }
     }
-    display: none;
 }

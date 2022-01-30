@@ -40,7 +40,6 @@ function ChatingRoom(props) {
         <section className="chating-form">
             {
                 otherChat !== null ? 
-                // eslint-disable-next-line react-hooks/rules-of-hooks
                 otherChatClassifyFn(otherChat, props.myAccount).map(({ content, User }) => {
                     return <div className="you">
                     <img src={props.basicImg} alt={props.basicImg} />

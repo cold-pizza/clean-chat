@@ -18,21 +18,40 @@
         }
         .meta-data {
             @include row;
+            width: 100%;
             img {
                 width: 50px;
                 height: 50px;
                 border-radius: 12px;
                 margin-right: 10px;
             }
-            div {
+            section {
                 @include col;
                 justify-content: center;
-                p {
-                    margin-bottom: 4px;
+                width: 100%;
+                div {
+                    @include row;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-right: 20px;
+                    .name {
+                        margin-bottom: 4px;
+                        margin-right: 10px;
+                    }
+                    .alarm {
+                        font-size: 12px;
+                        font-weight: 600;
+                        padding: 4px 6px;
+                        border-radius: 12px;
+                        background: red;
+                        color: white;
+
+                    }
                 }
-                span {
-                    color: $main-gray;
-                }
+                    .content {
+                        color: $main-gray;
+                    }
             }
         }
     }
