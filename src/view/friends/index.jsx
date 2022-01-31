@@ -12,7 +12,6 @@ function Friends(props) {
         return console.log('업데이트 되었습니다.');
       }, []);
 
-
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -26,14 +25,14 @@ function Friends(props) {
         <ul className="friends-list">
         {
             props.user !== null ?
-            props.user.map(({ name, imagePath }, i)=>{
+            props.user.map(({ name, imagePath, id }, i)=>{
                 return (
-                <li onClick={()=>{
+                <li key={id} onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                     <img 
-                    src={imagePath !== "" ? axios.defaults.baseURL + imagePath : props.basicImg} 
-                    alt={imagePath !== "" ? axios.defaults.baseURL + imagePath : props.basicImg} 
+                    src={imagePath !== "" ? ( imagePath.split('/')[0] === "img" ? `${axios.defaults.baseURL}/${imagePath}` : axios.defaults.baseURL + imagePath) : props.basicImg} 
+                    alt={imagePath !== "" ? ( imagePath.split('/')[0] === "img" ? `${axios.defaults.baseURL}/${imagePath}` : axios.defaults.baseURL + imagePath) : props.basicImg} 
                     />
                     <p>{name}</p>
                 </li>

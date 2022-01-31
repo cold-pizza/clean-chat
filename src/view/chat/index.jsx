@@ -37,8 +37,8 @@ function Chat(props) {
     return <div className="chat">
         {
             props.chatingRoom !== null ?
-            props.chatingRoom.map(({ chatUsers, ChatContent }, i)=>{
-                return <li>
+            props.chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
+                return <li key={id}>
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">

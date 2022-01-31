@@ -28,15 +28,17 @@ function Nav(props) {
 
     return <div className="nav">
       {
-        navSite.map(({ site, title })=>{
+        navSite.map(({ site, title, id })=>{
           return (<>
           <Route path={site}>
-          <div>{title}</div>
-          <div>
-            <i onClick={()=>{
-              props.setSettingModalSwitch(!props.settingModalSwitch)
-            }} className="fas fa-cog"></i>
-            </div>
+            <section key={id}>
+              <div>{title}</div>
+                <div>
+                  <i onClick={()=>{
+                    props.setSettingModalSwitch(!props.settingModalSwitch)
+                  }} className="fas fa-cog"></i>
+              </div>
+            </section>
           </Route>
           </>)
         })

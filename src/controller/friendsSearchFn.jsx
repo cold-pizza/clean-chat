@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
  // 친구 검색 요청 함수.
- const friendsSearchFn = function(id, setSearchList) {
-    axios.get(`${axios.defaults.baseURL}/api/users/id/${id}`, { withCredentials: true })
+ const friendsSearchFn = function(email, setSearchList) {
+    axios.get(`${axios.defaults.baseURL}/api/users/email/${email}`, { withCredentials: true })
     .then(res => {
         console.log(res.data.message);
         console.log(res.data.result);

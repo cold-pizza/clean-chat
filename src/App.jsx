@@ -52,9 +52,9 @@ function App() {
   // 비 로그인시 URL접근 제한.
   useEffect(() => {
     const routeLimitFn = function() {
-      const host = window.location.host;
-      const loginUrl = `http://${host}/clean-chat/`;
-      if (localStorage.getItem('user') === null && window.location.href !== loginUrl) {
+      const path = window.location.pathname;
+      const url = ["/clean-chat/", "/clean-chat/signup"];
+      if (localStorage.getItem('user') === null && path !== (url[0] || url[1])) {
           history.replace('/');
               // 강제 로그아웃 해야할 때⬇️
               // logoutFn(history);
@@ -63,6 +63,7 @@ function App() {
     }
     return routeLimitFn();
   }, [])
+
 
   // 로그인 중 다시 로그인 화면 돌아가기 방지.
   useEffect(() => {

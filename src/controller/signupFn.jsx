@@ -27,13 +27,12 @@ import axios from 'axios';
       .catch(() => {
         axios.post(`${axios.defaults.baseURL}/api/users`, {name, email: id, password, gender }, { withCredentials: true })
         .then((res)=>{
-          console.log(res);
-          console.log('회원가입 성공.');
+          console.log('회원가입 성공.\n' + res);
           setJoinAccount({ name:'', id: '', password: '' });
           history.push('/');
         })
         .catch((error)=>{
-          console.log(error);
+          console.log(error + "\n회원가입 에러");
         })
       })
     }

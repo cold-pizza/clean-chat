@@ -5,9 +5,9 @@ function FriendsRemove(props) {
     return <div className="friends-remove">
         {
             props.user !== null ?
-            props.user.map(({ name, imagePath }, i)=>{
+            props.user.map(({ name, imagePath, id }, i)=>{
                 return (
-            <div className="item">
+            <div key={id} className="item">
                 <div className="meta-data">
                     <img src={imagePath} alt={imagePath} />
                     <p>{name}</p> 

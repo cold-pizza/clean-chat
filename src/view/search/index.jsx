@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import searchOnChange from '../../controller/searchOnChange';
 import './style.scss';
 
@@ -14,14 +14,14 @@ function Search(props) {
         </section>
         <ul>
             {
-            props.user.filter(useCallback(user => {
+            props.user.filter(user => {
                 if (search === '') {
                     return user;
                 } else if (user.name.includes(search)) {
                     return user;
                }
-            }, [])).map(({ name, imagePath, id })=>{
-                return <li onClick={()=>{
+            }).map(({ name, imagePath, id })=>{
+                return <li key={id} onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${id}`)
                 }}>
                 <img 

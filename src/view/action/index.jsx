@@ -1,5 +1,4 @@
 
-import { useState } from 'react';
 import './style.scss';
 
 function Action(props) {
@@ -20,9 +19,9 @@ function Action(props) {
   ];
     return <div className="action">
       {
-        site.map(({ site, logo, dot })=>{
+        site.map(({ site, logo, id })=>{
           return (
-            <i onClick={()=>{
+            <i key={id} onClick={()=>{
         props.history.push(site);
       }} className={logo}>
       </i>

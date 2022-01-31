@@ -29,7 +29,7 @@ function SearchUser(props) {
             }
       }
   }, [searchList])
-
+console.log(searchList)
 
     return <div className="search-email">
         <div className="search-form">
@@ -37,7 +37,7 @@ function SearchUser(props) {
         onChange={(e) => inputOnChange(e, searchInput, setSearchInput)}
         name="userSearch" 
         type="text" 
-        placeholder="번호(id)를 입력해주세요" 
+        placeholder="이메일(email)을 입력해주세요" 
         />
         <i onClick={() => {
             friendsSearchFn(userSearch, setSearchList);

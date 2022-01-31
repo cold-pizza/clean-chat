@@ -1,16 +1,17 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 
 import signupFn from '../../controller/signupFn';
 // import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
 import joinOnChange from '../../controller/joinOnChange';
+import joinPsOnChange from '../../controller/joinPsOnChange';
 
 
 function Signup(props) {
-
+    const [btnActiveSwitch, setBtnActiveSwitch] = useState(false);
     const [genderSwitch, setGenderSwitch] = useState(false);
-
+    
     const [joinAccount, setJoinAccount] = useState({ 
         name: '', 
         id: '', 
@@ -19,13 +20,14 @@ function Signup(props) {
         gender: '', 
         imagePath: '' 
     });
-    console.log(joinAccount)
+
     // 첫 렌더링시 성별.
     useEffect(()=>{
         const arr = { ...joinAccount }
         arr.gender = 'male';
         setJoinAccount(arr);
     }, [])
+
 
     return <div className="signup">
         <h1>회원가입</h1>
@@ -59,7 +61,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
+            onChange={(e) => joinPsOnChange(e, joinAccount, setJoinAccount, btnActiveSwitch, setBtnActiveSwitch)} 
             type="password" 
             name="psCheck" 
             placeholder="비밀번호 확인" 
@@ -88,10 +90,17 @@ function Signup(props) {
             </div>
             <button onClick={()=>{
                 signupFn(joinAccount, setJoinAccount, props.history);
-            }} className="signup-btn" type="submit">완료</button>
+            }} 
+            disabled={btnActiveSwitch}
+            className="signup-btn" 
+            type="submit" 
+            style={{ 
+                background: btnActiveSwitch ? "#eee" : "#2647ff", 
+                color: btnActiveSwitch ? "#808080" : "white" }}
+            >완료</button>
             <button className="cancel-btn" onClick={()=>{
                 props.history.goBack();
-            }} type="button">취소</button>
+            }} type="button" >취소</button>
         </section>
     </div>
 }

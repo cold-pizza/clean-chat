@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import './style.scss';
 
@@ -40,8 +40,8 @@ function ChatingRoom(props) {
         <section className="chating-form">
             {
                 otherChat !== null ? 
-                otherChatClassifyFn(otherChat, props.myAccount).map(({ content, User }) => {
-                    return <div className="you">
+                otherChatClassifyFn(otherChat, props.myAccount).map(({ content, User, ids }) => {
+                    return <div key={ids} className="you">
                     <img src={props.basicImg} alt={props.basicImg} />
                             <div className="meta-info">
                     <div className="info">
@@ -56,8 +56,8 @@ function ChatingRoom(props) {
                     
             {
                 otherChat !== null ?
-                myChatClassifyFn(otherChat, props.myAccount).map(({ content })=>{
-                       return <div className="me">
+                myChatClassifyFn(otherChat, props.myAccount).map(({ content, ids })=>{
+                       return <div key={ids} className="me">
                                <div>
                                <p className="comment">{content}</p>
                                <p className="time"></p>
