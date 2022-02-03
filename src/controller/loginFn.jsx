@@ -80,14 +80,14 @@ import io from 'socket.io-client';
         }
         const socketio = io('wss://clean-chat.kumas.dev');
         socketio.on('conn', () => {
-            console.log('연결되었습니다.');
-            socketCallFn(socketio.id);
-        })
+          socketCallFn(socketio.id);
+        });
         chatMsgSearchFn(chatingRoom);
       })
       .catch(err => {
         console.log(err);
-        alert('이메일 또는 비밀번호를 다시 입력해주세요.');
+        // 401 예외 처리.
+        alert('이메일 또는 비밀번호를 다시 확인해주세요.');
       }) 
     }
   };

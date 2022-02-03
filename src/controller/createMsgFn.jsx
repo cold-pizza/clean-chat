@@ -7,7 +7,8 @@ import axios from 'axios';
         }
             axios.post(`${axios.defaults.baseURL}/api/chats/${id}/messages`, data)
             .then(res => {
-                console.log(`${res.data.message}\n${res}`);
+                console.log(res.data.message);
+                console.log(res);
                 axios.get(`${axios.defaults.baseURL}/api/chats/${id}/messages`)
                 .then(res => {
                     console.log(`${res.data.message}\n${res.data.result[0].ChatContents[0]}`);

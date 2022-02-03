@@ -1,5 +1,5 @@
 // 컴포넌트
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import Login from './view/login';
 import Signup from './view/signup';
 import Friends from './view/friends';
@@ -11,7 +11,8 @@ import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
 import ProfileImageEdit from './view/profileimageedit';
-import ChatingRoom from './view/chatingroom';
+// import ChatingRoom from './view/chatingroom';
+
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
 import Action from './view/action';
@@ -22,6 +23,7 @@ import './App.scss';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
+const ChatingRoom = lazy(() => import('./view/chatingroom') );
 // 강제 로그아웃 하기
 // import⬇️, line59~60사이 logoutFn() 열기.
 // import logoutFn from './controller/logoutFn';
@@ -159,6 +161,7 @@ function App() {
 
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
+        <Suspense fallback={<div>로딩중//</div>}>
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
@@ -169,6 +172,7 @@ function App() {
         myChatComments={myChatComments}
         setMyChatComments={setMyChatComments}
         />
+        </Suspense>
       </Route>
 
       {/* 친구찾기 */}
