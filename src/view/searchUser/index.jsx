@@ -29,7 +29,6 @@ function SearchUser(props) {
             }
       }
   }, [searchList])
-console.log(searchList)
 
     return <div className="search-email">
         <div className="search-form">

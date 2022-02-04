@@ -66,6 +66,7 @@ import io from 'socket.io-client';
             const cr = res.data.result;
             localStorage.setItem('chatingRoom', JSON.stringify(cr));
             setChatingRoom(cr);
+            chatMsgSearchFn(cr);
           })
           .catch(err => {
             console.log('채팅방 에러');
@@ -82,7 +83,6 @@ import io from 'socket.io-client';
         socketio.on('conn', () => {
           socketCallFn(socketio.id);
         });
-        chatMsgSearchFn(chatingRoom);
       })
       .catch(err => {
         console.log(err);

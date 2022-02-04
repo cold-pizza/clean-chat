@@ -1,8 +1,8 @@
 // 컴포넌트
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import LoginLoading from './view/loginLoading';
+import ChatLoading from './view/loginLoading';
 import Signup from './view/signup';
-import Friends from './view/friends';
 import Chat from './view/chat';
 import Search from './view/search';
 import Setting from './view/setting';
@@ -27,6 +27,7 @@ import axios from 'axios';
 // import logoutFn from './controller/logoutFn';
 const Login = lazy(() =>  import('./view/login') );
 const ChatingRoom = lazy(() => import('./view/chatingroom') );
+const Friends = lazy(() => import('./view/friends'));
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -120,6 +121,7 @@ function App() {
 
       {/* 친구창 */}
       <Route path="/friends">
+        <Suspense fallback={<LoginLoading />}>
         <Friends 
         setMyAccount={setMyAccount} 
         myAccount={myAccount} 
@@ -134,6 +136,7 @@ function App() {
         chatBubbleSwitch={chatBubbleSwitch}
         setChatBubbleSwitch={setChatBubbleSwitch}
         />
+        </Suspense>
       </Route>
 
       {/* Setting */}
@@ -163,7 +166,7 @@ function App() {
 
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
-        <Suspense fallback={<div>로딩중//</div>}>
+        <Suspense fallback={<ChatLoading />}>
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
