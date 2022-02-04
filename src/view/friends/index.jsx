@@ -1,14 +1,20 @@
 import './style.scss';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+// import { useState } from 'react';
+// import chatSequeanceFn from '../../controller/chatSequenceFn';
 
 // import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
 
 function Friends(props) {    
+    // const [test, setTest] = useState(null);
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        // setTest(JSON.parse(localStorage.getItem('chatContents_3')))
+        // console.log(test)
+        // console.log(chatSequeanceFn(test));
         return console.log('업데이트 되었습니다.');
       }, []);
 

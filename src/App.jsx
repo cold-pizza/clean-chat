@@ -1,6 +1,6 @@
 // 컴포넌트
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import Login from './view/login';
+import LoginLoading from './view/loginLoading';
 import Signup from './view/signup';
 import Friends from './view/friends';
 import Chat from './view/chat';
@@ -11,7 +11,6 @@ import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
 import ProfileImageEdit from './view/profileimageedit';
-// import ChatingRoom from './view/chatingroom';
 
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
@@ -23,10 +22,11 @@ import './App.scss';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
-const ChatingRoom = lazy(() => import('./view/chatingroom') );
 // 강제 로그아웃 하기
 // import⬇️, line59~60사이 logoutFn() 열기.
 // import logoutFn from './controller/logoutFn';
+const Login = lazy(() =>  import('./view/login') );
+const ChatingRoom = lazy(() => import('./view/chatingroom') );
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -80,6 +80,7 @@ function App() {
       <div className="app-box">
         {/* 로그인 */}
       <Route exact path="/">
+        <Suspense fallback={<LoginLoading />}>
         <Login 
         history={history} 
         setMyAccount={setMyAccount}
@@ -88,6 +89,7 @@ function App() {
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
         />
+        </Suspense>
       </Route>
 
       {/* 회원가입 */}

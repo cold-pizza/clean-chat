@@ -47,4 +47,4 @@ const { loginId, loginPs } = idInput;
     </div>
 }
 
-export default Login;
+export default React.memo(Login);

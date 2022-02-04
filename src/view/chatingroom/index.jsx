@@ -6,8 +6,6 @@ import './style.scss';
 
 import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
-import myChatClassifyFn from '../../controller/chatClassifyFn';
-import otherChatClassifyFn from '../../controller/otherChatClassifyFn';
 import socketCallFn from '../../controller/socketCallFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
 import chatSequeanceFn from '../../controller/chatSequenceFn';
@@ -19,8 +17,7 @@ function ChatingRoom(props) {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        console.log(otherChat);
-        // chatSequeanceFn(otherChat, 16);
+        // console.log(otherChat);
         // const socketio = io('wss://clean-chat.kumas.dev');
         // socketio.on('conn', () => {
         //     socketCallFn(socketio.id);
@@ -45,32 +42,33 @@ function ChatingRoom(props) {
         <div></div>
         </nav>
         <section className="chating-form">
-            {/* {
-                otherChat !== null ? 
-                otherChatClassifyFn(otherChat, props.myAccount).map(({ content }) => {
-                    return <OtherContent basicImg={props.basicImg} chatingRoom={props.chatingRoom} content={content} id={id} />
-                }) : null
-                }
-                    
             {
-                otherChat !== null ?
-                myChatClassifyFn(otherChat, props.myAccount).map(({ content })=>{
-                       return <MyContent content={content} />
-                    
+                otherChat !== null ? chatSequeanceFn(otherChat).map((list, i) => {
+                    if (otherChat[0].User.id === props.myAccount.id) {
+                        if (i % 2 === 0) {
+                            return <MyContent list={list} />
+                        } else {
+                            return <OtherContent 
+                            basicImg={props.basicImg} 
+                            chatingRoom={props.chatingRoom} 
+                            list={list} id={id} />
+                        }
+                    } else {
+                        if (i % 2 !== 0) {
+                            return <MyContent list={list} />
+                        } else {
+                            return <OtherContent 
+                            basicImg={props.basicImg} 
+                            chatingRoom={props.chatingRoom} 
+                            list={list} id={id} />
+                        }
+                    }
                 }) : null
-            } */}
-            {
-                otherChat !== null ?
-                otherChat.map((list, i) => {
-                return <MyContent content={list.content} /> }) : null
             }
-            
-            {/* <div>{testChat !== null ? testChat.content : null}</div> */}
         </section>
         <div className="chating-input">
         <input 
-        onChange={chatingOnChange} 
-        // onKeyDown={onKeyDownCreateChat(props.chatingRoom[id].id)} 
+        onChange={chatingOnChange}  
         value={ment} 
         name="ment" 
         id="chating" 
@@ -94,25 +92,37 @@ function ChatingRoom(props) {
 }
 
 const MyContent = function(props) {
-    return <div className="me">
-            <div>
-                <p className="comment">{props.content}</p>
-                <p className="time"></p>
-            </div>
-        </div>
+    return <div>
+        {
+            props.list.map(list => {
+                return <div className="me">
+                <div>
+                    <p className="comment">{list.content}</p>
+                    <p className="time"></p>
+                </div>
+                </div>
+        })
+    } 
+    </div> 
 }
 
 const OtherContent = function(props) {
-    return <div className="you">
-    <img src={props.basicImg} alt={props.basicImg} />
-            <div className="meta-info">
-                <div className="info">
-                    <p>{props.chatingRoom[props.id].chatUsers[0].name}</p>
-                    <span className="comments">{props.content}</span>
+    return <div>
+        {
+            props.list.map(({content}) => {
+                return <div className="you">
+                <img src={props.basicImg} alt={props.basicImg} />
+                        <div className="meta-info">
+                            <div className="info">
+                                <p>{props.chatingRoom[props.id].chatUsers[0].name}</p>
+                                <span className="comments">{content}</span>
+                            </div>
+                        </div>
+                    <p className="times"></p>
                 </div>
-            </div>
-        <p className="times"></p>
+            })
+        }
     </div>
 }
 
-export default ChatingRoom;
+export default React.memo(ChatingRoom);

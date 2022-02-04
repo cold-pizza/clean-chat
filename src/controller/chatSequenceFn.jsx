@@ -1,35 +1,33 @@
 
 
-const chatSequeanceFn = function(arr, id) {
+const chatSequeanceFn = function(arr) {
     let j = 0;
+    // 2차배열로 옮길 배열 ⬇️
     let chatArr = [];
-    // 2차원 배열 ⬇️
-    let chatArr2 = [];    
-    // for -> 순서대로 계속 돌리기.
-    // id가 다를때까지 arr2에 계속 추가.
-    // 만약 첫번째가 내 채팅이라면 짝수는 내꺼. arr2가 arr3의 짝수 번째에 들어가니까.
-    // id값이 달라지면 모아뒀던 arr2를 arr3[j]에 삽입.
-    // arr2 초기화.
-    
-    // while (arr[i].User.id !== id) {
-    //     arr2 = [ ...arr2, arr[i] ];
-    //     i++;
-    // }
+    // 2차 배열만들 배열 ⬇️
+    let chatArr2 = [];
+    // 배열 갯수만큼 순회.
     for (let i = 0; i < arr.length; i++) {
-        // 내가 먼저 채팅을 시작했을 때
-        if (arr[0].User.id === id) {
-            while (arr[i].User.id === id) {
+        if (i > 0) {
+            if (arr[i].User.id !== arr[i-1].User.id) { //지금과 이전것이 다르면 
+                chatArr2[j] = [];                      // 2차 배열생성하고 삽입하기
+                chatArr2[j] = chatArr;
+                chatArr = [];
+                j += 1;
+                chatArr = [ ...chatArr, arr[i] ];
+            } else {
                 chatArr = [ ...chatArr, arr[i] ];
             }
-            chatArr2[j] = chatArr;
         } else {
-            while (arr[i].User.id !== id) {
-                chatArr = [ ...chatArr, arr[i] ];
-            }
+            chatArr = [ ...chatArr, arr[i] ];
+        }
+        // 마지막에 삽입된 배열이 2차 배열로 안옮겨져서 추가한 로직.
+        if (i === arr.length - 1) {
+            chatArr2[j] = [];
             chatArr2[j] = chatArr;
         }
     }
-    console.log(chatArr);
+    return chatArr2;
 }
 
 export default chatSequeanceFn

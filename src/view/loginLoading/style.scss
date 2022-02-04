@@ -1,0 +1,20 @@
+.login-loading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    div {
+        width: 200px;
+        height: 40px;
+        background: #eee;
+        border-radius: 8px;
+    }
+    .app-name {
+        margin-top: 200px;
+        margin-bottom: 120px;
+    }
+    .loading-box {
+        margin-bottom: 10px;
+    }
+}
