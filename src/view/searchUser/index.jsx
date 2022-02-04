@@ -80,4 +80,4 @@ console.log(searchList)
     </div>
 }
 
-export default SearchUser;
+export default React.memo(SearchUser);

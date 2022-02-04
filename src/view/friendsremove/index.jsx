@@ -1,4 +1,5 @@
 import './style.scss';
+import React from 'react';
 
 function FriendsRemove(props) {
 
@@ -22,4 +23,4 @@ function FriendsRemove(props) {
     </div>
 }
 
-export default FriendsRemove;
+export default React.memo(FriendsRemove);
