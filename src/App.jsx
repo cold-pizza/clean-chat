@@ -110,8 +110,7 @@ function App() {
       {/* 액션버튼s */}
       <Route path={[
         '/friends', 
-        '/chat', 
-        '/chatingroom/:id', 
+        '/chat',  
         '/search', 
         '/searchuser', 
         '/friendsremove'

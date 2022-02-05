@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
 import accountOnChange from '../../controller/accountOnChange';
@@ -7,6 +7,8 @@ function Login(props) {
 
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
+const btnRef = useRef(null);
+const [btnValue, setBtnValue] = useState(false);
 
     return <div className="login">
         <h1>클린챗</h1>
@@ -34,15 +36,25 @@ const { loginId, loginPs } = idInput;
                     setIdInput, 
                     props.setMyAccount, 
                     props.setUser,
-                    props.chatingRoom,
                     props.setChatingRoom,
                     props.basicImg,
+                    btnValue,
+                    setBtnValue,
                     props.history
                     );
-            }} className="login-btn" type="submit">로그인</button>
+            }} 
+            className="login-btn" 
+            type="submit" 
+            disabled={btnValue} 
+            ref={btnRef} 
+            style={{ background: btnValue ? "#828282" : "#2647ff" }}
+            >{ btnValue ? "Loading.." : "로그인" }</button>
             <button onClick={()=>{
                 props.history.push('/signup')
-            }} className="signup-btn" type="button">회원가입</button>
+            }} 
+            className="signup-btn" 
+            type="button"
+            >회원가입</button>
         </section>
     </div>
 }

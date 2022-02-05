@@ -13,7 +13,7 @@ const chatMsgSearchFn = function(chatingRoom) {
                 localStorage.setItem(`chatContents_${i}`, JSON.stringify(chatContents.reverse()));
             } else {
                 return console.log(`${i}번째 채팅은 없습니다.`);
-            }
+            } 
         })
         .catch(err => {
             console.log("채팅조회 에러\n" + err);

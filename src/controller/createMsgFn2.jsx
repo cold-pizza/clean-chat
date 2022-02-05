@@ -9,7 +9,7 @@ import axios from 'axios';
                 console.log(res);
                 setOtherChat([...otherChat, res.data.result]);
                 setTalk({ ment: '' });
-            })
+            }) 
             .catch(err => {
                 console.log(err);
                 console.log('메시지 전송 에러');

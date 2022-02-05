@@ -20,9 +20,9 @@ function Search(props) {
                 } else if (user.name.includes(search)) {
                     return user;
                }
-            }).map(({ name, imagePath, id })=>{
+            }).map(({ name, imagePath, id }, i)=>{
                 return <li key={id} onClick={()=>{
-                    props.history.push(`/friends/friendsmodal/${id}`)
+                    props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                 <img 
                 src={imagePath !== '' ? axios.defaults.baseURL + imagePath : props.basicImg} 
