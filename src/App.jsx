@@ -191,6 +191,7 @@ function App() {
       {/* 친구추가 */}
       <Route path="/searchuser">
         <SearchUser
+        user={user}
         history={history} 
         basicImg={basicImg}
         />

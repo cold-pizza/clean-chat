@@ -1,6 +1,7 @@
 import './style.scss';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import imageOutputFn from '../../controller/imageOutputFn';
 // import { useState } from 'react';
 // import chatSequeanceFn from '../../controller/chatSequenceFn';
 
@@ -17,7 +18,7 @@ function Friends(props) {
         // console.log(chatSequeanceFn(test));
         return console.log('업데이트 되었습니다.');
       }, []);
-
+      
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -37,8 +38,8 @@ function Friends(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                     <img 
-                    src={imagePath !== "" ? ( imagePath.split('/')[0] === "img" ? `${axios.defaults.baseURL}/${imagePath}` : axios.defaults.baseURL + imagePath) : props.basicImg} 
-                    alt={imagePath !== "" ? ( imagePath.split('/')[0] === "img" ? `${axios.defaults.baseURL}/${imagePath}` : axios.defaults.baseURL + imagePath) : props.basicImg} 
+                    src={imagePath !== "" ? imageOutputFn(imagePath) : props.basicImg} 
+                    alt={imagePath !== "" ? imageOutputFn(imagePath) : props.basicImg} 
                     />
                     <p>{name}</p>
                 </li>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
 import inputOnChange from '../../controller/inputOnChange';
+import imageOutputFn from '../../controller/imageOutputFn';
 
 function SearchUser(props) {
     // 리스트 지정.
@@ -14,6 +15,8 @@ function SearchUser(props) {
     const [listRefSwitch, setListRefSwitch] = useState(false);
     
     const [searchList, setSearchList] = useState(null);
+
+    const [userOverlap, setUserOverlap] = useState(false);
 
     // 친구추가 모달 스위치.
     const [plusModalSwitch, setPlusModalSwitch] = useState(false);
@@ -39,7 +42,7 @@ function SearchUser(props) {
         placeholder="이메일(email)을 입력해주세요" 
         />
         <i onClick={() => {
-            friendsSearchFn(userSearch, setSearchList);
+            friendsSearchFn(userSearch, setSearchList, props.user, userOverlap, setUserOverlap);
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">
@@ -48,15 +51,18 @@ function SearchUser(props) {
                 <li className="item">
                 <div className="meta-data">
                 <img 
-                src={searchList.imagePath !== '' ? axios.defaults.baseURL + searchList.imagePath : props.basicImg} 
-                alt={searchList.imagePath !== '' ? axios.defaults.baseURL + searchList.imagePath : props.basicImg} />
+                src={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : props.basicImg} 
+                alt={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : props.basicImg} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }
                 </div>
+                {
+                    userOverlap ? <p style={{ color: "gray" }}>이미 친구입니다!</p> :
                <i onClick={() => {
                    setPlusModalSwitch(!plusModalSwitch);
                 }} className="fas fa-plus"></i>
+            }
             </li>
             : null
             }
