@@ -18,10 +18,10 @@ function ChatingRoom(props) {
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
         // console.log(otherChat);
-        // const socketio = io('wss://clean-chat.kumas.dev');
-        // socketio.on('conn', () => {
-        //     socketCallFn(socketio.id);
-        // });
+        const socketio = io('wss://clean-chat.kumas.dev');
+        socketio.on('conn', () => {
+            socketCallFn(socketio.id);
+        });
         return console.log('채팅기록 로딩 끝');
     }, [])
     

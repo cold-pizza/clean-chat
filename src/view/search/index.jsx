@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import searchOnChange from '../../controller/searchOnChange';
+import imageOutputFn from '../../controller/imageOutputFn';
 import './style.scss';
 
 
@@ -25,8 +26,8 @@ function Search(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                 <img 
-                src={imagePath !== '' ? axios.defaults.baseURL + imagePath : props.basicImg} 
-                alt={imagePath !== '' ? axios.defaults.baseURL + imagePath : props.basicImg} />
+                src={imagePath !== '' ? imageOutputFn(imagePath) : props.basicImg} 
+                alt={imagePath !== '' ? imageOutputFn(imagePath) : props.basicImg} />
                 <p>{name}</p>
             </li>
             })

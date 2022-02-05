@@ -17,6 +17,7 @@ function Chat(props) {
         return console.log('로딩 끝');
     }, [])
 
+
     const [bubbleNum, setBubbleNum] = useState([
         {
             id: '',
