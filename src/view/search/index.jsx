@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { useState } from 'react';
 import searchOnChange from '../../controller/searchOnChange';
 import imageOutputFn from '../../controller/imageOutputFn';
 import './style.scss';
+import { useSelector } from 'react-redux';
 
 
 function Search(props) {
     const [search, setSearch] = useState('');
+    const basicImg = useSelector(state => state.basicImg);
 
     return <div className="search">
         <section className="search-form">
@@ -26,8 +27,8 @@ function Search(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                 <img 
-                src={imagePath !== '' ? imageOutputFn(imagePath) : props.basicImg} 
-                alt={imagePath !== '' ? imageOutputFn(imagePath) : props.basicImg} />
+                src={imagePath !== '' ? imageOutputFn(imagePath) : basicImg} 
+                alt={imagePath !== '' ? imageOutputFn(imagePath) : basicImg} />
                 <p>{name}</p>
             </li>
             })

@@ -1,15 +1,16 @@
 import './style.scss';
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
 import inputOnChange from '../../controller/inputOnChange';
 import imageOutputFn from '../../controller/imageOutputFn';
+import { useSelector } from 'react-redux';
 
 function SearchUser(props) {
     // 리스트 지정.
     const listRef = useRef(null);
+    const basicImg = useSelector(state => state.basicImg);
 
     // 리스트 온오프 스위치.
     const [listRefSwitch, setListRefSwitch] = useState(false);
@@ -51,8 +52,8 @@ function SearchUser(props) {
                 <li className="item">
                 <div className="meta-data">
                 <img 
-                src={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : props.basicImg} 
-                alt={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : props.basicImg} />
+                src={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : basicImg} 
+                alt={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : basicImg} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }

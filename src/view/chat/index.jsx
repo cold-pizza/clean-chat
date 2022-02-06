@@ -1,23 +1,22 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
+import { useSelector } from 'react-redux';
 
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
-    
+    const basicImg = useSelector(state => state.basicImg);
     const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
     
     const [removeNum, setRemoveNum] = useState(null);
-    
-    const [chatImgs, setChatImgs] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         return console.log('로딩 끝');
     }, [])
 
-
+    
     const [bubbleNum, setBubbleNum] = useState([
         {
             id: '',
@@ -43,7 +42,7 @@ function Chat(props) {
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
         }} className="meta-data">
-                <img src={props.basicImg} alt={chatImgs} />
+                <img src={basicImg} alt={basicImg} />
                 <section>
                     <div>
                     <span className="name">{chatUsers[0].name}</span>

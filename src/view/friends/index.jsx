@@ -1,21 +1,17 @@
 import './style.scss';
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import imageOutputFn from '../../controller/imageOutputFn';
-// import { useState } from 'react';
-// import chatSequeanceFn from '../../controller/chatSequenceFn';
-
-// import chatMsgSearchFn from '../../controller/chatMsgSearchFn';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 function Friends(props) {    
-    // const [test, setTest] = useState(null);
+    const dispatch = useDispatch();
+    const basicImg = useSelector(state => state.basicImg);
+
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        // setTest(JSON.parse(localStorage.getItem('chatContents_3')))
-        // console.log(test)
-        // console.log(chatSequeanceFn(test));
         return console.log('업데이트 되었습니다.');
       }, []);
       
@@ -23,7 +19,7 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={props.myAccount !== null ? props.myAccount.imagePath : props.basicImg } alt="#" />
+            <img src={props.myAccount !== null ? props.myAccount.imagePath : basicImg } alt="#" />
             <p>{props.myAccount !== null ? props.myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
@@ -38,8 +34,8 @@ function Friends(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                     <img 
-                    src={imagePath !== "" ? imageOutputFn(imagePath) : props.basicImg} 
-                    alt={imagePath !== "" ? imageOutputFn(imagePath) : props.basicImg} 
+                    src={imagePath !== "" ? imageOutputFn(imagePath) : basicImg} 
+                    alt={imagePath !== "" ? imageOutputFn(imagePath) : basicImg} 
                     />
                     <p>{name}</p>
                 </li>
@@ -48,11 +44,11 @@ function Friends(props) {
         }
         </ul>
         <button onClick={() => {
-            props.setChatAlarmSwitch(!props.chatAlarmSwitch);
-            console.log(props.chatAlarmSwitch);
+            dispatch({type: "ALARM_SWITCH"});
         }}>채팅알림</button>
         <button onClick={() => {
-            props.setChatBubbleSwitch(!props.chatBubbleSwitch);
+            // props.setChatBubbleSwitch(!props.chatBubbleSwitch);
+            dispatch({ type: "CHAT_BUBBLE_SWITCH" })
         }}>채팅풍선알림</button>
     </div>
 }

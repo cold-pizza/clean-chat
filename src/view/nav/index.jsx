@@ -1,30 +1,11 @@
 import { Route } from 'react-router-dom';
 import React from 'react';
 import './style.scss';
+import { useSelector, useDispatch } from 'react-redux';
 
-function Nav(props) {
-
-    const navSite = [{
-      id: 0,
-      site: '/friends',
-      title: '친구'
-    },{
-      id: 1,
-      site: '/chat',
-      title: '채팅'
-    }, {
-      id: 2,
-      site: '/searchuser',
-      title: '유저검색'
-    }, {
-      id: 3,
-      site: '/search',
-      title: '친구찾기'
-    }, {
-      id: 4,
-      site: '/friendsremove',
-      title: '친구관리'
-    }];
+function Nav() {
+  const navSite = useSelector(state => state.navSite);
+  const dispatch = useDispatch();
 
     return <div className="nav">
       {
@@ -35,7 +16,7 @@ function Nav(props) {
               <div>{title}</div>
                 <div>
                   <i onClick={()=>{
-                    props.setSettingModalSwitch(!props.settingModalSwitch)
+                    dispatch({ type: "SETTING_SWITCH" });
                   }} className="fas fa-cog"></i>
               </div>
             </section>

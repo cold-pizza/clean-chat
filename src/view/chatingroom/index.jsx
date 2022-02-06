@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 import './style.scss';
+import OtherContent from '../../view/otherContent';
+import MyContent from '../../view/myContent';
 
-import createMsgFn from '../../controller/createMsgFn';
+// import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
 import socketCallFn from '../../controller/socketCallFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
 import chatSequeanceFn from '../../controller/chatSequenceFn';
+import { useSelector } from 'react-redux';
 
 function ChatingRoom(props) {
     const { id } = useParams();
@@ -49,7 +52,6 @@ function ChatingRoom(props) {
                             return <MyContent list={list} />
                         } else {
                             return <OtherContent 
-                            basicImg={props.basicImg} 
                             chatingRoom={props.chatingRoom} 
                             list={list} id={id} />
                         }
@@ -58,7 +60,6 @@ function ChatingRoom(props) {
                             return <MyContent list={list} />
                         } else {
                             return <OtherContent 
-                            basicImg={props.basicImg} 
                             chatingRoom={props.chatingRoom} 
                             list={list} id={id} />
                         }
@@ -88,40 +89,6 @@ function ChatingRoom(props) {
         }} className="fas fa-arrow-up"></i>
         </button>
         </div>
-    </div>
-}
-
-const MyContent = function(props) {
-    return <div>
-        {
-            props.list.map(list => {
-                return <div className="me">
-                <div>
-                    <p className="comment">{list.content}</p>
-                    <p className="time"></p>
-                </div>
-                </div>
-        })
-    } 
-    </div> 
-}
-
-const OtherContent = function(props) {
-    return <div>
-        {
-            props.list.map(({content}) => {
-                return <div className="you">
-                <img src={props.basicImg} alt={props.basicImg} />
-                        <div className="meta-info">
-                            <div className="info">
-                                <p>{props.chatingRoom[props.id].chatUsers[0].name}</p>
-                                <span className="comments">{content}</span>
-                            </div>
-                        </div>
-                    <p className="times"></p>
-                </div>
-            })
-        }
     </div>
 }
 

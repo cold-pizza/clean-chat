@@ -1,8 +1,8 @@
 
 
-const chatAlarm = function(chatAlarmSwitch, setChatAlarmSwitch) {
+const chatAlarm = function(user, chatAlarmSwitch, setChatAlarmSwitch) {
     // 채팅방에 안 들어와있을 때 -> 소켓비접속시.
-    if (true) { // <- 소켓 미접속시(채팅방에 안들어와있을 때)
+    if (user.length) { // <- 소켓 미접속시(채팅방에 안들어와있을 때)
         // 알림창에 채팅내용 삽입.
         // 알림 스위치 true.
         setChatAlarmSwitch(!chatAlarmSwitch);

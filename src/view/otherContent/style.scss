@@ -1,0 +1,35 @@
+@import '../../App.scss';
+.you {
+    @include row;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    position: relative;
+    img {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        margin-right: 10px;
+    }
+    .meta-info {
+        @include row;
+        align-items: flex-end;
+        p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .comments {
+            padding: 6px 8px;
+            background: white;
+            border-radius: 0 5px 5px 5px;
+            margin-right: 4px;
+            font-size: 16px;
+        }
+    }
+    .times {
+        font-size: 10px;
+        color: $main-gray;
+        position: absolute;
+        bottom: -8px;
+        left: 150px;
+    }
+}

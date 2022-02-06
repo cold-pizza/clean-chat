@@ -41,7 +41,6 @@ function ProfileImageEdit(props) {
         myAccount={props.myAccount}
         setMyAccount={props.setMyAccount}
         history={props.history}
-        basicImg={props.basicImg}
        /> : null }
         {
             selectImgSwitch ?
@@ -73,7 +72,7 @@ function ProfileImageEdit(props) {
         type="file" 
         id="image-file" 
         ref={imgFileRef} 
-        onChange={(e)=> selectImgFn(e, viewImg, setImgUrl)} 
+        onChange={e => selectImgFn(e, viewImg, setImgUrl)} 
         />
     </div>
 }

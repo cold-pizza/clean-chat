@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
 import accountOnChange from '../../controller/accountOnChange';
+import { useSelector } from 'react-redux';
 
 function Login(props) {
-
+const basicImg = useSelector(state => state.basicImg);
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 const btnRef = useRef(null);
@@ -37,7 +38,7 @@ const [btnValue, setBtnValue] = useState(false);
                     props.setMyAccount, 
                     props.setUser,
                     props.setChatingRoom,
-                    props.basicImg,
+                    basicImg,
                     btnValue,
                     setBtnValue,
                     props.history

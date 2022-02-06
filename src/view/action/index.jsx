@@ -1,22 +1,11 @@
 
+import { useSelector } from 'react-redux';
 import './style.scss';
 
 function Action(props) {
+  const chatBubble = useSelector(state => state.chatBubble);
+  const site = useSelector(state => state.site);
   
-    const site = [{
-      id: 0,
-      site: '/friends',
-      logo: 'fas fa-user',
-    }, {
-      id: 1,
-      site: '/chat',
-      logo: 'fas fa-comment'
-    }, {
-      id: 2,
-      site: '/search',
-      logo: 'fas fa-search'
-    }
-  ];
     return <div className="action">
       {
         site.map(({ site, logo, id })=>{
@@ -28,7 +17,7 @@ function Action(props) {
           )
         })
       }
-      { props.chatBubbleSwitch ? <div className="red-dot">1</div> : null}
+      { chatBubble ? <div className="red-dot">1</div> : null}
       </div>
   }
 

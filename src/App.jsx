@@ -21,6 +21,7 @@ import './App.scss';
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 // 강제 로그아웃 하기
 // import⬇️, line59~60사이 logoutFn() 열기.
@@ -34,11 +35,9 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
+  const alarm = useSelector(state => state.alarm);
+  const settingSwitch = useSelector(state => state.settingSwitch);
   const history = useHistory();
-
-  const basicImg = 'https://cold-pizza.github.io/clean-chat/images/happy.jpg';
-
-  const [chatAlarmSwitch, setChatAlarmSwitch] = useState(false);
 
   const [chatingRoom, setChatingRoom] = useState(null);
 
@@ -46,10 +45,6 @@ function App() {
   const [myChatComments, setMyChatComments] = useState(null);
 
   const [myAccount, setMyAccount] = useState(null);
-
-  const [settingModalSwitch, setSettingModalSwitch] = useState(false);
-
-  const [chatBubbleSwitch, setChatBubbleSwitch] = useState(false);
 
   const [user, setUser] = useState(null);
   // 비 로그인시 URL접근 제한.
@@ -86,7 +81,6 @@ function App() {
         history={history} 
         setMyAccount={setMyAccount}
         setUser={setUser}
-        basicImg={basicImg}
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
         />
@@ -95,17 +89,11 @@ function App() {
 
       {/* 회원가입 */}
       <Route path="/signup">
-        <Signup 
-          history={history}
-        />
+        <Signup history={history} />
       </Route>
       
       {/* navigation */}
-      <Nav 
-      history={history} 
-      settingModalSwitch={settingModalSwitch}
-      setSettingModalSwitch={setSettingModalSwitch}
-      />
+      <Nav />
 
       {/* 액션버튼s */}
       <Route path={[
@@ -115,7 +103,7 @@ function App() {
         '/searchuser', 
         '/friendsremove'
         ]}>
-      <Action history={history} chatBubbleSwitch={chatBubbleSwitch} />
+      <Action history={history} />
       </Route>
 
       {/* 친구창 */}
@@ -124,29 +112,18 @@ function App() {
         <Friends 
         setMyAccount={setMyAccount} 
         myAccount={myAccount} 
-        basicImg={basicImg} 
         user={user} 
         setUser={setUser}
         history={history} 
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
-        chatAlarmSwitch={chatAlarmSwitch}
-        setChatAlarmSwitch={setChatAlarmSwitch}
-        chatBubbleSwitch={chatBubbleSwitch}
-        setChatBubbleSwitch={setChatBubbleSwitch}
         />
         </Suspense>
       </Route>
 
       {/* Setting */}
       {
-        settingModalSwitch ?
-        <Setting 
-        history={history} 
-        settingModalSwitch={settingModalSwitch} 
-        setSettingModalSwitch={setSettingModalSwitch}
-        />
-        : null
+        settingSwitch ? <Setting history={history} /> : null
       }
 
 
@@ -157,7 +134,6 @@ function App() {
         chatingRoom={chatingRoom} 
         setMyAccount={setMyAccount}
         setChatingRoom={setChatingRoom}
-        basicImg={basicImg}
         user={user}
         setMyChatComments={setMyChatComments}
         />
@@ -172,7 +148,6 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history} 
-        basicImg={basicImg}
         myChatComments={myChatComments}
         setMyChatComments={setMyChatComments}
         />
@@ -181,20 +156,12 @@ function App() {
 
       {/* 친구찾기 */}
       <Route path="/search">
-        <Search 
-        history={history}
-        user={user}  
-        basicImg={basicImg}
-        />
+        <Search history={history} user={user} />
       </Route>
 
       {/* 친구추가 */}
       <Route path="/searchuser">
-        <SearchUser
-        user={user}
-        history={history} 
-        basicImg={basicImg}
-        />
+        <SearchUser user={user} history={history} />
       </Route>
 
       {/* 친구관리창 */}
@@ -203,7 +170,6 @@ function App() {
         history={history} 
         user={user}
         setUser={setUser}
-        basicImg={basicImg}
         />
       </Route>
 
@@ -222,8 +188,6 @@ function App() {
         history={history} 
         myAccount={myAccount}
         setMyAccount={setMyAccount}
-        settingModalSwitch={settingModalSwitch}
-        setSettingModalSwitch={setSettingModalSwitch}
         />
       </Route>
 
@@ -233,7 +197,6 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history}
-        basicImg={basicImg}
         />
       </Route>
 
@@ -242,7 +205,6 @@ function App() {
         <FriendsModal 
         history={history} 
         user={user} 
-        basicImg={basicImg}
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
         />
@@ -250,8 +212,8 @@ function App() {
 
       {/* 채팅알림창 */}
       {
-        chatAlarmSwitch ? 
-        <ChatingAlarm basicImg ={basicImg} />
+        alarm ? 
+        <ChatingAlarm />
         : null
       }
       </div>
