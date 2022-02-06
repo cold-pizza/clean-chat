@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const selectImgFn = function(e, viewImg, setImgUrl) {
+const selectImgFn = function(e, viewImg) {
     const reader = new FileReader();
     reader.onload = function(url) {
         const previewImg = document.createElement('img');
@@ -16,9 +16,7 @@ const selectImgFn = function(e, viewImg, setImgUrl) {
     axios.post(`${axios.defaults.baseURL}/api/users/images`, dataFile)
     .then(res => {
         const url = res.data.result.imagePath;
-        // console.log(url);
         localStorage.setItem('image', String(url));
-        setImgUrl(localStorage.getItem('image'));
         console.log("이미지가 " + res.data.message);
     })
     .catch(err => {

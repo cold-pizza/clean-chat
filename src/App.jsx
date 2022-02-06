@@ -122,10 +122,7 @@ function App() {
       </Route>
 
       {/* Setting */}
-      {
-        settingSwitch ? <Setting history={history} /> : null
-      }
-
+      { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
       <Route path="/chat">
@@ -211,11 +208,7 @@ function App() {
       </Route>
 
       {/* 채팅알림창 */}
-      {
-        alarm ? 
-        <ChatingAlarm />
-        : null
-      }
+      { alarm ? <ChatingAlarm /> : null }
       </div>
     </div>
   );

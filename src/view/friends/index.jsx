@@ -47,7 +47,6 @@ function Friends(props) {
             dispatch({type: "ALARM_SWITCH"});
         }}>채팅알림</button>
         <button onClick={() => {
-            // props.setChatBubbleSwitch(!props.chatBubbleSwitch);
             dispatch({ type: "CHAT_BUBBLE_SWITCH" })
         }}>채팅풍선알림</button>
     </div>

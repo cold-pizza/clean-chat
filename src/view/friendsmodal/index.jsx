@@ -9,14 +9,15 @@ function FriendsModal(props) {
     const basicImg = useSelector(state => state.basicImg);
     const history = useHistory(); 
     const { id } = useParams();
+    const imageUrl = axios.defaults.baseURL + props.user[id].imagePath;
     return <div className="friends-modal">
         {
             props.user !== null ? 
             <section className="friends-profile">
             <div className="meta-info">
                 <img 
-                src={props.user[id].imagePath !== '' ? axios.defaults.baseURL + props.user[id].imagePath : basicImg} 
-                alt={props.user[id].imagePath !== '' ? axios.defaults.baseURL + props.user[id].imagePath : basicImg} 
+                src={props.user[id].imagePath !== '' ? imageUrl : basicImg} 
+                alt={props.user[id].imagePath !== '' ? imageUrl : basicImg} 
                 />
                 <p>{props.user[id].name}</p>
             </div>

@@ -1,15 +1,17 @@
 import './style.scss';
 import basicImgChangeFn from "../../controller/basicImgChangeFn";
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function BasicImageModal(props) {
     const basicImg = useSelector(state => state.basicImg);
+    const dispatch = useDispatch();
     return <section className="basic-image-modal">
             <p>기본 이미지로 변경하시겠습니까?</p>
             <div>
             <button onClick={() => {
                 basicImgChangeFn(props.myAccount, props.setMyAccount, basicImg);
-                props.basicModalSwitchFn();
+                dispatch({ type: "BASIC_MODAL_SWITCH" });
                 props.history.push('/myprofile');
             }} className="yes-btn">Yes</button>
             <button onClick={()=>{
