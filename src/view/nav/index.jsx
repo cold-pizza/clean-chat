@@ -17,7 +17,7 @@ function Nav() {
               <div>{title}</div>
                 <div>
                   <i onClick={()=>{
-                    dispatch({ type: "SETTING_SWITCH" });
+                    dispatch({ type: "SWITCH_SETTING" });
                   }} className="fas fa-cog"></i>
               </div>
             </section>

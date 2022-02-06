@@ -43,12 +43,12 @@ function Friends(props) {
             }) : '친구가 없습니다.'
         }
         </ul>
-        <button onClick={() => {
-            dispatch({type: "ALARM_SWITCH"});
+        {/* <button onClick={() => {
+            dispatch({type: "SWITCH_ALARM"});
         }}>채팅알림</button>
         <button onClick={() => {
-            dispatch({ type: "CHAT_BUBBLE_SWITCH" })
-        }}>채팅풍선알림</button>
+            dispatch({ type: "SWITCH_CHATING_BUBBLE" })
+        }}>채팅풍선알림</button> */}
     </div>
 }
 

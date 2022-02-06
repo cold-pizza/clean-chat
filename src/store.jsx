@@ -47,41 +47,44 @@ const initialState = {
     
 }
 
-const ALARM_SWITCH = "ALARM_SWITCH";
-const CHAT_BUBBLE_SWITCH = "CHAT_BUBBLE_SWITCH";
-const SETTING_SWITCH = "SETTING_SWITCH";
-const BASIC_MODAL_SWITCH = "BASIC_MODAL_SWITCH";
-const SELECT_IMG_SWITCH = "SELECT_IMG_SWITCH";
-const NAME_INPUT_SWITCH = "NAME_INPUT_SWITCH";
-const MY_EDIT_SWITCH = "MY_EDIT_SWITCH";
+
+const SWITCH_ALARM = "SWITCH_ALARM";
+const SWITCH_CHATING_BUBBLE = "SWITCH_CHATING_BUBBLE";
+const SWITCH_SETTING = "SWITCH_SETTING";
+const SWITCH_BASIC_MODAL = "SWITCH_BASIC_MODAL";
+const SWITCH_IMG_SELECTION = "SWITCH_IMG_SELECTION";
+const SWITCH_NAME_INPUT = "SWITCH_NAME_INPUT";
+const SWITCH_MY_EDIT = "SWITCH_MY_EDIT";
+
 
 const reducer = function(state = initialState, action) {
     switch (action.type) {
-        case ALARM_SWITCH:
+        case SWITCH_ALARM:
             return { ...state, alarm: !state.alarm };
 
-        case CHAT_BUBBLE_SWITCH:
+        case SWITCH_CHATING_BUBBLE:
             return { ...state, chatBubble: !state.chatBubble };
 
-        case SETTING_SWITCH:
+        case SWITCH_SETTING:
             return { ...state, settingSwitch: !state.settingSwitch };
 
-        case BASIC_MODAL_SWITCH:
+        case SWITCH_BASIC_MODAL:
             return { ...state, basicModalSwitch: !state.basicModalSwitch };
 
-        case SELECT_IMG_SWITCH:
+        case SWITCH_IMG_SELECTION:
             return { ...state, selectImgSwitch: !state.selectImgSwitch };
         
-        case NAME_INPUT_SWITCH:
+        case SWITCH_NAME_INPUT:
             return { ...state, nameInputSwitch: !state.nameInputSwitch };
 
-        case MY_EDIT_SWITCH:
+        case SWITCH_MY_EDIT:
             return { ...state, myEditSwitch: !state.myEditSwitch };
 
         default:
             return state;
     }
 }
+
 
 const store = createStore(reducer);
 

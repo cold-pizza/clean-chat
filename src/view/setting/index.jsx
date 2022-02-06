@@ -4,7 +4,7 @@ import logoutFn from '../../controller/logoutFn';
 import { useDispatch } from 'react-redux';
 
 function Setting(props) {
-    const SETTING_SWITCH = "SETTING_SWITCH";
+    const SETTING_SWITCH = "SWITCH_SETTING";
     const dispatch = useDispatch();
 
     return <div className="setting">

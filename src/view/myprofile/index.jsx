@@ -7,8 +7,8 @@ import './style.scss';
 
 function MyProfile(props) {
     const dispatch = useDispatch();
-    const MY_EDIT_SWITCH = "MY_EDIT_SWITCH";
-    const NAME_INPUT_SWITCH = "NAME_INPUT_SWITCH";
+    const MY_EDIT_SWITCH = "SWITCH_MY_EDIT";
+    const NAME_INPUT_SWITCH = "SWITCH_NAME_INPUT";
 
     const nameInputSwitch = useSelector(state => state.nameInputSwitch);
     const myEditSwitch = useSelector(state => state.myEditSwitch);

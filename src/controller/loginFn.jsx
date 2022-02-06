@@ -16,7 +16,8 @@ import io from 'socket.io-client';
     basicImg,
     btnValue,
     setBtnValue,
-    history) {
+    history
+    ) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;

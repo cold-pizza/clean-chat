@@ -3,7 +3,7 @@ import upLoadImgFn from '../../controller/upLoadImgFn';
 import { useDispatch } from 'react-redux';
 
 function SelectImage(props) {
-    const SELECT_IMG_SWITCH = "SELECT_IMG_SWITCH";
+    const SELECT_IMG_SWITCH = "SWITCH_IMG_SELECTION";
     const dispatch = useDispatch();
     return <section className="select-image">
         <div ref={props.viewImg} className="img-box"></div>

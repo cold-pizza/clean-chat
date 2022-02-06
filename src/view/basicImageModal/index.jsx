@@ -11,7 +11,7 @@ function BasicImageModal(props) {
             <div>
             <button onClick={() => {
                 basicImgChangeFn(props.myAccount, props.setMyAccount, basicImg);
-                dispatch({ type: "BASIC_MODAL_SWITCH" });
+                dispatch({ type: "SWITCH_BASIC_MODAL" });
                 props.history.push('/myprofile');
             }} className="yes-btn">Yes</button>
             <button onClick={()=>{

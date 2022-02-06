@@ -11,7 +11,6 @@ import msgSearchFn from '../../controller/msgSearchFn';
 import socketCallFn from '../../controller/socketCallFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
 import chatSequeanceFn from '../../controller/chatSequenceFn';
-import { useSelector } from 'react-redux';
 
 function ChatingRoom(props) {
     const { id } = useParams();
@@ -20,7 +19,6 @@ function ChatingRoom(props) {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        // console.log(otherChat);
         const socketio = io('wss://clean-chat.kumas.dev');
         socketio.on('conn', () => {
             socketCallFn(socketio.id);

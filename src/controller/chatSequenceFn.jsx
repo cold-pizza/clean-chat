@@ -8,7 +8,7 @@ const chatSequeanceFn = function(arr) {
     for (let i = 0; i < arr.length; i++) {
         if (i > 0) {
             if (arr[i].UserId) { // 새로 등록된 채팅이 있을 때 실행
-                if (arr[i].UserId !== (arr[i-1].UserId || arr[i-1].User.id)) {  
+                if (arr[i].UserId !== (arr[i-1].UserId || arr[i-1].User.id)) {   
                     chatArr2[j] = [];
                     chatArr2[j] = chatArr;
                     chatArr = [];

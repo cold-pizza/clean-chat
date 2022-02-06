@@ -40,11 +40,11 @@ function ProfileImageEdit(props) {
         }
         <div className="btns">
             <button onClick={()=>{
-                dispatch({ type: "BASIC_MODAL_SWITCH" });
+                dispatch({ type: "SWITCH_BASIC_MODAL" });
             }} type="button">기본 이미지 설정</button>
             <label htmlFor="image-file">
             <p onClick={() => {
-                dispatch({ type: "SELECT_IMG_SWITCH" });
+                dispatch({ type: "SWITCH_SELECT_IMG" });
             }}>이미지 불러오기</p>
             </label>
             <button onClick={()=>{

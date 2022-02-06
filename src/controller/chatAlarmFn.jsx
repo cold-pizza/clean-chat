@@ -1,14 +1,14 @@
 
 
-const chatAlarm = function(user, chatAlarmSwitch, setChatAlarmSwitch) {
-    // 채팅방에 안 들어와있을 때 -> 소켓비접속시.
-    if (user.length) { // <- 소켓 미접속시(채팅방에 안들어와있을 때)
+const chatAlarm = function(otherChat, dispatch) {
+    const arr = otherChat[otherChat.length-1];
+    if (arr[arr.length-1].User.id !== arr[arr.length-2].User.id) { // <- 소켓 미접속시(채팅방에 안들어와있을 때)
         // 알림창에 채팅내용 삽입.
         // 알림 스위치 true.
-        setChatAlarmSwitch(!chatAlarmSwitch);
+        dispatch({ type: "알람스위치~" });
         // setTimeout 실행. -> 2초
         setTimeout(() => {
-            setChatAlarmSwitch(!chatAlarmSwitch);
+            dispatch({ type: "알람스위치~" });
         }, 2000);
         // return false
 
