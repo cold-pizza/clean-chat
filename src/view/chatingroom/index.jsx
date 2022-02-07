@@ -15,6 +15,7 @@ import chatSequeanceFn from '../../controller/chatSequenceFn';
 function ChatingRoom(props) {
     const { id } = useParams();
     const [otherChat, setOtherChat] = useState(null);
+    
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
@@ -22,6 +23,9 @@ function ChatingRoom(props) {
         const socketio = io('wss://clean-chat.kumas.dev');
         socketio.on('conn', () => {
             socketCallFn(socketio.id);
+            socketio.on('message', (data) => {
+                console.log(data);
+            })
         });
         return console.log('채팅기록 로딩 끝');
     }, [])
