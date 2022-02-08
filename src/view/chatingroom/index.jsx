@@ -14,26 +14,28 @@ function ChatingRoom(props) {
     const { id } = useParams();
     const [otherChat, setOtherChat] = useState(null);
     const scrollRef = useRef(null);
-    const [msg, set] = useState(null);
+    const [msg, setMsg] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        const socketio = io('wss://clean-chat.kumas.dev');
-        socketio.on('conn', () => {
-            socketCallFn(socketio.id);
-            socketio.on('message', data => {
-                console.log(data);
-                set(data);
+        const message = async function () {
+            const socketio = io('wss://clean-chat.kumas.dev');
+            socketio.on('conn', async () => {
+                await socketCallFn(socketio.id);
+                await socketio.on('message', async data => {
+                    await console.log(data);
+                    await setMsg(data);
+                    await setOtherChat([...otherChat, msg]);
+                });
             });
-        });
-        console.log(msg);
-        if (msg !== null) {
-            setOtherChat([...otherChat, msg]);
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-        return console.log('채팅기록 로딩 끝');
+
+        message();
+            return console.log('채팅기록 로딩 끝');
     }, []);
+
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
