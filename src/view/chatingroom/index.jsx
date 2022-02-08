@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 import './style.scss';
@@ -10,12 +10,11 @@ import MyContent from '../../view/myContent';
 import msgSearchFn from '../../controller/msgSearchFn';
 import socketCallFn from '../../controller/socketCallFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
-import chatSequeanceFn from '../../controller/chatSequenceFn';
-
 function ChatingRoom(props) {
     const { id } = useParams();
     const [otherChat, setOtherChat] = useState(null);
-    
+    const scrollRef = useRef(null);
+    const [msg, set] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
@@ -23,14 +22,24 @@ function ChatingRoom(props) {
         const socketio = io('wss://clean-chat.kumas.dev');
         socketio.on('conn', () => {
             socketCallFn(socketio.id);
-            socketio.on('message', (data) => {
+            socketio.on('message', data => {
                 console.log(data);
-            })
+                set(data);
+            });
         });
+        console.log(msg);
+        if (msg !== null) {
+            setOtherChat([...otherChat, msg]);
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
         return console.log('채팅기록 로딩 끝');
-    }, [])
-    
-    // input 이벤트 내용.
+    }, []);
+
+    useEffect(() => {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        return console.log('정렬');
+    }, [otherChat]);
+
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
 
@@ -46,8 +55,17 @@ function ChatingRoom(props) {
         <p className="name">{props.chatingRoom[id].chatUsers[0].name}</p>
         <div></div>
         </nav>
-        <section className="chating-form">
+        <section ref={scrollRef} className="chating-form">
             {
+                otherChat !== null ? otherChat.map((list, i) => {
+                    if (list.User) {
+                        if (list.User.id === props.myAccount.id) {
+                            return <MyContent key={i} list={list} />
+                        } else return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                    } else return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                }) : null
+            }
+            {/* {
                 otherChat !== null ? chatSequeanceFn(otherChat).map((list, i) => {
                     if (otherChat[0].User.id === props.myAccount.id) {
                         if (i % 2 === 0) {
@@ -67,7 +85,7 @@ function ChatingRoom(props) {
                         }
                     }
                 }) : null
-            }
+            } */}
         </section>
         <div className="chating-input">
         <input 
@@ -80,13 +98,6 @@ function ChatingRoom(props) {
         <button>
             <i 
             onClick={()=>{
-            // createMsgFn(
-            //     props.chatingRoom[id].id, 
-            //     ment, 
-            //     setTalk, 
-            //     otherChat,
-            //     setOtherChat
-            //     );
             createMsgFn2(props.chatingRoom[id].id, ment, otherChat, setOtherChat, setTalk);
         }} className="fas fa-arrow-up"></i>
         </button>
