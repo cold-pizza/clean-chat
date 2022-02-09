@@ -44,11 +44,12 @@ function ProfileImageEdit(props) {
             }} type="button">기본 이미지 설정</button>
             <label htmlFor="image-file">
             <p onClick={() => {
-                dispatch({ type: "SWITCH_SELECT_IMG" });
+                dispatch({ type: "SWITCH_IMG_SELECTION" });
             }}>이미지 불러오기</p>
             </label>
             <button onClick={()=>{
                 props.history.goBack();
+                dispatch({ type: "SWITCH_MY_EDIT" });
             }} type="button">취소</button>
         </div>
         <input 

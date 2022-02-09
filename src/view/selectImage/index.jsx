@@ -3,7 +3,7 @@ import upLoadImgFn from '../../controller/upLoadImgFn';
 import { useDispatch } from 'react-redux';
 
 function SelectImage(props) {
-    const SELECT_IMG_SWITCH = "SWITCH_IMG_SELECTION";
+    const SWITCH_IMG_SELECTION = "SWITCH_IMG_SELECTION";
     const dispatch = useDispatch();
     return <section className="select-image">
         <div ref={props.viewImg} className="img-box"></div>
@@ -11,11 +11,11 @@ function SelectImage(props) {
         <div className="img-btns">
             <button onClick={() => {
                 upLoadImgFn(props.myAccount, props.setMyAccount);
-                dispatch({ type: SELECT_IMG_SWITCH });
+                dispatch({ type: SWITCH_IMG_SELECTION });
                 props.history.push('/myprofile'); 
             }}>Yes</button>
             <button onClick={() => {
-                dispatch({ type: SELECT_IMG_SWITCH });
+                dispatch({ type: SWITCH_IMG_SELECTION });
             }}>No</button>
         </div>
     </section>

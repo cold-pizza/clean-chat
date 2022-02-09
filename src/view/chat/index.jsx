@@ -8,7 +8,7 @@ import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 function Chat(props) {
     const basicImg = useSelector(state => state.basicImg);
     const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
-    
+    const chatBubble = useSelector(state => state.chatBubble);
     const [removeNum, setRemoveNum] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
@@ -46,7 +46,7 @@ function Chat(props) {
                 <section>
                     <div className="data">
                     <span className="name">{chatUsers[0].name}</span>
-                    <div className="red-dot">1</div>
+                    { chatBubble ? <div className="red-dot">1</div> : null}
                     {
                         bubbleNum !== null ?
                         (!bubbleNum ?
