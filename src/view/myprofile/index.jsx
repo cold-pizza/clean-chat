@@ -39,9 +39,11 @@ function MyProfile(props) {
         { nameInputSwitch ? 
         <NameInput 
         nameOnChange={(e) => nameOnChange(e, nickNameEdit, setNickNameEdit)} 
-        name={props.myAccount.name} /> : null }
+        name={props.myAccount !== null ? props.myAccount.name : null } /> : null }
         <section>
-            <img src={props.myAccount.imagePath} alt={props.myAccount.imagePath} />
+            <img 
+            src={props.myAccount !== null ? props.myAccount.imagePath : null} 
+            alt={props.myAccount !== null ? props.myAccount.imagePath : null} />
 
             { myEditSwitch ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');

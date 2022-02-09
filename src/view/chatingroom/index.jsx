@@ -15,25 +15,24 @@ function ChatingRoom(props) {
     const [otherChat, setOtherChat] = useState(null);
     const scrollRef = useRef(null);
     const [msg, setMsg] = useState(null);
+    const iterable =  v => v !== null && typeof v[Symbol.iterator] === 'function';
+
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        const message = async function () {
+        console.log(otherChat);
+        const message = function() {
             const socketio = io('wss://clean-chat.kumas.dev');
-            socketio.on('conn', async () => {
-                await socketCallFn(socketio.id);
-                await socketio.on('message', async data => {
-                    await console.log(data);
-                    await setMsg(data);
-                    await setOtherChat([...otherChat, msg]);
+            socketio.on('conn', () => {
+                socketCallFn(socketio.id);
+                socketio.on('message', data => {
+                    setOtherChat([...otherChat, data]);
                 });
             });
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-
         message();
-            return console.log('채팅기록 로딩 끝');
+        return console.log(iterable(otherChat))
     }, []);
 
 
@@ -64,7 +63,9 @@ function ChatingRoom(props) {
                         if (list.User.id === props.myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
-                    } else return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                    } else {
+                        return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                    };
                 }) : null
             }
             {/* {

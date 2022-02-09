@@ -18,6 +18,7 @@ import Action from './view/action';
 import ChatingAlarm from './view/chatingAlarm';
 import './App.scss';
 
+
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -25,7 +26,7 @@ import { useSelector } from 'react-redux';
 
 // 강제 로그아웃 하기
 // import⬇️, line59~60사이 logoutFn() 열기.
-// import logoutFn from './controller/logoutFn';
+import logoutFn from './controller/logoutFn';
 const Login = lazy(() =>  import('./view/login') );
 const ChatingRoom = lazy(() => import('./view/chatingroom') );
 const Friends = lazy(() => import('./view/friends'));
@@ -60,16 +61,15 @@ function App() {
         }
     }
     return routeLimitFn();
-  }, [])
+  }, [history])
 
 
   // 로그인 중 다시 로그인 화면 돌아가기 방지.
   useEffect(() => {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
-      history.goBack();
-      return alert('로그인을 원하시면 로그아웃하시기 바랍니다.');
+      logoutFn(history);
     }
-  }, []);
+  }, [history]);
 
   return (
     <div className="App">
