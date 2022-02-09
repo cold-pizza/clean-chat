@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import imageOutputFn from '../../controller/imageOutputFn';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import chatAlarm from '../../controller/chatAlarmFn';
+import { useState } from 'react/cjs/react.development';
 
 function Friends(props) {    
     const dispatch = useDispatch();
@@ -12,6 +14,8 @@ function Friends(props) {
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        chatAlarm(props.setMessage, dispatch);
+        console.log(localStorage.message)
         return console.log('업데이트 되었습니다.');
       }, []);
       
@@ -43,12 +47,12 @@ function Friends(props) {
             }) : '친구가 없습니다.'
         }
         </ul>
-        {/* <button onClick={() => {
+        <button onClick={() => {
             dispatch({type: "SWITCH_ALARM"});
         }}>채팅알림</button>
         <button onClick={() => {
             dispatch({ type: "SWITCH_CHATING_BUBBLE" })
-        }}>채팅풍선알림</button> */}
+        }}>채팅풍선알림</button>
     </div>
 }
 

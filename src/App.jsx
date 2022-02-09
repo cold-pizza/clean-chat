@@ -42,6 +42,8 @@ function App() {
 
   const [chatingRoom, setChatingRoom] = useState(null);
 
+  const [message, setMessage] = useState(null);
+
       // 나의 채팅 내용.
   const [myChatComments, setMyChatComments] = useState(null);
 
@@ -117,6 +119,7 @@ function App() {
         history={history} 
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
+        setMessage={setMessage}
         />
         </Suspense>
       </Route>
@@ -208,7 +211,7 @@ function App() {
       </Route>
 
       {/* 채팅알림창 */}
-      { alarm ? <ChatingAlarm /> : null }
+      { alarm ? <ChatingAlarm message={message} /> : null }
       </div>
     </div>
   );

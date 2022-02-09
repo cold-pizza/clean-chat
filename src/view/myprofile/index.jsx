@@ -22,6 +22,9 @@ function MyProfile(props) {
             <nav>
             <i onClick={()=>{
                 props.history.push('/friends');
+                if (myEditSwitch) {
+                    dispatch({ type: MY_EDIT_SWITCH });
+                }
             }} className="fas fa-chevron-left"></i>
             { 
             !nameInputSwitch ? <i onClick={() => {

@@ -6,7 +6,7 @@ const selectImgFn = function(e, viewImg) {
         const previewImg = document.createElement('img');
         previewImg.setAttribute('src', url.target.result);
         viewImg.current.appendChild(previewImg);
-    };
+    }; 
     reader.readAsDataURL(e.target.files[0]);
 
     const dataFile = new FormData();

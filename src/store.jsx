@@ -8,6 +8,7 @@ const initialState = {
     selectImgSwitch: false,
     nameInputSwitch: false,
     myEditSwitch: false,
+    message: null,
     basicImg: "https://cold-pizza.github.io/clean-chat/images/happy.jpg",
     site: [{
         id: 0,

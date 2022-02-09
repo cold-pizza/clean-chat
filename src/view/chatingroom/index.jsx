@@ -27,12 +27,13 @@ function ChatingRoom(props) {
             socketio.on('conn', () => {
                 socketCallFn(socketio.id);
                 socketio.on('message', data => {
-                    setOtherChat([...otherChat, data]);
+                    // setOtherChat([...otherChat, data]);
+                    console.log(data);
                 });
             });
         }
         message();
-        return console.log(iterable(otherChat))
+        return console.log(iterable(otherChat));
     }, []);
 
 

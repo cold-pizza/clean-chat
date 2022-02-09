@@ -44,8 +44,9 @@ function Chat(props) {
         }} className="meta-data">
                 <img src={basicImg} alt={basicImg} />
                 <section>
-                    <div>
+                    <div className="data">
                     <span className="name">{chatUsers[0].name}</span>
+                    <div className="red-dot">1</div>
                     {
                         bubbleNum !== null ?
                         (!bubbleNum ?
