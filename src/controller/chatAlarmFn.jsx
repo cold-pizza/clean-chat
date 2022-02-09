@@ -2,7 +2,7 @@
 
 const chatAlarm = function(setState, dispatch) {
     if (localStorage.message !== undefined) {
-        setState(JSON.parse(localStorage.getItem("message")));
+        setState([JSON.parse(localStorage.getItem("message"))]);
         dispatch({type: "SWITCH_ALARM"});
         setTimeout(() => {
             dispatch({type: "SWITCH_ALARM"});

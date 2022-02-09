@@ -211,7 +211,7 @@ function App() {
       </Route>
 
       {/* 채팅알림창 */}
-      { alarm ? <ChatingAlarm message={message} /> : null }
+      { alarm ? <ChatingAlarm chatingRoom={chatingRoom} message={message} /> : null }
       </div>
     </div>
   );

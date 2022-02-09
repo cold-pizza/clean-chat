@@ -4,7 +4,7 @@ import imageOutputFn from '../../controller/imageOutputFn';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import chatAlarm from '../../controller/chatAlarmFn';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 
 function Friends(props) {    
     const dispatch = useDispatch();

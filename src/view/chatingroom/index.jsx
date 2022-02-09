@@ -28,7 +28,8 @@ function ChatingRoom(props) {
                 socketCallFn(socketio.id);
                 socketio.on('message', data => {
                     // setOtherChat([...otherChat, data]);
-                    console.log(data);
+                    // console.log(data);
+                    localStorage.setItem("message", JSON.stringify(data));
                 });
             });
         }
