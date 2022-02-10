@@ -36,8 +36,8 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
-  const alarm = useSelector(state => state.alarm);
-  const settingSwitch = useSelector(state => state.settingSwitch);
+  const alarm = useSelector(state => state.switchReducer.alarm);
+  const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
   const history = useHistory();
 
   const [chatingRoom, setChatingRoom] = useState(null);

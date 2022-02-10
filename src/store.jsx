@@ -1,4 +1,7 @@
+import axios from 'axios';
 import { combineReducers, createStore } from 'redux';
+
+import msgSearchFn from './controller/msgSearchFn';
 
 const switchState = {
     alarm: false,
@@ -63,13 +66,16 @@ const SWITCH_MY_EDIT = "SWITCH_MY_EDIT";
 
 // stateReducer
 const GET_MESSAGE = "GET_MESSAGE";
+const CREATE_MESSAGE = "CREATE_MESSAGE";
+const CHECK_CHAT = "CHECK_CHAT";
+const SEND_MESSAGE = "SEND_MESSAGE";
 
 
 const switchReducer = function(state = switchState, action) {
     switch (action.type) {
         case SWITCH_ALARM:
-          let node = state.test;
-          node = action.payload;
+          let node = { ...state };
+          node.test = action.payload;
             // return { ...state, alarm: !state.alarm };
             return node;
 
@@ -97,11 +103,40 @@ const switchReducer = function(state = switchState, action) {
 }
 
 const stateReducer = function(state = stateManagement, action) {
-  switch(action.type) {
-    case GET_MESSAGE:
-          // let arr = [...state.chatContents];
-          // arr = JSON.parse(localStorage.getItem(`chatContents_${action.type.payload.id}`)); 
-          return console.log(action.type.payload);
+      switch(action.type) {
+            case GET_MESSAGE:
+                  let arr = { ...state };
+                  arr.chatContents = JSON.parse(localStorage.getItem(`chatContents_${action.payload.id}`)); 
+                  return arr;
+
+            case CREATE_MESSAGE:
+              let array = { ...state };
+              const data = {
+                message: action.payload.message
+              }
+              axios.post(`${axios.defaults.baseURL}/api/chats/${action.payload.id}/messages`, data)
+                    .then(res => {
+                        console.log(res.data);
+                        array.chatContents = [ ...array.chatContents, res.data.result ];
+                        return array;
+                    }) 
+                    .catch(err => {
+                        console.log(err);
+                        console.log('메시지 전송 에러');
+                    })
+                    return array;
+
+            case SEND_MESSAGE:
+              let sendedMessage = { ...state };
+              sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
+              return sendedMessage;
+
+
+    // case CHECK_CHAT:
+    //   const id = action.payload.id;
+    //   const chatingRoom = action.payload.chatingRoom;
+    //   const setChatingRoom = action.payload.setChatingRoom;
+    //   return msgSearchFn(id, chatingRoom, setChatingRoom);
 
     
     default:

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from 'react/cjs/react.development';
 import './style.scss';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
+    const dispatch = useDispatch();
     const basicImg = useSelector(state => state.stateReducer.basicImg);
     const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
@@ -23,6 +24,7 @@ function Chat(props) {
                 return <li key={id}>
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
+            dispatch({ type: "GET_MESSAGE", payload: { id: i } });
         }} className="meta-data">
                 <img src={basicImg} alt={basicImg} />
                 <section>

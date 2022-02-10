@@ -10,30 +10,30 @@ import MyContent from '../../view/myContent';
 import msgSearchFn from '../../controller/msgSearchFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
 import socketMsgFn from '../../controller/socketMsgFn';
-function ChatingRoom(props) {
-    const { id } = useParams();
-    const chatName = props.chatingRoom[id].chatUsers[0].name;
-    const [otherChat, setOtherChat] = useState(null);
-    const scrollRef = useRef(null);
-    // const [msg, setMsg] = useState(null);
-    const iterable =  v => v !== null && typeof v[Symbol.iterator] === 'function';
+import { useSelector, useDispatch } from 'react-redux';
 
+function ChatingRoom(props) {
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const chatContent = useSelector(state => state.stateReducer.chatContents);
+    // const [otherChat, setOtherChat] = useState(() => JSON.parse(localStorage.getItem(`chatContents_${id}`)));
+    const scrollRef = useRef(null);
+    
+    // const iterable =  v => v !== null && typeof v[Symbol.iterator] === 'function';
+    const chatName = props.chatingRoom[id].chatUsers[0].name;
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
-        setOtherChat(chatContents);
-        return console.log('222222');
-    }, [props.history])
+        // const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
+        socketMsgFn(io, dispatch);
+        // console.log(iterable(otherChat));
+        return console.log(chatContent);
+    }, []);
 
-    useEffect(() => {
-        socketMsgFn(io, otherChat, setOtherChat);
-        return console.log(iterable(otherChat));
-    }, []);    
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return console.log('정렬');
-    }, [otherChat]);
+    }, [chatContent]);
 
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
@@ -45,6 +45,7 @@ function ChatingRoom(props) {
         <nav>
         <i onClick={()=>{
             msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
+            // dispatch({ type: "CHECK_CHAT", payload: { id: id, chatingRoom: props.chatingRoom, setChatingRoom: props.setChatingRoom } });
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
         <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
@@ -52,7 +53,8 @@ function ChatingRoom(props) {
         </nav>
         <section ref={scrollRef} className="chating-form">
             {
-                otherChat !== null ? otherChat.map((list, i) => {
+                
+                chatContent !== null ? chatContent.map((list, i) => {
 
                     if (list.User) {
                         if (list.User.id === props.myAccount.id) {
@@ -99,7 +101,9 @@ function ChatingRoom(props) {
         <button>
             <i 
             onClick={()=>{
-            createMsgFn2(props.chatingRoom[id].id, ment, otherChat, setOtherChat, setTalk);
+                dispatch({ type: "CREATE_MESSAGE", payload: { id: props.chatingRoom[id].id, message: ment } });
+                setTalk({ ment: '' });
+            // createMsgFn2(props.chatingRoom[id].id, ment, otherChat, setOtherChat, setTalk);
         }} className="fas fa-arrow-up"></i>
         </button>
         </div>
