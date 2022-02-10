@@ -5,7 +5,7 @@ import accountOnChange from '../../controller/accountOnChange';
 import { useSelector } from 'react-redux';
 
 function Login(props) {
-const basicImg = useSelector(state => state.basicImg);
+const basicImg = useSelector(state => state.stateReducer.basicImg);
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 const btnRef = useRef(null);

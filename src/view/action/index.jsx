@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import './style.scss';
 
 function Action(props) {
-  const chatBubble = useSelector(state => state.chatBubble);
-  const site = useSelector(state => state.site);
+  const chatBubble = useSelector(state => state.switchReducer.chatBubble);
+  const site = useSelector(state => state.stateReducer.site);
   
     return <div className="action">
       {

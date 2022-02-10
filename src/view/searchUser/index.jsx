@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 function SearchUser(props) {
     // 리스트 지정.
     const listRef = useRef(null);
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
 
     // 리스트 온오프 스위치.
     const [listRefSwitch, setListRefSwitch] = useState(false);

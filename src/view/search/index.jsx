@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 function Search(props) {
     const [search, setSearch] = useState('');
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
 
     return <div className="search">
         <section className="search-form">

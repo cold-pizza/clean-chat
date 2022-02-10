@@ -10,8 +10,8 @@ function MyProfile(props) {
     const MY_EDIT_SWITCH = "SWITCH_MY_EDIT";
     const NAME_INPUT_SWITCH = "SWITCH_NAME_INPUT";
 
-    const nameInputSwitch = useSelector(state => state.nameInputSwitch);
-    const myEditSwitch = useSelector(state => state.myEditSwitch);
+    const nameInputSwitch = useSelector(state => state.switchReducer.nameInputSwitch);
+    const myEditSwitch = useSelector(state => state.switchReducer.myEditSwitch);
     const [nickNameEdit, setNickNameEdit] = useState('');    
   useEffect(()=>{
     props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));

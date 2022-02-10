@@ -7,7 +7,8 @@ import chatAlarm from '../../controller/chatAlarmFn';
 
 function Friends(props) {    
     const dispatch = useDispatch();
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
+    const test = useSelector(state => state.switchReducer.test);
 
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
@@ -17,7 +18,7 @@ function Friends(props) {
         // console.log(localStorage.message)
         return console.log('업데이트 되었습니다.');
       }, []);
-      
+      console.log(test)
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -47,11 +48,11 @@ function Friends(props) {
         }
         </ul>
         <button onClick={() => {
-            dispatch({type: "SWITCH_ALARM"});
-        }}>채팅알림</button>
+            dispatch({type: "SWITCH_ALARM", payload: { id: 0 }});
+        }}>payload 테스트</button>
         <button onClick={() => {
             dispatch({ type: "SWITCH_CHATING_BUBBLE" })
-        }}>채팅풍선알림</button>
+        }}>채팅기록 수정하기</button>
     </div>
 }
 

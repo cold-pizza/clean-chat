@@ -8,34 +8,27 @@ import MyContent from '../../view/myContent';
 
 // import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
-import socketCallFn from '../../controller/socketCallFn';
 import createMsgFn2 from '../../controller/createMsgFn2';
+import socketMsgFn from '../../controller/socketMsgFn';
 function ChatingRoom(props) {
     const { id } = useParams();
+    const chatName = props.chatingRoom[id].chatUsers[0].name;
     const [otherChat, setOtherChat] = useState(null);
     const scrollRef = useRef(null);
-    const [msg, setMsg] = useState(null);
+    // const [msg, setMsg] = useState(null);
     const iterable =  v => v !== null && typeof v[Symbol.iterator] === 'function';
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        const message = function() {
-            const socketio = io('wss://clean-chat.kumas.dev');
-            socketio.on('conn', () => {
-                socketCallFn(socketio.id);
-                socketio.on('message', data => {
-                    // setOtherChat([...otherChat, data]);
-                    // console.log(data);
-                    localStorage.setItem("message", JSON.stringify(data));
-                });
-            });
-        }
-        message();
-        return console.log(iterable(otherChat));
-    }, []);
+        return console.log('222222');
+    }, [props.history])
 
+    useEffect(() => {
+        socketMsgFn(io, otherChat, setOtherChat);
+        return console.log(iterable(otherChat));
+    }, []);    
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -54,7 +47,7 @@ function ChatingRoom(props) {
             msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
-        <p className="name">{props.chatingRoom[id].chatUsers[0].name}</p>
+        <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
         <div></div>
         </nav>
         <section ref={scrollRef} className="chating-form">
@@ -65,11 +58,11 @@ function ChatingRoom(props) {
                         if (list.User.id === props.myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                        return <OtherContent key={i} list={list} chatName={chatName} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                        return <OtherContent key={i} list={list} chatName={chatName} />
                     }
                 }) : null
             }

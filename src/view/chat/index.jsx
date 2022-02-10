@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
     const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
-    const chatBubble = useSelector(state => state.chatBubble);
+    const chatBubble = useSelector(state => state.switchReducer.chatBubble);
     const [removeNum, setRemoveNum] = useState(null);
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
@@ -16,24 +16,6 @@ function Chat(props) {
         return console.log('로딩 끝');
     }, [])
 
-    
-    const [bubbleNum, setBubbleNum] = useState([
-        {
-            id: '',
-            number: '3',
-            active: false
-        },
-        {
-            id: '',
-            number: '4',
-            active: false
-        },
-        {
-            id: '',
-            number: '5',
-            active: false
-        }
-    ]);
     return <div className="chat">
         {
             props.chatingRoom !== null ?
@@ -47,12 +29,6 @@ function Chat(props) {
                     <div className="data">
                     <span className="name">{chatUsers[0].name}</span>
                     { chatBubble ? <div className="red-dot">1</div> : null}
-                    {
-                        bubbleNum !== null ?
-                        (!bubbleNum ?
-                        <span className="alarm">{bubbleNum[0].number}</span>
-                        : null) : null
-                    }
                     </div>
                     <p className="content">{ChatContent ? ChatContent.content : null}</p>
                 </section>
@@ -71,7 +47,7 @@ function Chat(props) {
                 <div className="btns">
                     <button onClick={() => {
                         chatRoomRemoveFn(props.chatingRoom[removeNum].id);
-                        setChatRemoveSwitch(!chatRemoveSwitch);
+                        setChatRemoveSwitch(!chatRemoveSwitch); 
                     }}>Yes</button>
                     <button onClick={() => {
                         setChatRemoveSwitch(!chatRemoveSwitch);

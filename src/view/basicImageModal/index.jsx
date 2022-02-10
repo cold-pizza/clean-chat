@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 function BasicImageModal(props) {
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
     const dispatch = useDispatch();
     const SWITCH_BASIC_MODAL = "SWITCH_BASIC_MODAL";
 

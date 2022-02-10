@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 function FriendsModal(props) {
-    const basicImg = useSelector(state => state.basicImg);
+    const basicImg = useSelector(state => state.stateReducer.basicImg);
     const history = useHistory(); 
     const { id } = useParams();
     const imageUrl = axios.defaults.baseURL + props.user[id].imagePath;
