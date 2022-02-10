@@ -21,7 +21,6 @@ function ChatingRoom(props) {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         setOtherChat(chatContents);
-        console.log(otherChat);
         const message = function() {
             const socketio = io('wss://clean-chat.kumas.dev');
             socketio.on('conn', () => {
@@ -61,13 +60,17 @@ function ChatingRoom(props) {
         <section ref={scrollRef} className="chating-form">
             {
                 otherChat !== null ? otherChat.map((list, i) => {
+
                     if (list.User) {
                         if (list.User.id === props.myAccount.id) {
                             return <MyContent key={i} list={list} />
-                        } else return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                        } else 
+                        return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
+                    } else if (list.UserId) {
+                        return <MyContent key={i} list={list} />
                     } else {
                         return <OtherContent key={i} list={list} id={id} chatingRoom={props.chatingRoom} />
-                    };
+                    }
                 }) : null
             }
             {/* {

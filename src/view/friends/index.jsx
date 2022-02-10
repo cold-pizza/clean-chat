@@ -4,7 +4,6 @@ import imageOutputFn from '../../controller/imageOutputFn';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import chatAlarm from '../../controller/chatAlarmFn';
-import { useState } from 'react';
 
 function Friends(props) {    
     const dispatch = useDispatch();
@@ -15,7 +14,7 @@ function Friends(props) {
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         chatAlarm(props.setMessage, dispatch);
-        console.log(localStorage.message)
+        // console.log(localStorage.message)
         return console.log('업데이트 되었습니다.');
       }, []);
       

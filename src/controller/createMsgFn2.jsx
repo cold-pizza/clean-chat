@@ -6,7 +6,7 @@ import axios from 'axios';
         }
             axios.post(`${axios.defaults.baseURL}/api/chats/${id}/messages`, data)
             .then(res => {
-                console.log(res);
+                console.log(res.data);
                 setOtherChat([...otherChat, res.data.result]);
                 setTalk({ ment: '' });
             }) 
