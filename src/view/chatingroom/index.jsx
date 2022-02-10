@@ -8,14 +8,14 @@ import MyContent from '../../view/myContent';
 
 // import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
-import createMsgFn2 from '../../controller/createMsgFn2';
+// import createMsgFn2 from '../../controller/createMsgFn2';
 import socketMsgFn from '../../controller/socketMsgFn';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ChatingRoom(props) {
     const dispatch = useDispatch();
     const { id } = useParams();
-    const chatContent = useSelector(state => state.stateReducer.chatContents);
+    const chatContents = useSelector(state => state.stateReducer.chatContents);
     // const [otherChat, setOtherChat] = useState(() => JSON.parse(localStorage.getItem(`chatContents_${id}`)));
     const scrollRef = useRef(null);
     
@@ -26,14 +26,14 @@ function ChatingRoom(props) {
         // const chatContents = JSON.parse(localStorage.getItem(`chatContents_${id}`));
         socketMsgFn(io, dispatch);
         // console.log(iterable(otherChat));
-        return console.log(chatContent);
+        return console.log("로딩");
     }, []);
 
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return console.log('정렬');
-    }, [chatContent]);
+    }, [chatContents]);
 
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
@@ -54,7 +54,7 @@ function ChatingRoom(props) {
         <section ref={scrollRef} className="chating-form">
             {
                 
-                chatContent !== null ? chatContent.map((list, i) => {
+                chatContents !== null ? chatContents.map((list, i) => {
 
                     if (list.User) {
                         if (list.User.id === props.myAccount.id) {
@@ -101,8 +101,9 @@ function ChatingRoom(props) {
         <button>
             <i 
             onClick={()=>{
-                dispatch({ type: "CREATE_MESSAGE", payload: { id: props.chatingRoom[id].id, message: ment } });
-                setTalk({ ment: '' });
+                dispatch({ 
+                    type: "CREATE_MESSAGE", 
+                    payload: { id: props.chatingRoom[id].id, message: ment, setTalk } });
             // createMsgFn2(props.chatingRoom[id].id, ment, otherChat, setOtherChat, setTalk);
         }} className="fas fa-arrow-up"></i>
         </button>

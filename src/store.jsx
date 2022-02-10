@@ -110,6 +110,7 @@ const stateReducer = function(state = stateManagement, action) {
                   return arr;
 
             case CREATE_MESSAGE:
+              const setTalk = action.payload.setTalk;
               let array = { ...state };
               const data = {
                 message: action.payload.message
@@ -118,6 +119,7 @@ const stateReducer = function(state = stateManagement, action) {
                     .then(res => {
                         console.log(res.data);
                         array.chatContents = [ ...array.chatContents, res.data.result ];
+                        setTalk({ ment: '' });
                         return array;
                     }) 
                     .catch(err => {
@@ -128,7 +130,11 @@ const stateReducer = function(state = stateManagement, action) {
 
             case SEND_MESSAGE:
               let sendedMessage = { ...state };
-              sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
+              if (action.payload.data.message === sendedMessage.chatContents[state.chatContents.length-1].message) {
+                return null;
+              } else {
+                sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
+              }
               return sendedMessage;
 
 
