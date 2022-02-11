@@ -144,15 +144,13 @@ const stateReducer = function(state = stateManagement, action) {
 
             case SEND_MESSAGE:
               let sendedMessage = { ...state };
-              const beforeMessage = sendedMessage.chatContents[state.chatContents.length-1].message;
-              if (beforeMessage) {
-                if (action.payload.data.message === beforeMessage) {
+                if (action.payload.data.message === sendedMessage.chatContents[sendedMessage.chatContents.length-1].message) {
                   return null;
                 } else {
                   sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
                 }
-              } else return sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
-              return sendedMessage;
+                return sendedMessage;
+
 
 
               case REMOVE_CHATINGROOM:

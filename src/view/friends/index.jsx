@@ -1,20 +1,19 @@
 import './style.scss';
 import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
 import imageOutputFn from '../../controller/imageOutputFn';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import chatAlarm from '../../controller/chatAlarmFn';
 
+import Chat from '../chat';
+
 function Friends(props) {    
     const dispatch = useDispatch();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
-    // let user = useSelector(state => state.stateReducer.user);
-    // console.log(user)
 
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-        // var users = JSON.parse(localStorage.getItem("user"));
-        // dispatch({ type: "CALL_USERS" });
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         chatAlarm(props.setMessage, dispatch);
@@ -55,7 +54,17 @@ function Friends(props) {
         <button onClick={() => {
             dispatch({ type: "SWITCH_CHATING_BUBBLE" })
         }}>채팅기록 수정하기</button> */}
+        <Route path="/chat">    
+        <Chat 
+        history={props.history}
+        chatingRoom={props.chatingRoom} 
+        setMyAccount={props.setMyAccount}
+        setChatingRoom={props.setChatingRoom}
+        user={props.user}
+        />
+      </Route>
     </div>
+    
 }
 
 export default React.memo(Friends);

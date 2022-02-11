@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import './style.scss';
 
 import signupFn from '../../controller/signupFn';
@@ -21,6 +21,14 @@ function Signup(props) {
         imagePath: '' 
     });
 
+    const joinOnChangeCallback = useCallback((e) => {
+        joinOnChange(e, joinAccount, setJoinAccount);
+    }, [joinAccount]);
+
+    const joinPsOnChangeCallback = useCallback((e) => {
+        joinPsOnChange(e, joinAccount, setJoinAccount, btnActiveSwitch, setBtnActiveSwitch);
+    }, [btnActiveSwitch, joinAccount]);
+
     // 첫 렌더링시 성별.
     useEffect(()=>{
         const arr = { ...joinAccount }
@@ -37,7 +45,7 @@ function Signup(props) {
         </div>
         <section id="signup-form">
             <input 
-            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
+            onChange={(e) => joinOnChangeCallback(e)} 
             name="name" 
             type="text" 
             id="name" 
@@ -45,7 +53,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
+            onChange={(e) => joinOnChangeCallback(e)} 
             name="id" 
             type="email" 
             id="email" 
@@ -53,7 +61,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinOnChange(e, joinAccount, setJoinAccount)} 
+            onChange={(e) => joinOnChangeCallback(e)} 
             name="password" 
             type="password" 
             id="password" 
@@ -61,7 +69,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinPsOnChange(e, joinAccount, setJoinAccount, btnActiveSwitch, setBtnActiveSwitch)} 
+            onChange={(e) => joinPsOnChangeCallback(e)} 
             type="password" 
             name="psCheck" 
             placeholder="비밀번호 확인" 

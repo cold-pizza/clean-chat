@@ -3,7 +3,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 import LoginLoading from './view/loginLoading';
 import ChatLoading from './view/loginLoading';
 import Signup from './view/signup';
-import Chat from './view/chat';
+// import Chat from './view/chat';
 import Search from './view/search';
 import Setting from './view/setting';
 import SearchUser from './view/searchUser';
@@ -11,21 +11,17 @@ import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
 import ProfileImageEdit from './view/profileimageedit';
-
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
 import Action from './view/action';
 import ChatingAlarm from './view/chatingAlarm';
 import './App.scss';
 
-
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-// 강제 로그아웃 하기
-// import⬇️, line59~60사이 logoutFn() 열기.
 import logoutFn from './controller/logoutFn';
 const Login = lazy(() =>  import('./view/login') );
 const ChatingRoom = lazy(() => import('./view/chatingroom') );
@@ -38,21 +34,16 @@ axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
-  const state = useSelector(state => state);
-  console.log(state);
   const history = useHistory();
 
   const [chatingRoom, setChatingRoom] = useState(null);
 
   const [message, setMessage] = useState(null);
 
-      // 나의 채팅 내용.
-  const [myChatComments, setMyChatComments] = useState(null);
-
   const [myAccount, setMyAccount] = useState(null);
 
   const [user, setUser] = useState(null);
-  // 비 로그인시 URL접근 제한.
+
   useEffect(() => {
     const routeLimitFn = function() {
       const path = window.location.pathname;
@@ -67,8 +58,6 @@ function App() {
     return routeLimitFn();
   }, [history])
 
-
-  // 로그인 중 다시 로그인 화면 돌아가기 방지.
   useEffect(() => {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
       logoutFn(history);
@@ -130,16 +119,15 @@ function App() {
       { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
-      <Route path="/chat">
+      {/* <Route path="/chat">    
         <Chat 
         history={history} 
         chatingRoom={chatingRoom} 
         setMyAccount={setMyAccount}
         setChatingRoom={setChatingRoom}
         user={user}
-        setMyChatComments={setMyChatComments}
         />
-      </Route>
+      </Route> */}
 
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
@@ -150,15 +138,13 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history} 
-        myChatComments={myChatComments}
-        setMyChatComments={setMyChatComments}
         />
         </Suspense>
       </Route>
 
       {/* 친구찾기 */}
       <Route path="/search">
-        <Search history={history} user={user} />
+        <Search history={history} user={user} setUser={setUser} />
       </Route>
 
       {/* 친구추가 */}
@@ -220,4 +206,4 @@ function App() {
   );
 }
 
-export default App;
+export default React.memo(App);

@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function Nav() {
   const navSite = useSelector(state => state.basicReducer.navSite);
-  console.log(navSite)
-
   const dispatch = useDispatch();
 
     return <div className="nav">

@@ -63,4 +63,4 @@ function Chat(props) {
 }
 
 
-export default React.memo(Chat);
+export default Chat
