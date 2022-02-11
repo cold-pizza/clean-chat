@@ -1,7 +1,7 @@
 // 컴포넌트
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import LoginLoading from './view/loginLoading';
-import ChatLoading from './view/loginLoading';
+// import ChatLoading from './view/loginLoading';
 import Signup from './view/signup';
 // import Chat from './view/chat';
 import Search from './view/search';
@@ -22,8 +22,9 @@ import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-import logoutFn from './controller/logoutFn';
+// import logoutFn from './controller/logoutFn';
 const Login = lazy(() =>  import('./view/login') );
+const Chat = lazy(() => import('./view/chat'));
 const ChatingRoom = lazy(() => import('./view/chatingroom') );
 const Friends = lazy(() => import('./view/friends'));
 
@@ -50,17 +51,18 @@ function App() {
       const url = ["/clean-chat/", "/clean-chat/signup"];
       if (localStorage.getItem('user') === null && path !== (url[0] || url[1])) {
           history.replace('/');
-              // 강제 로그아웃 해야할 때⬇️
-              // logoutFn(history);
           alert('로그인시 이용 가능합니다.');
         }
     }
     return routeLimitFn();
   }, [history])
 
-  useEffect(() => {
+  useEffect( () => {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
-      logoutFn(history);
+      import('./controller/logoutFn.jsx')
+      .then(({ default: logout }) => {
+        logout(history);
+      })
     }
   }, [history]);
 
@@ -98,9 +100,9 @@ function App() {
         ]}>
       <Action history={history} />
       </Route>
-
+        {/* <Route path="/friends" component={() => import('./view/friends') /> */}
       {/* 친구창 */}
-      <Route path="/friends">
+       <Route path="/friends">
         <Suspense fallback={<LoginLoading />}>
         <Friends 
         setMyAccount={setMyAccount} 
@@ -119,7 +121,8 @@ function App() {
       { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
-      {/* <Route path="/chat">    
+      <Route path="/chat">    
+      <Suspense fallback={<LoginLoading />}>
         <Chat 
         history={history} 
         chatingRoom={chatingRoom} 
@@ -127,11 +130,12 @@ function App() {
         setChatingRoom={setChatingRoom}
         user={user}
         />
-      </Route> */}
+        </Suspense>
+      </Route>
 
       {/* 채팅창 */}
       <Route path="/chatingroom/:id">
-        <Suspense fallback={<ChatLoading />}>
+        <Suspense fallback={<LoginLoading />}>
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
