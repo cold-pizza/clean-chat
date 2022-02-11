@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 
 function ProfileImageEdit(props) {
     const dispatch = useDispatch();
-    const basicModalSwitch = useSelector(state => state.switchReducer.basicModalSwitch);
+    const basicModalSwitch = useSelector(state => state.basicReducer.basicModalSwitch);
     const selectImgSwitch = useSelector(state => state.switchReducer.selectImgSwitch);
     // 불러온 이미지 url.
     const [imgUrl, setImgUrl] = useState(null);

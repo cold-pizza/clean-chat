@@ -18,7 +18,7 @@ function ChatingRoom(props) {
     const chatContents = useSelector(state => state.stateReducer.chatContents);
     // const [otherChat, setOtherChat] = useState(() => JSON.parse(localStorage.getItem(`chatContents_${id}`)));
     const scrollRef = useRef(null);
-    
+      
     // const iterable =  v => v !== null && typeof v[Symbol.iterator] === 'function';
     const chatName = props.chatingRoom[id].chatUsers[0].name;
     useEffect(() => {

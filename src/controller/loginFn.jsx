@@ -11,7 +11,7 @@ import io from 'socket.io-client';
     loginPs, 
     setIdInput, 
     setMyAccount, 
-    setUser, 
+    dispatch, 
     setChatingRoom, 
     basicImg,
     btnValue,
@@ -51,18 +51,19 @@ import io from 'socket.io-client';
         }
         console.log(user);
         if (res.status === 200) {
-          // 친구리스트 요청.
-          axios.get(`${axios.defaults.baseURL}/api/friends`)
-          .then(res => {
-            console.log("친구가 " + res.data.message);
-            console.log(res.data.result);
-            localStorage.setItem('user', JSON.stringify(res.data.result));
-            setUser(JSON.parse(localStorage.getItem('user')));
-          })
-          .catch(err => {
-            console.log('친구 에러');
-            console.log(err);
-          });
+          dispatch({ type: "CALL_USERS" });
+          // // 친구리스트 요청.
+          // axios.get(`${axios.defaults.baseURL}/api/friends`)
+          // .then(res => {
+          //   console.log("친구가 " + res.data.message);
+          //   console.log(res.data.result);
+          //   localStorage.setItem('user', JSON.stringify(res.data.result));
+          //   setUser(JSON.parse(localStorage.getItem('user')));
+          // })
+          // .catch(err => {
+          //   console.log('친구 에러');
+          //   console.log(err);
+          // });
 
           // 채팅방 요청.
           axios.get(`${axios.defaults.baseURL}/api/chats`)

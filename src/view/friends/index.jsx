@@ -7,16 +7,17 @@ import chatAlarm from '../../controller/chatAlarmFn';
 
 function Friends(props) {    
     const dispatch = useDispatch();
-    const basicImg = useSelector(state => state.stateReducer.basicImg);
-    const test = useSelector(state => state);
-    console.log(test);
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
+    // let user = useSelector(state => state.stateReducer.user);
+    // console.log(user)
 
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+        // var users = JSON.parse(localStorage.getItem("user"));
+        // dispatch({ type: "CALL_USERS" });
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         chatAlarm(props.setMessage, dispatch);
-        // console.log(localStorage.message)
         return console.log('업데이트 되었습니다.');
       }, []);
     return <div className="friends">
@@ -47,13 +48,13 @@ function Friends(props) {
             }) : '친구가 없습니다.'
         }
         </ul>
-        <button onClick={() => {
+        {/* <button onClick={() => {
             dispatch({type: "SWITCH_ALARM", payload: { id: 0 }});
             console.log(test);
         }}>payload 테스트</button>
         <button onClick={() => {
             dispatch({ type: "SWITCH_CHATING_BUBBLE" })
-        }}>채팅기록 수정하기</button>
+        }}>채팅기록 수정하기</button> */}
     </div>
 }
 

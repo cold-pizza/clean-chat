@@ -7,8 +7,9 @@ import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
     const dispatch = useDispatch();
-    const basicImg = useSelector(state => state.stateReducer.basicImg);
-    const [chatRemoveSwitch, setChatRemoveSwitch] = useState(false);
+    const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
+    const chatRemoveSwitch = useSelector(state => state.switchReducer.chatRemoveSwitch);
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
     const [removeNum, setRemoveNum] = useState(null);
     useEffect(() => {
@@ -36,7 +37,7 @@ function Chat(props) {
                 </section>
             </div>
             <i onClick={() => {
-                setChatRemoveSwitch(!chatRemoveSwitch);
+                dispatch({ type: SWITCH_CHAT_REMOVE });
                 setRemoveNum(i);
             }} className="fas fa-minus minus"></i>
         </li>
@@ -48,11 +49,12 @@ function Chat(props) {
                 <p>방을 나가시겠습니까?</p>
                 <div className="btns">
                     <button onClick={() => {
-                        chatRoomRemoveFn(props.chatingRoom[removeNum].id);
-                        setChatRemoveSwitch(!chatRemoveSwitch); 
+                        // chatRoomRemoveFn(props.chatingRoom[removeNum].id);
+                        dispatch({ type: "REMOVE_CHATINGROOM", payload: {id: props.chatingRoom[removeNum].id} })
+                        dispatch({ type: SWITCH_CHAT_REMOVE });
                     }}>Yes</button>
                     <button onClick={() => {
-                        setChatRemoveSwitch(!chatRemoveSwitch);
+                        dispatch({ type: SWITCH_CHAT_REMOVE });
                     }}>No</button>
                 </div>
             </div> : null

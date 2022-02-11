@@ -38,6 +38,8 @@ axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
+  const state = useSelector(state => state);
+  console.log(state);
   const history = useHistory();
 
   const [chatingRoom, setChatingRoom] = useState(null);
@@ -205,6 +207,7 @@ function App() {
         <FriendsModal 
         history={history} 
         user={user} 
+        setUser={setUser}
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
         />

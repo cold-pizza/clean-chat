@@ -3,9 +3,11 @@ import './style.scss';
 import loginFn from '../../controller/loginFn';
 import accountOnChange from '../../controller/accountOnChange';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function Login(props) {
-const basicImg = useSelector(state => state.stateReducer.basicImg);
+    const dispatch = useDispatch();
+const basicImg = useSelector(state => state.basicReducer.basicImg);
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 const btnRef = useRef(null);
@@ -36,7 +38,7 @@ const [btnValue, setBtnValue] = useState(false);
                     loginPs, 
                     setIdInput, 
                     props.setMyAccount, 
-                    props.setUser,
+                    dispatch,
                     props.setChatingRoom,
                     basicImg,
                     btnValue,

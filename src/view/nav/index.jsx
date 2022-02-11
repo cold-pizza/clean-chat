@@ -4,7 +4,8 @@ import './style.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
 function Nav() {
-  const navSite = useSelector(state => state.stateReducer.navSite);
+  const navSite = useSelector(state => state.basicReducer.navSite);
+  console.log(navSite)
 
   const dispatch = useDispatch();
 

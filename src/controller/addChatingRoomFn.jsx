@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // 채팅방에 추가할 함수.
-const addChatingRoomFn = function(id, user, history) {
+const addChatingRoomFn = function(id) {
   const body = {
-    userId: user[id].id
+    userId: [id].id
   }
   axios.post(`${axios.defaults.baseURL}/api/chats`, body)
   .then(res => {

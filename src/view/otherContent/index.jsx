@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import './style.scss';
 
 const OtherContent = function(props) {
-    const basicImg = useSelector(state => state.stateReducer.basicImg);
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
     return <div>
              <div className="you">
                 <img src={basicImg} alt={basicImg} />

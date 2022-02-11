@@ -7,7 +7,7 @@ const chatMsgSearchFn = function(chatingRoom) {
         axios.get(`${axios.defaults.baseURL}/api/chats/${chatingRoom[i].id}/messages`)
         .then(res => {
             console.log(`${i}번째 ` + res.data.message);
-            console.log(res.data.result);
+            // console.log(res.data.result);
             if (res.data.result[0].ChatContents !== null) {
                 const chatContents = res.data.result[0].ChatContents;
                 localStorage.setItem(`chatContents_${i}`, JSON.stringify(chatContents.reverse()));

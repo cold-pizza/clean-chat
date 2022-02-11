@@ -4,7 +4,7 @@ import alarmNameFn from '../../controller/alarmNameFn';
 
 const ChatingAlarm = function(props) {
     console.log(props.chatingRoom)
-    const basicImg = useSelector(state => state.stateReducer.basicImg);
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
     return <div className="chat-modal">
         <p className="msg-alarm">메시지가 도착했습니다.</p>
         <div className="chat-box">

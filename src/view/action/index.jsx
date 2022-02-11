@@ -4,7 +4,7 @@ import './style.scss';
 
 function Action(props) {
   const chatBubble = useSelector(state => state.switchReducer.chatBubble);
-  const site = useSelector(state => state.stateReducer.site);
+  const site = useSelector(state => state.basicReducer.site);
   
     return <div className="action">
       {

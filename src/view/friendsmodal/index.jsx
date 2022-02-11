@@ -4,12 +4,19 @@ import './style.scss';
 import addChatingRoomFn from '../../controller/addChatingRoomFn';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 function FriendsModal(props) {
-    const basicImg = useSelector(state => state.stateReducer.basicImg);
-    const history = useHistory(); 
-    const { id } = useParams();
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const history = useHistory();
+    const [i, setI] = useState(0); 
+    const { id } = useParams() || localStorage.friendsNumber;
     const imageUrl = axios.defaults.baseURL + props.user[id].imagePath;
+
+    useEffect(() => {
+        props.setUser(JSON.parse(localStorage.getItem('user')));
+        localStorage.setItem("friendsNumber", id);
+    }, [])
     return <div className="friends-modal">
         {
             props.user !== null ? 
@@ -23,10 +30,11 @@ function FriendsModal(props) {
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    addChatingRoomFn(id, props.user, props.chatingRoom, props.setChatingRoom);
+                    addChatingRoomFn(props.user[id].id);
                     history.push(`/chatingroom/${id}`);
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
+                    localStorage.removeItem("friendsNumber");
                     history.goBack();
                 }} className="cancel-btn">뒤로가기</button>
             </div>
