@@ -1,9 +1,8 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
-import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
+// import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
 
 function Chat(props) {
     const dispatch = useDispatch();
@@ -63,4 +62,4 @@ function Chat(props) {
 }
 
 
-export default Chat
+export default Chat;

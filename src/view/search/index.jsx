@@ -3,13 +3,9 @@ import searchOnChange from '../../controller/searchOnChange';
 import imageOutputFn from '../../controller/imageOutputFn';
 import './style.scss';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react/cjs/react.development';
-import { useHistory } from 'react-router';
-
 
 function Search(props) {
     const [search, setSearch] = useState('');
-    const history = useHistory();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     return <div className="search">
         <section className="search-form">

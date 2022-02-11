@@ -1,32 +1,37 @@
 // 컴포넌트
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import LoginLoading from './view/loginLoading';
+// import LoginLoading from './view/loginLoading';
 // import ChatLoading from './view/loginLoading';
 import Signup from './view/signup';
-// import Chat from './view/chat';
+import Chat from './view/chat';
+import Login from './view/login';
 import Search from './view/search';
 import Setting from './view/setting';
 import SearchUser from './view/searchUser';
 import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
-import ProfileImageEdit from './view/profileimageedit';
+// import ProfileImageEdit from './view/profileimageedit';
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
+import Friends from './view/friends';
 import Action from './view/action';
 import ChatingAlarm from './view/chatingAlarm';
 import './App.scss';
+import ChatingRoom from './view/chatingroom';
+import ProfileImageEdit from './view/profileimageedit';
 
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-// import logoutFn from './controller/logoutFn';
-const Login = lazy(() =>  import('./view/login') );
-const Chat = lazy(() => import('./view/chat'));
-const ChatingRoom = lazy(() => import('./view/chatingroom') );
-const Friends = lazy(() => import('./view/friends'));
+// const Login = lazy(() =>  import('./view/login') );
+// const Chat = lazy(() => import('./view/chat'));
+// const ChatingRoom = lazy(() => import('./view/chatingroom') );
+// const Friends = lazy(() => import('./view/friends'));
+// const Signup = lazy(() => import('./view/signup'));
+// const ProfileImageEdit = lazy(() => import('./view/profileimageedit'));
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -59,7 +64,7 @@ function App() {
 
   useEffect( () => {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
-      import('./controller/logoutFn.jsx')
+      import('./controller/logoutFn')
       .then(({ default: logout }) => {
         logout(history);
       })
@@ -70,22 +75,17 @@ function App() {
     <div className="App">
       <div className="app-box">
         {/* 로그인 */}
-      <Route exact path="/">
-        <Suspense fallback={<LoginLoading />}>
-        <Login 
-        history={history} 
-        setMyAccount={setMyAccount}
+        {/* <Suspense fallback={<LoginLoading />}> */}
+      <Route exact path="/" render={() => <Login history={history} 
+      setMyAccount={setMyAccount}
         setUser={setUser}
         chatingRoom={chatingRoom}
-        setChatingRoom={setChatingRoom}
-        />
-        </Suspense>
-      </Route>
-
-      {/* 회원가입 */}
-      <Route path="/signup">
+        setChatingRoom={setChatingRoom} /> }/>
+        <Route path="/signup">
         <Signup history={history} />
       </Route>
+        {/* </Suspense> */}
+
       
       {/* navigation */}
       <Nav />
@@ -102,8 +102,8 @@ function App() {
       </Route>
         {/* <Route path="/friends" component={() => import('./view/friends') /> */}
       {/* 친구창 */}
+        {/* <Suspense fallback={<LoginLoading />}> */}
        <Route path="/friends">
-        <Suspense fallback={<LoginLoading />}>
         <Friends 
         setMyAccount={setMyAccount} 
         myAccount={myAccount} 
@@ -114,15 +114,15 @@ function App() {
         setChatingRoom={setChatingRoom}
         setMessage={setMessage}
         />
-        </Suspense>
       </Route>
+        {/* </Suspense> */}
 
       {/* Setting */}
       { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
       <Route path="/chat">    
-      <Suspense fallback={<LoginLoading />}>
+      {/* <Suspense fallback={<LoginLoading />}> */}
         <Chat 
         history={history} 
         chatingRoom={chatingRoom} 
@@ -130,12 +130,12 @@ function App() {
         setChatingRoom={setChatingRoom}
         user={user}
         />
-        </Suspense>
+        {/* </Suspense> */}
       </Route>
 
       {/* 채팅창 */}
+        {/* <Suspense fallback={<LoginLoading />}> */}
       <Route path="/chatingroom/:id">
-        <Suspense fallback={<LoginLoading />}>
         <ChatingRoom 
         chatingRoom={chatingRoom} 
         setChatingRoom={setChatingRoom}
@@ -143,8 +143,15 @@ function App() {
         setMyAccount={setMyAccount}
         history={history} 
         />
-        </Suspense>
       </Route>
+      <Route path="/myprofile/profileimageedit">
+        <ProfileImageEdit 
+        myAccount={myAccount}
+        setMyAccount={setMyAccount}
+        history={history}
+        />
+      </Route>
+        {/* </Suspense> */}
 
       {/* 친구찾기 */}
       <Route path="/search">
@@ -184,13 +191,7 @@ function App() {
       </Route>
 
       {/* 내 프로필 이미지 변경 */}
-      <Route path="/myprofile/profileimageedit">
-        <ProfileImageEdit 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
-        history={history}
-        />
-      </Route>
+
 
       {/* 친구프로필 */}
       <Route path="/friends/friendsmodal/:id">
