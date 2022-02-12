@@ -1,5 +1,5 @@
 // 컴포넌트
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 // import LoginLoading from './view/loginLoading';
 // import ChatLoading from './view/loginLoading';
 import Signup from './view/signup';
@@ -98,7 +98,7 @@ function App() {
         '/searchuser', 
         '/friendsremove'
         ]}>
-      <Action history={history} />
+      <Action history={history} setUser={setUser} />
       </Route>
         {/* <Route path="/friends" component={() => import('./view/friends') /> */}
       {/* 친구창 */}
@@ -142,6 +142,7 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history} 
+        setMessage={setMessage}
         />
       </Route>
       <Route path="/myprofile/profileimageedit">

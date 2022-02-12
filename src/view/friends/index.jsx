@@ -8,12 +8,13 @@ import chatAlarm from '../../controller/chatAlarmFn';
 function Friends(props) {    
     const dispatch = useDispatch();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const message = useSelector(state => state.stateReducer.message);
 
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        chatAlarm(props.setMessage, dispatch);
+        chatAlarm(message, dispatch);
         return console.log('업데이트 되었습니다.');
       }, []);
     return <div className="friends">

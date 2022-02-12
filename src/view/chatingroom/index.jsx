@@ -6,10 +6,9 @@ import './style.scss';
 import OtherContent from '../../view/otherContent';
 import MyContent from '../../view/myContent';
 
-// import createMsgFn from '../../controller/createMsgFn';
 import msgSearchFn from '../../controller/msgSearchFn';
-// import createMsgFn2 from '../../controller/createMsgFn2';
 import socketMsgFn from '../../controller/socketMsgFn';
+import chatingSencerFn from '../../controller/chatingSencerFn';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ChatingRoom(props) {
@@ -17,14 +16,14 @@ function ChatingRoom(props) {
     const { id } = useParams();
     const chatContents = useSelector(state => state.stateReducer.chatContents);
     const scrollRef = useRef(null);
-    const chatName = props.chatingRoom[id].chatUsers[0].name;
     const [inputSwitch, setInputSwitch] = useState(false);
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        socketMsgFn(io, dispatch);
+        localStorage.setItem('number', id);
+        socketMsgFn(io, dispatch, props.setMessage);
         return console.log("로딩");
     }, []);
 
@@ -32,14 +31,6 @@ function ChatingRoom(props) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return console.log('정렬');
     }, [chatContents]);
-
-    const chatingSencerFn = function() {
-        if (ment.length === 0 && inputSwitch) {
-            setInputSwitch(!inputSwitch);
-        } else if (ment.length > 0 && !inputSwitch) {
-            setInputSwitch(!inputSwitch);
-        }
-    }
 
     const chatingOnChange = function(e) {
         setTalk({...talk, [e.target.name]: e.target.value});
@@ -49,31 +40,32 @@ function ChatingRoom(props) {
         <nav>
         <i onClick={()=>{
             msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
+            localStorage.removeItem('number');
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
         <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
         <div></div>
         </nav>
         <section ref={scrollRef} className="chating-form">
-            {       
-                chatContents !== null ? chatContents.map((list, i) => {
+            {
+                chatContents.length > 0 ? chatContents.map((list, i) => {
                     if (list.User) {
                         if (list.User.id === props.myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} chatName={chatName} />
+                        return <OtherContent key={i} list={list} chatName={props.chatingRoom[id].chatUsers[0].name} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} chatName={chatName} />
+                        return <OtherContent key={i} list={list} chatName={props.chatingRoom[id].chatUsers[0].name} />
                     }
-                }) : null
+                }) : console.log('chatContents === null')
             }
         </section>
         <div className="chating-input">
         <input 
         onChange={chatingOnChange}  
-        onKeyUp={chatingSencerFn}
+        onKeyUp={chatingSencerFn(ment, inputSwitch, setInputSwitch)}
         value={ment} 
         name="ment" 
         id="chating" 

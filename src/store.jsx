@@ -18,7 +18,6 @@ const stateManagement = {
   user: null,
   message: null,
   chatContents: [],
-
 }
 
 const basicState = {
@@ -77,6 +76,7 @@ const CHECK_CHAT = "CHECK_CHAT";
 const SEND_MESSAGE = "SEND_MESSAGE";
 const REMOVE_CHATINGROOM = "REMOVE_CHATINGROOM";
 const CALL_USERS = "CALL_USERS";
+const ALARM_MESSAGE = "ALARM_MESSAGE";
 
 
 const switchReducer = function(state = switchState, action) {
@@ -178,6 +178,9 @@ const stateReducer = function(state = stateManagement, action) {
                   console.log(err);
                 });
                 return users;
+
+                case ALARM_MESSAGE:
+                  return { ...state, message: action.payload.message };
 
 
 

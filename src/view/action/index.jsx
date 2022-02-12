@@ -11,6 +11,9 @@ function Action(props) {
         site.map(({ site, logo, id })=>{
           return (
             <i key={id} onClick={()=>{
+              if (site === '/search') {
+                props.setUser(JSON.parse(localStorage.getItem('user')));
+              }
         props.history.push(site);
       }} className={logo}>
       </i>
