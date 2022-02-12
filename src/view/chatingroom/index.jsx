@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 import './style.scss';
@@ -16,8 +16,12 @@ function ChatingRoom(props) {
     const dispatch = useDispatch();
     const { id } = useParams();
     const chatContents = useSelector(state => state.stateReducer.chatContents);
+    const chatingInputSwitch = useSelector(state => state.stateReducer.chatingInputSwitch);
     const scrollRef = useRef(null);
     const chatName = props.chatingRoom[id].chatUsers[0].name;
+    const [inputSwitch, setInputSwitch] = useState(false);
+    const [talk, setTalk] = useState({ ment: '' });
+    const { ment } = talk;
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
@@ -25,18 +29,26 @@ function ChatingRoom(props) {
         return console.log("로딩");
     }, []);
 
-
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return console.log('정렬');
     }, [chatContents]);
 
-    const [talk, setTalk] = useState({ ment: '' });
-    const { ment } = talk;
+    const chatingSencerFn = function() {
+        if (ment.length === 0 && inputSwitch) {
+            setInputSwitch(!inputSwitch);
+        } else if (ment.length > 0 && !inputSwitch) {
+            setInputSwitch(!inputSwitch);
+        }
+    }
 
     const chatingOnChange = function(e) {
         setTalk({...talk, [e.target.name]: e.target.value});
     }
+    const chatingCallback = useCallback((e) => {
+        chatingOnChange(e);
+    }, [talk]);
+
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{
@@ -65,21 +77,25 @@ function ChatingRoom(props) {
         <div className="chating-input">
         <input 
         onChange={chatingOnChange}  
+        onKeyUp={chatingSencerFn}
         value={ment} 
         name="ment" 
         id="chating" 
         type="text" 
         />
         <button>
+            { inputSwitch ? 
             <i 
             onClick={()=>{
                 dispatch({ 
                     type: "CREATE_MESSAGE", 
                     payload: { id: props.chatingRoom[id].id, message: ment, setTalk } });
+                    setInputSwitch(!inputSwitch);
         }} className="fas fa-arrow-up"></i>
+         : null }
         </button>
         </div>
     </div>
 }
 
-export default React.memo(ChatingRoom);
+export default ChatingRoom;

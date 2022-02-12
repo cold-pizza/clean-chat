@@ -11,6 +11,7 @@ const switchState = {
     nameInputSwitch: false,
     myEditSwitch: false,
     chatRemoveSwitch: false,
+    chatingInputSwitch: false,
     test: null,
 }
 
@@ -69,6 +70,7 @@ const SWITCH_IMG_SELECTION = "SWITCH_IMG_SELECTION";
 const SWITCH_NAME_INPUT = "SWITCH_NAME_INPUT";
 const SWITCH_MY_EDIT = "SWITCH_MY_EDIT";
 const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
+const SWITCH_CHATING_INPUT = "SWITCH_CHATING_INPUT";
 
 // stateReducer
 const GET_MESSAGE = "GET_MESSAGE";
@@ -105,8 +107,11 @@ const switchReducer = function(state = switchState, action) {
         case SWITCH_MY_EDIT:
             return { ...state, myEditSwitch: !state.myEditSwitch };
 
-            case SWITCH_CHAT_REMOVE:
-              return { ...state, chatRemoveSwitch: !state.chatRemoveSwitch };
+        case SWITCH_CHAT_REMOVE:
+            return { ...state, chatRemoveSwitch: !state.chatRemoveSwitch };
+
+        case SWITCH_CHATING_INPUT:
+            return { ...state, chatingInputSwitch: !state.chatingInputSwitch };
 
         default:
             return state;
