@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useSelector, useDispatch } from 'react-redux';
-
-// import chatRoomRemoveFn from '../../controller/chatRoomRemoveFn';
-
 function Chat(props) {
     const dispatch = useDispatch();
     const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
@@ -48,7 +45,6 @@ function Chat(props) {
                 <p>방을 나가시겠습니까?</p>
                 <div className="btns">
                     <button onClick={() => {
-                        // chatRoomRemoveFn(props.chatingRoom[removeNum].id);
                         dispatch({ type: "REMOVE_CHATINGROOM", payload: {id: props.chatingRoom[removeNum].id} })
                         dispatch({ type: SWITCH_CHAT_REMOVE });
                     }}>Yes</button>

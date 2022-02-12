@@ -39,7 +39,6 @@ function ChatingRoom(props) {
         <nav>
         <i onClick={()=>{ 
             msgSearchFn(props.chatingRoom[id].id, props.setChatingRoom);
-            localStorage.removeItem('number');
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
         <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
