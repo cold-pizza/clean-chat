@@ -82,10 +82,7 @@ const ALARM_MESSAGE = "ALARM_MESSAGE";
 const switchReducer = function(state = switchState, action) {
     switch (action.type) {
         case SWITCH_ALARM:
-          let node = { ...state };
-          node.test = action.payload;
-            // return { ...state, alarm: !state.alarm };
-            return node;
+            return { ...state, alarm: !state.alarm };
 
         case SWITCH_CHATING_BUBBLE:
             return { ...state, chatBubble: !state.chatBubble };
@@ -180,7 +177,7 @@ const stateReducer = function(state = stateManagement, action) {
                 return users;
 
                 case ALARM_MESSAGE:
-                  return { ...state, message: action.payload.message };
+                  return { ...state, message: action.payload.data };
 
 
 

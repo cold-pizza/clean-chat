@@ -1,13 +1,8 @@
 
-
-const alarmNameFn = function(chatingRoom) {
+const alarmNameFn = function(chatingRoom, id) {
     let arr = [...chatingRoom];
-    const message = JSON.parse(localStorage.getItem("message"));
-    arr = arr.filter(arr => {
-        return arr.id !== message.chatId ? arr.chatUsers[0].name : null 
-    })
-    
-    return console.log(arr);
+    arr = arr.filter(list => list.id === id);
+    return arr[0].chatUsers[0].name;
 }
 
 export default alarmNameFn

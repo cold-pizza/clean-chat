@@ -1,7 +1,5 @@
-// 컴포넌트
 import React, { useEffect, useState } from 'react';
-// import LoginLoading from './view/loginLoading';
-// import ChatLoading from './view/loginLoading';
+// 컴포넌트
 import Signup from './view/signup';
 import Chat from './view/chat';
 import Login from './view/login';
@@ -11,7 +9,6 @@ import SearchUser from './view/searchUser';
 import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
 import MyProfile from './view/myprofile';
-// import ProfileImageEdit from './view/profileimageedit';
 import FriendsModal from './view/friendsmodal';
 import Nav from './view/nav';
 import Friends from './view/friends';
@@ -21,10 +18,12 @@ import './App.scss';
 import ChatingRoom from './view/chatingroom';
 import ProfileImageEdit from './view/profileimageedit';
 
+import chatAlarm from './controller/chatAlarmFn';
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // const Login = lazy(() =>  import('./view/login') );
 // const Chat = lazy(() => import('./view/chat'));
@@ -38,17 +37,19 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
-  const history = useHistory();
+  const messageData = useSelector(state => state.stateReducer.message);
 
   const [chatingRoom, setChatingRoom] = useState(null);
-
-  const [message, setMessage] = useState(null);
-
   const [myAccount, setMyAccount] = useState(null);
-
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    chatAlarm(messageData, dispatch);
+  }, [messageData]);
 
   useEffect(() => {
     const routeLimitFn = function() {
@@ -112,7 +113,8 @@ function App() {
         history={history} 
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
-        setMessage={setMessage}
+        // message={message}
+        // setMessage={setMessage}
         />
       </Route>
         {/* </Suspense> */}
@@ -142,7 +144,7 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history} 
-        setMessage={setMessage}
+        // setMessage={setMessage}
         />
       </Route>
       <Route path="/myprofile/profileimageedit">
@@ -206,7 +208,7 @@ function App() {
       </Route>
 
       {/* 채팅알림창 */}
-      { alarm ? <ChatingAlarm chatingRoom={chatingRoom} message={message} /> : null }
+      { alarm ? <ChatingAlarm chatingRoom={chatingRoom} /> : null }
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ function ChatingRoom(props) {
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
         localStorage.setItem('number', id);
-        socketMsgFn(io, dispatch, props.setMessage);
+        socketMsgFn(io, dispatch);
         return console.log("로딩");
     }, []);
 

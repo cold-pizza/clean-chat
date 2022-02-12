@@ -1,20 +1,19 @@
 import './style.scss';
 import React, { useEffect } from 'react';
 import imageOutputFn from '../../controller/imageOutputFn';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import chatAlarm from '../../controller/chatAlarmFn';
+import { useDispatch, useSelector } from 'react-redux';
+import io from 'socket.io-client';
+import msgReceiveFn from '../../controller/msgReceiveFn';
 
 function Friends(props) {    
     const dispatch = useDispatch();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
-    const message = useSelector(state => state.stateReducer.message);
 
     useEffect(()=>{
         props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
         props.setUser(JSON.parse(localStorage.getItem('user')));
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        chatAlarm(message, dispatch);
+        msgReceiveFn(io, dispatch);
         return console.log('업데이트 되었습니다.');
       }, []);
     return <div className="friends">
