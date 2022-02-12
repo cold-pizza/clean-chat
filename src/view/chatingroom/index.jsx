@@ -22,7 +22,6 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        localStorage.setItem('number', id);
         socketMsgFn(io, dispatch);
         return console.log("로딩");
     }, []);
@@ -38,8 +37,8 @@ function ChatingRoom(props) {
 
     return <div className="chating-room">
         <nav>
-        <i onClick={()=>{
-            msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
+        <i onClick={()=>{ 
+            msgSearchFn(props.chatingRoom[id].id, props.setChatingRoom);
             localStorage.removeItem('number');
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>

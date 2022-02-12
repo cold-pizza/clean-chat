@@ -99,7 +99,7 @@ function App() {
         '/searchuser', 
         '/friendsremove'
         ]}>
-      <Action history={history} setUser={setUser} />
+      <Action history={history} setUser={setUser} setChatingRoom={setChatingRoom} />
       </Route>
         {/* <Route path="/friends" component={() => import('./view/friends') /> */}
       {/* 친구창 */}

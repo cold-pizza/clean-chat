@@ -51,8 +51,6 @@ import io from 'socket.io-client';
         }
         console.log(user);
         if (res.status === 200) {
-          // dispatch({ type: "CALL_USERS" });
-          // 친구리스트 요청.
           axios.get(`${axios.defaults.baseURL}/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
