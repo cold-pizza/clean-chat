@@ -146,10 +146,9 @@ const stateReducer = function(state = stateManagement, action) {
               let sendedMessage = { ...state };
               const messageData = action.payload.data;
               const beforeMessage = sendedMessage.chatContents[sendedMessage.chatContents.length-1];
-              console.log(data);
-              if (beforeMessage.message) {
+              if (beforeMessage.message !== undefined) {
                 if (messageData.message === beforeMessage.message) {
-                  return null;
+                  return sendedMessage;
                 } else {
                   sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
                 }
