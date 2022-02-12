@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 import './style.scss';
@@ -16,7 +16,6 @@ function ChatingRoom(props) {
     const dispatch = useDispatch();
     const { id } = useParams();
     const chatContents = useSelector(state => state.stateReducer.chatContents);
-    const chatingInputSwitch = useSelector(state => state.stateReducer.chatingInputSwitch);
     const scrollRef = useRef(null);
     const chatName = props.chatingRoom[id].chatUsers[0].name;
     const [inputSwitch, setInputSwitch] = useState(false);
@@ -45,9 +44,6 @@ function ChatingRoom(props) {
     const chatingOnChange = function(e) {
         setTalk({...talk, [e.target.name]: e.target.value});
     }
-    const chatingCallback = useCallback((e) => {
-        chatingOnChange(e);
-    }, [talk]);
 
     return <div className="chating-room">
         <nav>
