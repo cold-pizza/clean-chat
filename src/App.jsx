@@ -19,6 +19,8 @@ import ChatingRoom from './view/chatingroom';
 import ProfileImageEdit from './view/profileimageedit';
 
 import chatAlarm from './controller/chatAlarmFn';
+import urlLimitFn from './controller/urlLimitFn';
+
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -52,31 +54,13 @@ function App() {
   }, [dispatch, messageData]);
 
   useEffect(() => {
-    const routeLimitFn = function() {
-      const path = window.location.pathname;
-      const url = ["/clean-chat/", "/clean-chat/signup"];
-      if (path !== url[0]) {
-        if (localStorage.user === undefined) {
-          history.replace('/');
-          alert('로그인시 이용 가능합니다.');
-        }
-      }
-      // if (localStorage.user === undefined && path !== (url[0] || url[1])) {
-      //     history.replace('/');
-      //     alert('로그인시 이용 가능합니다.');
-      //   }
-    }
-    routeLimitFn();
-    return console.log('url check')
-  }, [history])
-
-  useEffect( () => {
     if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
       import('./controller/logoutFn')
       .then(({ default: logout }) => {
         logout(history);
       })
     }
+    urlLimitFn(history);
   }, [history]);
 
   return (
@@ -201,7 +185,6 @@ function App() {
       </Route>
 
       {/* 내 프로필 이미지 변경 */}
-
 
       {/* 친구프로필 */}
       <Route path="/friends/friendsmodal/:id">
