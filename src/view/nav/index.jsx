@@ -27,4 +27,4 @@ function Nav() {
     </div>
   }
 
-export default React.memo(Nav);
+export default Nav;

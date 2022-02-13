@@ -43,9 +43,6 @@ const [btnValue, setBtnValue] = useState(false);
                     setBtnValue,
                     props.history
                     );
-                    import('../../view/friends').then((component) => {
-                        return console.log(component)
-                    })
             }} 
             className="login-btn" 
             type="submit" 

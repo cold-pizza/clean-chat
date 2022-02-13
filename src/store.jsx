@@ -11,6 +11,7 @@ const switchState = {
     nameInputSwitch: false,
     myEditSwitch: false,
     chatRemoveSwitch: false,
+    profileImageEditSwitch: false,
     test: null,
 }
 
@@ -68,6 +69,7 @@ const SWITCH_IMG_SELECTION = "SWITCH_IMG_SELECTION";
 const SWITCH_NAME_INPUT = "SWITCH_NAME_INPUT";
 const SWITCH_MY_EDIT = "SWITCH_MY_EDIT";
 const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
+const SWITCH_PROFILE_IMAGE_EDIT = "SWITCH_PROFILE_IMAGE_EDIT";
 
 // stateReducer
 const GET_MESSAGE = "GET_MESSAGE";
@@ -104,6 +106,9 @@ const switchReducer = function(state = switchState, action) {
 
         case SWITCH_CHAT_REMOVE:
             return { ...state, chatRemoveSwitch: !state.chatRemoveSwitch };
+
+        case SWITCH_PROFILE_IMAGE_EDIT:
+          return { ...state, profileImageEditSwitch: !state.profileImageEditSwitch };
 
         default:
             return state;

@@ -1,17 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './style.scss';
 import BasicImageModal from '../basicImageModal'
 import SelectImage from '../selectImage';
 import selectImgFn from '../../controller/selectImgFn';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 function ProfileImageEdit(props) {
     const dispatch = useDispatch();
     const basicModalSwitch = useSelector(state => state.basicReducer.basicModalSwitch);
     const selectImgSwitch = useSelector(state => state.switchReducer.selectImgSwitch);
-    // 불러온 이미지 url.
-    const [imgUrl, setImgUrl] = useState(null);
     // input file dom.
     const imgFileRef = useRef(null);
     // 이미지 넣을 dom.
@@ -61,4 +58,4 @@ function ProfileImageEdit(props) {
     </div>
 }
 
-export default React.memo(ProfileImageEdit);
+export default ProfileImageEdit;

@@ -28,7 +28,7 @@ function MyProfile(props) {
             }} className="fas fa-chevron-left"></i>
             { 
             !nameInputSwitch ? <i onClick={() => {
-                dispatch({ type: "SETTING_SWITCH" });
+                dispatch({ type: "SWITCH_SETTING" }); 
             }} className="fas fa-cog"></i>
              : <i onClick={()=>{
             nameChangeFn(props.myAccount, props.setMyAccount, nickNameEdit);
@@ -37,12 +37,14 @@ function MyProfile(props) {
             setNickNameEdit({ names: '' });
         }} className="fas fa-check"></i> 
         }
-            </nav>
+        </nav>
 
-        { nameInputSwitch ? 
+        {
+         nameInputSwitch ? 
         <NameInput 
         onChange={e => onChange(e, nickNameEdit, setNickNameEdit)} 
-        name={props.myAccount !== null ? props.myAccount.name : null } /> : null }
+        name={props.myAccount !== null ? props.myAccount.name : null } /> : null 
+        }
         <section>
             <img 
             src={props.myAccount !== null ? props.myAccount.imagePath : null} 
@@ -50,6 +52,7 @@ function MyProfile(props) {
 
             { myEditSwitch ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');
+                // dispatch({ type: "SWITCH_PROFILE_IMAGE_EDIT" });
             }} className="fas fa-edit image-edit"></i> : null }
 
             <p>{props.myAccount !== null ? props.myAccount.name : 'state가 비어있습니다.'}</p>
@@ -72,4 +75,4 @@ function MyProfile(props) {
 
 
 
-export default React.memo(MyProfile);
+export default MyProfile;

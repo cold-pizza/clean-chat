@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 // 컴포넌트
 import Signup from './view/signup';
 import Chat from './view/chat';
-import Login from './view/login';
+// import Login from './view/login';
+import LoginLoading from './view/loginLoading';
 import Search from './view/search';
 import Setting from './view/setting';
 import SearchUser from './view/searchUser';
@@ -18,6 +19,7 @@ import './App.scss';
 import ChatingRoom from './view/chatingroom';
 import ProfileImageEdit from './view/profileimageedit';
 
+// function
 import chatAlarm from './controller/chatAlarmFn';
 import urlLimitFn from './controller/urlLimitFn';
 
@@ -26,6 +28,8 @@ import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+
+const Login = lazy(() => import("./view/login"));
 
 // const Login = lazy(() =>  import('./view/login') );
 // const Chat = lazy(() => import('./view/chat'));
@@ -44,6 +48,7 @@ function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
   const messageData = useSelector(state => state.stateReducer.message);
+  const profileImageEditSwitch = useSelector(state => state.switchReducer.profileImageEditSwitch);
 
   const [chatingRoom, setChatingRoom] = useState(null);
   const [myAccount, setMyAccount] = useState(null);
@@ -67,17 +72,17 @@ function App() {
     <div className="App">
       <div className="app-box">
         {/* 로그인 */}
-        {/* <Suspense fallback={<LoginLoading />}> */}
+        <Suspense fallback={<LoginLoading />}>
       <Route exact path="/" render={() => <Login history={history} 
       setMyAccount={setMyAccount}
         setUser={setUser}
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom} /> }/>
+        </Suspense>
+
         <Route path="/signup">
         <Signup history={history} />
       </Route>
-        {/* </Suspense> */}
-
       
       {/* navigation */}
       <Nav />
@@ -138,6 +143,7 @@ function App() {
         // setMessage={setMessage}
         />
       </Route>
+
       <Route path="/myprofile/profileimageedit">
         <ProfileImageEdit 
         myAccount={myAccount}
@@ -204,4 +210,4 @@ function App() {
   );
 }
 
-export default React.memo(App);
+export default App;
