@@ -1,5 +1,6 @@
 @import '../../App.scss';
     .basic-image-modal {
+        z-index: 12;
         @include col;
         align-items: center;
         p {

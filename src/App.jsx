@@ -1,11 +1,12 @@
-import React, { useEffect, useState, lazy, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 // 컴포넌트
 import Signup from './view/signup';
 import Chat from './view/chat';
-// import Login from './view/login';
-import LoginLoading from './view/loginLoading';
+import Login from './view/login';
+// import LoginLoading from './view/loginLoading';
 import Search from './view/search';
 import Setting from './view/setting';
+import ProfileImageEdit from './view/profileimageedit';
 import SearchUser from './view/searchUser';
 import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
@@ -17,7 +18,6 @@ import Action from './view/action';
 import ChatingAlarm from './view/chatingAlarm';
 import './App.scss';
 import ChatingRoom from './view/chatingroom';
-import ProfileImageEdit from './view/profileimageedit';
 
 // function
 import chatAlarm from './controller/chatAlarmFn';
@@ -29,15 +29,6 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
-const Login = lazy(() => import("./view/login"));
-
-// const Login = lazy(() =>  import('./view/login') );
-// const Chat = lazy(() => import('./view/chat'));
-// const ChatingRoom = lazy(() => import('./view/chatingroom') );
-// const Friends = lazy(() => import('./view/friends'));
-// const Signup = lazy(() => import('./view/signup'));
-// const ProfileImageEdit = lazy(() => import('./view/profileimageedit'));
-
 // CORS 처리
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
@@ -48,7 +39,7 @@ function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
   const messageData = useSelector(state => state.stateReducer.message);
-  const profileImageEditSwitch = useSelector(state => state.switchReducer.profileImageEditSwitch);
+  // const profileImageEditSwitch = useSelector(state => state.switchReducer.profileImageEditSwitch);
 
   const [chatingRoom, setChatingRoom] = useState(null);
   const [myAccount, setMyAccount] = useState(null);
@@ -72,13 +63,13 @@ function App() {
     <div className="App">
       <div className="app-box">
         {/* 로그인 */}
-        <Suspense fallback={<LoginLoading />}>
+        {/* <Suspense fallback={<LoginLoading />}> */}
       <Route exact path="/" render={() => <Login history={history} 
       setMyAccount={setMyAccount}
         setUser={setUser}
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom} /> }/>
-        </Suspense>
+        {/* </Suspense> */}
 
         <Route path="/signup">
         <Signup history={history} />
@@ -97,9 +88,8 @@ function App() {
         ]}>
       <Action history={history} setUser={setUser} setChatingRoom={setChatingRoom} />
       </Route>
-        {/* <Route path="/friends" component={() => import('./view/friends') /> */}
+
       {/* 친구창 */}
-        {/* <Suspense fallback={<LoginLoading />}> */}
        <Route path="/friends">
         <Friends 
         setMyAccount={setMyAccount} 
@@ -109,18 +99,14 @@ function App() {
         history={history} 
         chatingRoom={chatingRoom}
         setChatingRoom={setChatingRoom}
-        // message={message}
-        // setMessage={setMessage}
         />
       </Route>
-        {/* </Suspense> */}
 
       {/* Setting */}
       { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
       <Route path="/chat">    
-      {/* <Suspense fallback={<LoginLoading />}> */}
         <Chat 
         history={history} 
         chatingRoom={chatingRoom} 
@@ -128,11 +114,9 @@ function App() {
         setChatingRoom={setChatingRoom}
         user={user}
         />
-        {/* </Suspense> */}
       </Route>
 
       {/* 채팅창 */}
-        {/* <Suspense fallback={<LoginLoading />}> */}
       <Route path="/chatingroom/:id">
         <ChatingRoom 
         chatingRoom={chatingRoom} 
@@ -140,7 +124,6 @@ function App() {
         myAccount={myAccount}
         setMyAccount={setMyAccount}
         history={history} 
-        // setMessage={setMessage}
         />
       </Route>
 
@@ -151,7 +134,7 @@ function App() {
         history={history}
         />
       </Route>
-        {/* </Suspense> */}
+
 
       {/* 친구찾기 */}
       <Route path="/search">

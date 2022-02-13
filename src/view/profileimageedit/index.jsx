@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 function ProfileImageEdit(props) {
     const dispatch = useDispatch();
-    const basicModalSwitch = useSelector(state => state.basicReducer.basicModalSwitch);
+    const basicModalSwitch = useSelector(state => state.switchReducer.basicModalSwitch);
     const selectImgSwitch = useSelector(state => state.switchReducer.selectImgSwitch);
     // input file dom.
     const imgFileRef = useRef(null);

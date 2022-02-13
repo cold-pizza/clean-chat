@@ -1,6 +1,7 @@
 @import '/src/App.scss';
 
 .profile-image-edit {
+    z-index: 10;
     @include main;
     @include row;
     justify-content: center;
