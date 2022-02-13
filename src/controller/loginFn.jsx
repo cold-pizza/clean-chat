@@ -2,6 +2,7 @@ import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
 import socketCallFn from './socketCallFn';
 import changeStateFn from './changeStateFn';
+import imageFilterFn from './imageFilterFn';
 import io from 'socket.io-client';
 
 
@@ -51,11 +52,13 @@ import io from 'socket.io-client';
         }
         console.log(user);
         if (res.status === 200) {
+          // 친구요청.
           axios.get(`${axios.defaults.baseURL}/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
             console.log(res.data.result);
-            localStorage.setItem('user', JSON.stringify(res.data.result));
+            const friends = res.data.result;
+            localStorage.setItem('user', JSON.stringify(imageFilterFn(friends, basicImg)));
             setUser(JSON.parse(localStorage.getItem('user')));
           })
           .catch(err => {

@@ -9,6 +9,7 @@ import MyContent from '../../view/myContent';
 import msgSearchFn from '../../controller/msgSearchFn';
 import socketMsgFn from '../../controller/socketMsgFn';
 import chatingSencerFn from '../../controller/chatingSencerFn';
+import onChange from '../../controller/onChange';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ChatingRoom(props) {
@@ -31,14 +32,10 @@ function ChatingRoom(props) {
         return console.log('정렬');
     }, [chatContents]);
 
-    const chatingOnChange = function(e) {
-        setTalk({...talk, [e.target.name]: e.target.value});
-    }
-
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{ 
-            msgSearchFn(props.chatingRoom[id].id, props.setChatingRoom);
+            msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
         <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
@@ -62,7 +59,7 @@ function ChatingRoom(props) {
         </section>
         <div className="chating-input">
         <input 
-        onChange={chatingOnChange}  
+        onChange={e => onChange(e, talk, setTalk)}  
         onKeyUp={chatingSencerFn(ment, inputSwitch, setInputSwitch)}
         value={ment} 
         name="ment" 

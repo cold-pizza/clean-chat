@@ -9,25 +9,19 @@ function Search(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     return <div className="search">
         <section className="search-form">
-        <input value={search} onChange={(e) => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
+        <input value={search} onChange={e => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
         <i className="fas fa-times cancel-btn"></i>
         </section>
         <ul>
             {
                 props.user !== null ?
             props.user.filter(user => {
-                if (search === '') {
-                    return user;
-                } else if (user.name.includes(search)) {
-                    return user;
-               }
+                if (search === '' || user.name.includes(search)) return user;
             }).map(({ name, imagePath, id }, i)=>{
                 return <li key={id} onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
-                <img 
-                src={imagePath !== '' ? imageOutputFn(imagePath) : basicImg} 
-                alt={imagePath !== '' ? imageOutputFn(imagePath) : basicImg} />
+                <img src={imageOutputFn(imagePath, basicImg)} alt={imageOutputFn(imagePath, basicImg)} />
                 <p>{name}</p>
             </li>
             })

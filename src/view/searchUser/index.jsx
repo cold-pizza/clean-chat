@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import friendsAddFn from '../../controller/friendsAddFn';
 import friendsSearchFn from '../../controller/friendsSearchFn';
-import inputOnChange from '../../controller/inputOnChange';
 import imageOutputFn from '../../controller/imageOutputFn';
+import onChange from '../../controller/onChange';
 import { useSelector } from 'react-redux';
 
 function SearchUser(props) {
@@ -37,7 +37,7 @@ function SearchUser(props) {
     return <div className="search-email">
         <div className="search-form">
         <input 
-        onChange={(e) => inputOnChange(e, searchInput, setSearchInput)}
+        onChange={e => onChange(e, searchInput, setSearchInput)}
         name="userSearch" 
         type="text" 
         placeholder="이메일(email)을 입력해주세요" 

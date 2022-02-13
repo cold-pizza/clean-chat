@@ -16,6 +16,7 @@ function Friends(props) {
         msgReceiveFn(io, dispatch);
         return console.log('업데이트 되었습니다.');
       }, []);
+      
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
@@ -35,8 +36,8 @@ function Friends(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                     <img 
-                    src={imagePath !== "" ? imageOutputFn(imagePath) : basicImg} 
-                    alt={imagePath !== "" ? imageOutputFn(imagePath) : basicImg} 
+                    src={imageOutputFn(imagePath, basicImg)} 
+                    alt={imageOutputFn(imagePath, basicImg)} 
                     />
                     <p>{name}</p>
                 </li>

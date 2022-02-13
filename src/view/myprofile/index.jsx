@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import nameChangeFn from '../../controller/nameChangeFn';
-import nameOnChange from '../../controller/nameOnChange';
+import onChange from '../../controller/onChange';
 import NameInput from '../nameInput';
 import './style.scss';
 
@@ -41,7 +41,7 @@ function MyProfile(props) {
 
         { nameInputSwitch ? 
         <NameInput 
-        nameOnChange={(e) => nameOnChange(e, nickNameEdit, setNickNameEdit)} 
+        onChange={e => onChange(e, nickNameEdit, setNickNameEdit)} 
         name={props.myAccount !== null ? props.myAccount.name : null } /> : null }
         <section>
             <img 

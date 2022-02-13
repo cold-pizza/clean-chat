@@ -4,14 +4,12 @@ import './style.scss';
 import signupFn from '../../controller/signupFn';
 // import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
-import joinOnChange from '../../controller/joinOnChange';
-import joinPsOnChange from '../../controller/joinPsOnChange';
+import onChange from '../../controller/onChange';
 
 
 function Signup(props) {
     const [btnActiveSwitch, setBtnActiveSwitch] = useState(false);
     const [genderSwitch, setGenderSwitch] = useState(false);
-    
     const [joinAccount, setJoinAccount] = useState({ 
         name: '', 
         id: '', 
@@ -20,14 +18,6 @@ function Signup(props) {
         gender: '', 
         imagePath: '' 
     });
-
-    const joinOnChangeCallback = useCallback((e) => {
-        joinOnChange(e, joinAccount, setJoinAccount);
-    }, [joinAccount]);
-
-    const joinPsOnChangeCallback = useCallback((e) => {
-        joinPsOnChange(e, joinAccount, setJoinAccount, btnActiveSwitch, setBtnActiveSwitch);
-    }, [btnActiveSwitch, joinAccount]);
 
     // 첫 렌더링시 성별.
     useEffect(()=>{
@@ -45,7 +35,7 @@ function Signup(props) {
         </div>
         <section id="signup-form">
             <input 
-            onChange={(e) => joinOnChangeCallback(e)} 
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
             name="name" 
             type="text" 
             id="name" 
@@ -53,7 +43,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinOnChangeCallback(e)} 
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
             name="id" 
             type="email" 
             id="email" 
@@ -61,7 +51,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinOnChangeCallback(e)} 
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
             name="password" 
             type="password" 
             id="password" 
@@ -69,7 +59,7 @@ function Signup(props) {
             required
             />
             <input 
-            onChange={(e) => joinPsOnChangeCallback(e)} 
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
             type="password" 
             name="psCheck" 
             placeholder="비밀번호 확인" 

@@ -49,18 +49,25 @@ function App() {
 
   useEffect(() => {
     chatAlarm(messageData, dispatch);
-  }, [messageData]);
+  }, [dispatch, messageData]);
 
   useEffect(() => {
     const routeLimitFn = function() {
       const path = window.location.pathname;
       const url = ["/clean-chat/", "/clean-chat/signup"];
-      if (localStorage.getItem('user') === null && path !== (url[0] || url[1])) {
+      if (path !== url[0]) {
+        if (localStorage.user === undefined) {
           history.replace('/');
           alert('로그인시 이용 가능합니다.');
         }
+      }
+      // if (localStorage.user === undefined && path !== (url[0] || url[1])) {
+      //     history.replace('/');
+      //     alert('로그인시 이용 가능합니다.');
+      //   }
     }
-    return routeLimitFn();
+    routeLimitFn();
+    return console.log('url check')
   }, [history])
 
   useEffect( () => {

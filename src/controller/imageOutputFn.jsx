@@ -1,19 +1,17 @@
 import axios from 'axios';
 
-const imageOutputFn = function(url) {
-    try {
-        if (url.split('/')[0] === "img") {
-            console.log(url)
-            return `${axios.defaults.baseURL}/${url}`;
-        } else if (url[url.length - 1] !== "g") {
-            return axios.defaults.baseURL + url + 'g';
-        } else {
-            return axios.defaults.baseURL + url;
+const imageOutputFn = function(url, basicImg) {
+    let path = url.split('/');
+        if (url !== basicImg) {
+            url = axios.defaults.baseURL + url
         }
-    }
-    catch(err) {
-        console.error(err);
-    }
+        else if (path[1] === 'img') {
+            const lastSpelling = path[2][path[2].length-1];
+            if (lastSpelling === 'p' || 'n') {
+                url = axios.defaults.baseURL + url + 'g';
+            }
+        }
+        return url;
 }
 
 export default imageOutputFn

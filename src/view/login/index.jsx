@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './style.scss';
 import loginFn from '../../controller/loginFn';
-import accountOnChange from '../../controller/accountOnChange';
+import onChange from '../../controller/onChange';
 import { useSelector } from 'react-redux';
 
 function Login(props) {
@@ -15,7 +15,7 @@ const [btnValue, setBtnValue] = useState(false);
         <h1>클린챗</h1>
         <section id="login-form" action="#">
             <input 
-            onChange={(e) => accountOnChange(e, idInput, setIdInput)} 
+            onChange={e => onChange(e, idInput, setIdInput)} 
             name="loginId" 
             value={props.loginId}
             className="email" 
@@ -23,7 +23,7 @@ const [btnValue, setBtnValue] = useState(false);
             placeholder="이메일" 
             />
             <input 
-            onChange={(e) => accountOnChange(e, idInput, setIdInput)}  
+            onChange={e => onChange(e, idInput, setIdInput)}  
             name="loginPs" 
             value={props.loginPs}
             className="password" 
