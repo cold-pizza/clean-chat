@@ -1,17 +1,14 @@
-import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import './style.scss';
-import addChatingRoomFn from '../../controller/addChatingRoomFn';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import addChatingRoomFn from '../../controller/addChatingRoomFn';
+import imageOutputFn from '../../controller/imageOutputFn';
+import './style.scss';
 
 function FriendsModal(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const history = useHistory();
-    const [i, setI] = useState(0); 
-    const { id } = useParams() || localStorage.friendsNumber;
-    const imageUrl = axios.defaults.baseURL + props.user[id].imagePath;
+    const { id } = useParams();
 
     useEffect(() => {
         props.setUser(JSON.parse(localStorage.getItem('user')));
@@ -23,8 +20,8 @@ function FriendsModal(props) {
             <section className="friends-profile">
             <div className="meta-info">
                 <img 
-                src={props.user[id].imagePath !== '' ? imageUrl : basicImg} 
-                alt={props.user[id].imagePath !== '' ? imageUrl : basicImg} 
+                src={imageOutputFn(props.user[id].imagePath, basicImg)} 
+                alt={imageOutputFn(props.user[id].imagePath, basicImg)} 
                 />
                 <p>{props.user[id].name}</p>
             </div>

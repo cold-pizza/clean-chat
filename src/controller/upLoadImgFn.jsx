@@ -13,7 +13,9 @@ const upLoadImgFn = function(myAccount, setMyAccount) {
     .then(res => {
         console.log(res);
         console.log("이미지가 " + res.data.message);
+        localStorage.removeItem('image');
     })
+    .catch(err => console.log(err));
 }
 
 export default upLoadImgFn

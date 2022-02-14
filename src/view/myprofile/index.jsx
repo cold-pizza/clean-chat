@@ -52,10 +52,9 @@ function MyProfile(props) {
 
             { myEditSwitch ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');
-                // dispatch({ type: "SWITCH_PROFILE_IMAGE_EDIT" });
             }} className="fas fa-edit image-edit"></i> : null }
 
-            <p>{props.myAccount !== null ? props.myAccount.name : 'state가 비어있습니다.'}</p>
+            <p>{props.myAccount !== null ? props.myAccount.name : 'NULL'}</p>
             
             { myEditSwitch ? <i onClick={()=>{
                 dispatch({ type: NAME_INPUT_SWITCH });
