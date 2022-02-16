@@ -9,32 +9,17 @@ function ProfileImageEdit(props) {
     const dispatch = useDispatch();
     const basicModalSwitch = useSelector(state => state.switchReducer.basicModalSwitch);
     const selectImgSwitch = useSelector(state => state.switchReducer.selectImgSwitch);
-    // input file dom.
     const imgFileRef = useRef(null);
-    // 이미지 넣을 dom.
     const viewImg = useRef(null);
 
     useEffect(() => {
-        props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
         return console.log('내 정보 업데이트');
     }, [])
     
     return <div className="profile-image-edit">
-        { basicModalSwitch ? 
-        <BasicImageModal
-        myAccount={props.myAccount}
-        setMyAccount={props.setMyAccount}
-        history={props.history}
-       /> : null }
-        {
-            selectImgSwitch ?
-            <SelectImage 
-            myAccount={props.myAccount}
-            setMyAccount={props.setMyAccount}
-            history={props.history}
-            viewImg={viewImg} 
-            /> : null
-        }
+        { basicModalSwitch ? <BasicImageModal history={props.history}/> : null }
+        { selectImgSwitch ? <SelectImage history={props.history} viewImg={viewImg} /> : null }
         <div className="btns">
             <button onClick={()=>{
                 dispatch({ type: "SWITCH_BASIC_MODAL" });

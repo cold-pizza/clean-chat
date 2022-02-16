@@ -8,11 +8,13 @@ import msgReceiveFn from '../../controller/msgReceiveFn';
 function Friends(props) {    
     const dispatch = useDispatch();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
-
+    const users = useSelector(state => state.stateReducer.users);
+    const myAccount = useSelector(state => state.stateReducer.myAccount);
+    console.log(users);
+    console.log(myAccount)
     useEffect(()=>{
-        props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
-        props.setUser(JSON.parse(localStorage.getItem('user')));
-        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
+        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
         msgReceiveFn(io, dispatch);
         return console.log('업데이트 되었습니다.');
       }, []);
@@ -21,16 +23,16 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={props.myAccount !== null ? props.myAccount.imagePath : basicImg } alt="#" />
-            <p>{props.myAccount !== null ? props.myAccount.name : '로딩중입니다.'}</p>
+            <img src={myAccount.imagePath} alt={myAccount.imagePath} />
+            <p>{myAccount !== null ? myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
-            <p>친구 {props.user !== null ? props.user.length : 0 }</p>
+            <p>친구 {users !== null ? users.length : 0 }</p>
         </div>
         <ul className="friends-list">
         {
-            props.user !== null ?
-            props.user.map(({ name, imagePath, id }, i)=>{
+            users !== null ?
+            users.map(({ name, imagePath, id }, i)=>{
                 return (
                 <li key={id} onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${i}`)

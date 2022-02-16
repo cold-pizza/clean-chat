@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 
 function BasicImageModal(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const myAccount = useSelector(state => state.stateReducer.myAccount);
     const dispatch = useDispatch();
     const SWITCH_BASIC_MODAL = "SWITCH_BASIC_MODAL";
 
@@ -12,7 +13,7 @@ function BasicImageModal(props) {
             <p>기본 이미지로 변경하시겠습니까?</p>
             <div>
             <button onClick={() => {
-                basicImgChangeFn(props.myAccount, props.setMyAccount, basicImg);
+                basicImgChangeFn(myAccount, basicImg, dispatch);
                 dispatch({ type: SWITCH_BASIC_MODAL });
                 props.history.push('/myprofile');
             }} className="yes-btn">Yes</button>

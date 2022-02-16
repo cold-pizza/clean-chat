@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 function Search(props) {
     const [search, setSearch] = useState('');
     const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const users = useSelector(state => state.stateReducer.users);
     return <div className="search">
         <section className="search-form">
         <input value={search} onChange={e => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
@@ -14,9 +15,9 @@ function Search(props) {
         </section>
         <ul>
             {
-                props.user !== null ?
-            props.user.filter(user => {
-                if (search === '' || user.name.includes(search)) return user;
+                users !== null ?
+            users.filter(users => {
+                if (search === '' || users.name.includes(search)) return users;
             }).map(({ name, imagePath, id }, i)=>{
                 return <li key={id} onClick={()=>{
                     props.history.push(`/friends/friendsmodal/${i}`)

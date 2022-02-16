@@ -1,7 +1,7 @@
 import axios from "axios"
 
 
-const msgSearchFn = function(i, chatingRoom, setChatingRoom) {
+const msgSearchFn = function(i, chatingRoom, dispatch) {
     axios.get(`${axios.defaults.baseURL}/api/chats/${chatingRoom[i].id}/messages`)
     .then(res => {
         console.log('메시지가 ' + res.data.message);
@@ -14,7 +14,7 @@ const msgSearchFn = function(i, chatingRoom, setChatingRoom) {
           console.log('채팅방이 ' + res.data.message);
           const cr = res.data.result;
           localStorage.setItem('chatingRoom', JSON.stringify(cr));
-          setChatingRoom(cr);
+          dispatch({ type: "SET_CHATINGROOM", payload: cr });
         })
         .catch(err => {
           console.log('채팅방 에러');

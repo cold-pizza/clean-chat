@@ -11,6 +11,7 @@ function SearchUser(props) {
     // 리스트 지정.
     const listRef = useRef(null);
     const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const users = useSelector(state => state.stateReducer.users);
 
     // 리스트 온오프 스위치.
     const [listRefSwitch, setListRefSwitch] = useState(false);
@@ -32,7 +33,7 @@ function SearchUser(props) {
               setListRefSwitch(!listRefSwitch);
             }
       }
-  }, [searchList])
+  }, [listRefSwitch, searchList])
 
     return <div className="search-email">
         <div className="search-form">
@@ -43,7 +44,7 @@ function SearchUser(props) {
         placeholder="이메일(email)을 입력해주세요" 
         />
         <i onClick={() => {
-            friendsSearchFn(userSearch, setSearchList, props.user, userOverlap, setUserOverlap);
+            friendsSearchFn(userSearch, setSearchList, users, userOverlap, setUserOverlap);
         }} className="fas fa-check cancel-btn"></i>
         </div>
         <section ref={listRef} className="item-list">

@@ -1,12 +1,7 @@
-import axios from 'axios';
-import { Dispatch } from 'redux';
 
-export const fetchData = (url) => async (dispatch) => {
-    try {
-        const res = await axios.get(``);
-        const data = res.data;
+const CREATE_MESSAGE = "CREATE_MESSAGE";
 
-    } catch(err) {
 
-    }
+export const createMessage = () => dispatch => {
+    dispatch({ type: CREATE_MESSAGE });
 }

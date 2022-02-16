@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 // 컴포넌트
 import Signup from './view/signup';
 import Chat from './view/chat';
@@ -34,16 +34,11 @@ axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const history = useHistory();
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
   const messageData = useSelector(state => state.stateReducer.message);
-  // const profileImageEditSwitch = useSelector(state => state.switchReducer.profileImageEditSwitch);
-
-  const [chatingRoom, setChatingRoom] = useState(null);
-  const [myAccount, setMyAccount] = useState(null);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     chatAlarm(messageData, dispatch);
@@ -62,132 +57,57 @@ function App() {
   return (
     <div className="App">
       <div className="app-box">
-        {/* 로그인 */}
-        {/* <Suspense fallback={<LoginLoading />}> */}
-      <Route exact path="/" render={() => <Login history={history} 
-      setMyAccount={setMyAccount}
-        setUser={setUser}
-        chatingRoom={chatingRoom}
-        setChatingRoom={setChatingRoom} /> }/>
-        {/* </Suspense> */}
-
-        <Route path="/signup">
-        <Signup history={history} />
-      </Route>
-      
       {/* navigation */}
       <Nav />
+      {/* 회원가입 */}
+      <Route path="/signup" render={() => <Signup history={history} />} />
+        {/* 로그인 */}
+      <Route exact path="/" render={() => <Login history={history} /> }/>
 
       {/* 액션버튼s */}
+      {/* 로그인 후 컴포넌트에 삽입 */}
       <Route path={[
         '/friends', 
         '/chat',  
         '/search', 
         '/searchuser', 
         '/friendsremove'
-        ]}>
-      <Action history={history} setUser={setUser} setChatingRoom={setChatingRoom} />
-      </Route>
+        ]} render={() => <Action history={history} />} />
 
       {/* 친구창 */}
-       <Route path="/friends">
-        <Friends 
-        setMyAccount={setMyAccount} 
-        myAccount={myAccount} 
-        user={user} 
-        setUser={setUser}
-        history={history} 
-        chatingRoom={chatingRoom}
-        setChatingRoom={setChatingRoom}
-        />
-      </Route>
+       <Route path="/friends" render={() => <Friends history={history} />} />
 
       {/* Setting */}
       { settingSwitch ? <Setting history={history} /> : null }
 
       {/* 채팅목록 */}
-      <Route path="/chat">    
-        <Chat 
-        history={history} 
-        chatingRoom={chatingRoom} 
-        setMyAccount={setMyAccount}
-        setChatingRoom={setChatingRoom}
-        user={user}
-        />
-      </Route>
+      <Route path="/chat" render={() => <Chat history={history} />} />    
 
       {/* 채팅창 */}
-      <Route path="/chatingroom/:id">
-        <ChatingRoom 
-        chatingRoom={chatingRoom} 
-        setChatingRoom={setChatingRoom}
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
-        history={history} 
-        />
-      </Route>
+      <Route path="/chatingroom/:id" render={() => <ChatingRoom history={history} />} />
 
-      <Route path="/myprofile/profileimageedit">
-        <ProfileImageEdit 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
-        history={history}
-        />
-      </Route>
-
+      <Route path="/myprofile/profileimageedit" render={() => <ProfileImageEdit history={history} />} />
 
       {/* 친구찾기 */}
-      <Route path="/search">
-        <Search history={history} user={user} setUser={setUser} />
-      </Route>
+      <Route path="/search" render={() => <Search history={history} />} />
 
       {/* 친구추가 */}
-      <Route path="/searchuser">
-        <SearchUser user={user} history={history} />
-      </Route>
+      <Route path="/searchuser" render={() => <SearchUser history={history} />} />
 
       {/* 친구관리창 */}
-      <Route path="/friendsremove">
-        <FriendsRemove 
-        history={history} 
-        user={user}
-        setUser={setUser}
-        />
-      </Route>
+      <Route path="/friendsremove" render={() => <FriendsRemove history={history} />} />
 
       {/* 친구삭제모달창 */}
-        <Route path="/friendsremove/delete/:id">
-          <Delete 
-          user={user}
-          setUser={setUser}
-          history={history} 
-          />
-        </Route>
+        <Route path="/friendsremove/delete/:id" render={() => <Delete history={history} />} />
 
       {/* 내 프로필 설정 */}
-      <Route path="/myprofile">
-        <MyProfile 
-        history={history} 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
-        />
-      </Route>
-
-      {/* 내 프로필 이미지 변경 */}
+      <Route path="/myprofile" render={() => <MyProfile history={history} />} />
 
       {/* 친구프로필 */}
-      <Route path="/friends/friendsmodal/:id">
-        <FriendsModal 
-        history={history} 
-        user={user} 
-        setUser={setUser}
-        chatingRoom={chatingRoom}
-        setChatingRoom={setChatingRoom}
-        />
-      </Route>
+      <Route path="/friends/friendsmodal/:id" render={() => <FriendsModal history={history} />} />
 
       {/* 채팅알림창 */}
-      { alarm ? <ChatingAlarm chatingRoom={chatingRoom} /> : null }
+      { alarm ? <ChatingAlarm /> : null }
       </div>
     </div>
   );

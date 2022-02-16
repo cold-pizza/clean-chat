@@ -1,12 +1,14 @@
 import './style.scss';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 function FriendsRemove(props) {
+    const users = useSelector(state => state.stateReducer.users);
 
     return <div className="friends-remove">
         {
-            props.user !== null ?
-            props.user.map(({ name, imagePath, id }, i)=>{
+            users !== null ?
+            users.map(({ name, imagePath, id }, i)=>{
                 return (
             <div key={id} className="item">
                 <div className="meta-data">

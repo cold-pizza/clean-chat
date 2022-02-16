@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useSelector, useDispatch } from 'react-redux';
+
 function Chat(props) {
     const dispatch = useDispatch();
     const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
     const chatRemoveSwitch = useSelector(state => state.switchReducer.chatRemoveSwitch);
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
+    const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
     const [removeNum, setRemoveNum] = useState(null);
     useEffect(() => {
-        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
-        props.setMyAccount(JSON.parse(localStorage.getItem('myInfo')));
+        dispatch({ type: "SET_CHATINGROOM", payload: JSON.parse(localStorage.getItem("chatingRoom")) });
+        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
         return console.log('로딩 끝');
     }, [])
 
     return <div className="chat">
         {
-            props.chatingRoom !== null ?
-            props.chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
+            chatingRoom !== null ?
+            chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
                 return <li key={id}>
             <div onClick={()=>{
             props.history.push(`/chatingroom/${i}`);
@@ -41,11 +43,11 @@ function Chat(props) {
         }
         {
             chatRemoveSwitch ? <div className="chat-remove-modal">
-                <p className="chat-title">{props.chatingRoom[removeNum].chatUsers[0].name}</p>
+                <p className="chat-title">{chatingRoom[removeNum].chatUsers[0].name}</p>
                 <p>방을 나가시겠습니까?</p>
                 <div className="btns">
                     <button onClick={() => {
-                        dispatch({ type: "REMOVE_CHATINGROOM", payload: {id: props.chatingRoom[removeNum].id} })
+                        dispatch({ type: "REMOVE_CHATINGROOM", payload: {id: chatingRoom[removeNum].id} })
                         dispatch({ type: SWITCH_CHAT_REMOVE });
                     }}>Yes</button>
                     <button onClick={() => {

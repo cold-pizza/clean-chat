@@ -3,13 +3,15 @@ import './style.scss';
 import loginFn from '../../controller/loginFn';
 import onChange from '../../controller/onChange';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 function Login(props) {
+    const dispatch = useDispatch();
 const basicImg = useSelector(state => state.basicReducer.basicImg);
+const buttonActiveSwitch = useSelector(state => state.switchReducer.buttonActiveSwitch);
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 const btnRef = useRef(null);
-const [btnValue, setBtnValue] = useState(false);
 
     return <div className="login">
         <h1>클린챗</h1>
@@ -17,7 +19,7 @@ const [btnValue, setBtnValue] = useState(false);
             <input 
             onChange={e => onChange(e, idInput, setIdInput)} 
             name="loginId" 
-            value={props.loginId}
+            value={loginId}
             className="email" 
             type="email" 
             placeholder="이메일" 
@@ -25,31 +27,21 @@ const [btnValue, setBtnValue] = useState(false);
             <input 
             onChange={e => onChange(e, idInput, setIdInput)}  
             name="loginPs" 
-            value={props.loginPs}
+            value={loginPs}
             className="password" 
             type="password" 
             placeholder="비밀번호" 
             />
             <button onClick={()=>{
-                loginFn(
-                    loginId, 
-                    loginPs, 
-                    setIdInput, 
-                    props.setMyAccount, 
-                    props.setUser,
-                    props.setChatingRoom,
-                    basicImg,
-                    btnValue,
-                    setBtnValue,
-                    props.history
-                    );
+                loginFn(loginId, loginPs, basicImg, props.history, dispatch);
+                setIdInput({ loginId: '', loginPs: '' });
             }} 
             className="login-btn" 
             type="submit" 
-            disabled={btnValue} 
+            disabled={buttonActiveSwitch} 
             ref={btnRef} 
-            style={{ background: btnValue ? "#828282" : "#2647ff" }}
-            >{ btnValue ? "Loading.." : "로그인" }</button>
+            style={{ background: buttonActiveSwitch ? "#828282" : "#2647ff" }}
+            >{ buttonActiveSwitch ? "Loading.." : "로그인" }</button>
             <button onClick={()=>{
                 props.history.push('/signup')
             }} 

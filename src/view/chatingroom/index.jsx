@@ -16,16 +16,18 @@ function ChatingRoom(props) {
     const dispatch = useDispatch();
     const { id } = useParams();
     const chatContents = useSelector(state => state.stateReducer.chatContents);
+    const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
+    const myAccount = useSelector(state => state.stateReducer.myAccount);
     const scrollRef = useRef(null);
     const [inputSwitch, setInputSwitch] = useState(false);
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
 
     useEffect(() => {
-        props.setChatingRoom(JSON.parse(localStorage.getItem('chatingRoom')));
+        dispatch({ type: "SET_CHATINGROOM", payload: JSON.parse(localStorage.getItem("chatingRoom")) });
         socketMsgFn(io, dispatch);
         return console.log("로딩");
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -35,24 +37,24 @@ function ChatingRoom(props) {
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{ 
-            msgSearchFn(id, props.chatingRoom, props.setChatingRoom);
+            msgSearchFn(id, chatingRoom, dispatch);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
-        <p className="name">{props.chatingRoom !== null ? props.chatingRoom[id].chatUsers[0].name : null}</p>
+        <p className="name">{chatingRoom !== null ? chatingRoom[id].chatUsers[0].name : null}</p>
         <div></div>
         </nav>
         <section ref={scrollRef} className="chating-form">
             {
                 chatContents.length > 0 ? chatContents.map((list, i) => {
                     if (list.User) {
-                        if (list.User.id === props.myAccount.id) {
+                        if (list.User.id === myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} chatName={props.chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} chatName={props.chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
                     }
                 }) : console.log('chatContents === null')
             }
@@ -72,7 +74,7 @@ function ChatingRoom(props) {
             onClick={()=>{
                 dispatch({ 
                     type: "CREATE_MESSAGE", 
-                    payload: { id: props.chatingRoom[id].id, message: ment, setTalk } });
+                    payload: { id: chatingRoom[id].id, message: ment, setTalk } });
                     setInputSwitch(!inputSwitch);
         }} className="fas fa-arrow-up"></i>
          : null }

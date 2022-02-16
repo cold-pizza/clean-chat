@@ -2,7 +2,9 @@ import axios from "axios";
 import chatRoomRemoveFn from "../controller/chatRoomRemoveFn";
 
 const stateManagement = {
-    user: null,
+    users: null,
+    myAccount: null,
+    chatingRoom: null,
     message: null,
     chatContents: [],
   }
@@ -10,11 +12,14 @@ const stateManagement = {
   // stateReducer
 const GET_MESSAGE = "GET_MESSAGE";
 const CREATE_MESSAGE = "CREATE_MESSAGE";
-const CHECK_CHAT = "CHECK_CHAT";
 const SEND_MESSAGE = "SEND_MESSAGE";
 const REMOVE_CHATINGROOM = "REMOVE_CHATINGROOM";
 const CALL_USERS = "CALL_USERS";
 const ALARM_MESSAGE = "ALARM_MESSAGE";
+const SET_USERS = "SET_USERS";
+const SET_MY_ACCOUNT = "SET_MY_ACCOUNT";
+const SET_CHATINGROOM = "SET_CHATINGROOM";
+
 
 const stateReducer = function(state = stateManagement, action) {
     switch(action.type) {
@@ -85,17 +90,14 @@ const stateReducer = function(state = stateManagement, action) {
               case ALARM_MESSAGE:
                 return { ...state, message: action.payload.data };
 
+              case SET_USERS:
+                return { ...state, user: action.payload };
 
+              case SET_MY_ACCOUNT:
+                return { ...state, myAccount: action.payload };
 
-
-  // case CHECK_CHAT:
-  //   const id = action.payload.id;
-  //   const chatingRoom = action.payload.chatingRoom;
-  //   const setChatingRoom = action.payload.setChatingRoom;
-  //   return msgSearchFn(id, chatingRoom, setChatingRoom);
-
-
-
+              case SET_CHATINGROOM:
+                return { ...state, chatingRoom: action.payload };
   
   default:
     return state;

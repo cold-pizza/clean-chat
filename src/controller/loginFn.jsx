@@ -1,24 +1,12 @@
 import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
 import socketCallFn from './socketCallFn';
-import changeStateFn from './changeStateFn';
 import imageFilterFn from './imageFilterFn';
 import io from 'socket.io-client';
 
 
   // 로그인 함수.
-  const loginFn = function(
-    loginId, 
-    loginPs, 
-    setIdInput, 
-    setMyAccount, 
-    setUser, 
-    setChatingRoom, 
-    basicImg,
-    btnValue,
-    setBtnValue,
-    history
-    ) {
+  const loginFn = function(loginId, loginPs,basicImg, history, dispatch) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;
@@ -39,7 +27,7 @@ import io from 'socket.io-client';
         password: loginPs
       }
       // 로그인 버튼 비활성화.
-      changeStateFn(btnValue, setBtnValue);
+      dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
 
       // 로그인 요청.
       axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
@@ -58,8 +46,8 @@ import io from 'socket.io-client';
             console.log("친구가 " + res.data.message);
             console.log(res.data.result);
             const friends = res.data.result;
-            localStorage.setItem('user', JSON.stringify(imageFilterFn(friends, basicImg)));
-            setUser(JSON.parse(localStorage.getItem('user')));
+            localStorage.setItem('users', JSON.stringify(imageFilterFn(friends, basicImg)));
+            dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
           })
           .catch(err => {
             console.log('친구 에러');
@@ -72,7 +60,6 @@ import io from 'socket.io-client';
             console.log('채팅방이 ' + res.data.message);
             const cr = res.data.result;
             localStorage.setItem('chatingRoom', JSON.stringify(cr));
-            setChatingRoom(cr);
             chatMsgSearchFn(cr);
           })
           .catch(err => {
@@ -80,13 +67,12 @@ import io from 'socket.io-client';
             console.log(err);
           })
           // 내 계정 업로드.
-          setMyAccount(user);
           localStorage.setItem('myInfo', JSON.stringify(user));
-          setIdInput({ loginId: '', loginPs: '' });
+          dispatch({ type: "SET_MY_ACCOUNT", payload: user });
           console.log(res.data.message);
           history.push('/friends');
-          // 로그인버튼 다시 활성화.
-          changeStateFn(btnValue, setBtnValue);
+          // 로그인버튼 활성화.
+          dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
         }
         const socketio = io('wss://clean-chat.kumas.dev');
         socketio.on('conn', () => {
@@ -95,7 +81,7 @@ import io from 'socket.io-client';
       })
       .catch(err => {
         console.log(err);
-        changeStateFn(btnValue, setBtnValue);
+        dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
         // 401 예외 처리.
         alert('이메일 또는 비밀번호를 다시 확인해주세요.');
       }) 

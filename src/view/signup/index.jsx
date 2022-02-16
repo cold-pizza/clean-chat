@@ -35,35 +35,16 @@ function Signup(props) {
         </div>
         <section id="signup-form">
             <input 
-            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
-            name="name" 
-            type="text" 
-            id="name" 
-            placeholder="이름" 
-            required
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} name="name" type="text" id="name" placeholder="이름" required
             />
             <input 
-            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
-            name="id" 
-            type="email" 
-            id="email" 
-            placeholder="이메일" 
-            required
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} name="id" type="email" id="email" placeholder="이메일" required
             />
             <input 
-            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
-            name="password" 
-            type="password" 
-            id="password" 
-            placeholder="비밀번호" 
-            required
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} name="password" type="password" id="password" placeholder="비밀번호" required
             />
             <input 
-            onChange={e => onChange(e, joinAccount, setJoinAccount)} 
-            type="password" 
-            name="psCheck" 
-            placeholder="비밀번호 확인" 
-            required
+            onChange={e => onChange(e, joinAccount, setJoinAccount)} type="password" name="psCheck" placeholder="비밀번호 확인" required
             />
             <div className="gender">
                 <button
@@ -89,13 +70,8 @@ function Signup(props) {
             <button onClick={()=>{
                 signupFn(joinAccount, setJoinAccount, props.history);
             }} 
-            disabled={btnActiveSwitch}
             className="signup-btn" 
-            type="submit" 
-            style={{ 
-                background: btnActiveSwitch ? "#eee" : "#2647ff", 
-                color: btnActiveSwitch ? "#808080" : "white" }}
-            >완료</button>
+            type="submit">완료</button>
             <button className="cancel-btn" onClick={()=>{
                 props.history.goBack();
             }} type="button" >취소</button>
