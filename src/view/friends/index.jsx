@@ -7,23 +7,21 @@ import msgReceiveFn from '../../controller/msgReceiveFn';
 
 function Friends(props) {    
     const dispatch = useDispatch();
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
-    const users = useSelector(state => state.stateReducer.users);
-    const myAccount = useSelector(state => state.stateReducer.myAccount);
-    console.log(users);
-    console.log(myAccount)
     useEffect(()=>{
         dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
         dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
         msgReceiveFn(io, dispatch);
         return console.log('업데이트 되었습니다.');
-      }, []);
+      }, [dispatch]);
+    const basicImg = useSelector(state => state.basicReducer.basicImg);
+    const users = useSelector(state => state.stateReducer.users);
+    const myAccount = useSelector(state => state.stateReducer.myAccount);
       
     return <div className="friends">
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={myAccount.imagePath} alt={myAccount.imagePath} />
+            <img src={imageOutputFn(myAccount.imagePath)} alt={imageOutputFn(myAccount.imagePath)} />
             <p>{myAccount !== null ? myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">

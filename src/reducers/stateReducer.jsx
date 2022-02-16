@@ -91,7 +91,7 @@ const stateReducer = function(state = stateManagement, action) {
                 return { ...state, message: action.payload.data };
 
               case SET_USERS:
-                return { ...state, user: action.payload };
+                return { ...state, users: action.payload };
 
               case SET_MY_ACCOUNT:
                 return { ...state, myAccount: action.payload };

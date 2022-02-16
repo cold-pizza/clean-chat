@@ -33,20 +33,15 @@ import io from 'socket.io-client';
       axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
       .then(res => {
         const user = res.data.result;
-        if (!res.data.result.imagePath) {
-          user.imagePath = basicImg;
-        } else {
-          user.imagePath = `${axios.defaults.baseURL + res.data.result.imagePath}`;
-        }
-        console.log(user);
+        // console.log(user);
         if (res.status === 200) {
           // 친구요청.
           axios.get(`${axios.defaults.baseURL}/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
-            console.log(res.data.result);
-            const friends = res.data.result;
-            localStorage.setItem('users', JSON.stringify(imageFilterFn(friends, basicImg)));
+            // console.log(res.data.result);
+            const friends = imageFilterFn(res.data.result, basicImg);
+            localStorage.setItem('users', JSON.stringify(friends));
             dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
           })
           .catch(err => {
