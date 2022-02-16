@@ -1,14 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 
 import signupFn from '../../controller/signupFn';
-// import changeGenderFn from '../../controller/changeGenderFn';
 import selectGenderFn from '../../controller/selectGenderFn';
 import onChange from '../../controller/onChange';
 
-
 function Signup(props) {
-    const [btnActiveSwitch, setBtnActiveSwitch] = useState(false);
     const [genderSwitch, setGenderSwitch] = useState(false);
     const [joinAccount, setJoinAccount] = useState({ 
         name: '', 

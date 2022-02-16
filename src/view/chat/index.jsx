@@ -10,12 +10,6 @@ function Chat(props) {
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
     const [removeNum, setRemoveNum] = useState(null);
-    useEffect(() => {
-        dispatch({ type: "SET_CHATINGROOM", payload: JSON.parse(localStorage.getItem("chatingRoom")) });
-        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
-        return console.log('로딩 끝');
-    }, [])
-
     return <div className="chat">
         {
             chatingRoom !== null ?

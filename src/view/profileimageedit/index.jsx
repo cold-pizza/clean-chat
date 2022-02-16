@@ -13,7 +13,7 @@ function ProfileImageEdit(props) {
     const viewImg = useRef(null);
 
     useEffect(() => {
-        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
+        // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
         return console.log('내 정보 업데이트');
     }, [])
     

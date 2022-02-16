@@ -3,10 +3,8 @@ import React, { useEffect } from 'react';
 import Signup from './view/signup';
 import Chat from './view/chat';
 import Login from './view/login';
-// import LoginLoading from './view/loginLoading';
 import Search from './view/search';
 import Setting from './view/setting';
-import ProfileImageEdit from './view/profileimageedit';
 import SearchUser from './view/searchUser';
 import FriendsRemove from './view/friendsremove';
 import Delete from './view/delete';
@@ -26,8 +24,7 @@ import urlLimitFn from './controller/urlLimitFn';
 // 라이브러리
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // CORS 처리
 axios.defaults.withCredentials = true;
@@ -39,20 +36,21 @@ function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const settingSwitch = useSelector(state => state.switchReducer.settingSwitch);
   const messageData = useSelector(state => state.stateReducer.message);
+  const myAccount = useSelector(state => state.stateReducer.myAccount);
 
   useEffect(() => {
     chatAlarm(messageData, dispatch);
   }, [dispatch, messageData]);
 
   useEffect(() => {
-    if (localStorage.length !== 0 && window.location.pathname === '/clean-chat/') {
+    if (myAccount !== null && window.location.pathname === '/clean-chat/') {
       import('./controller/logoutFn')
       .then(({ default: logout }) => {
         logout(history);
       })
     }
-    urlLimitFn(history);
-  }, [history]);
+    urlLimitFn(myAccount, history);
+  }, [history, myAccount]);
 
   return (
     <div className="App">
@@ -86,13 +84,11 @@ function App() {
       {/* 채팅창 */}
       <Route path="/chatingroom/:id" render={() => <ChatingRoom history={history} />} />
 
-      <Route path="/myprofile/profileimageedit" render={() => <ProfileImageEdit history={history} />} />
-
       {/* 친구찾기 */}
       <Route path="/search" render={() => <Search history={history} />} />
 
       {/* 친구추가 */}
-      <Route path="/searchuser" render={() => <SearchUser history={history} />} />
+      <Route path="/searchuser" render={() => <SearchUser />} />
 
       {/* 친구관리창 */}
       <Route path="/friendsremove" render={() => <FriendsRemove history={history} />} />

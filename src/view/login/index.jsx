@@ -9,6 +9,7 @@ function Login(props) {
     const dispatch = useDispatch();
 const basicImg = useSelector(state => state.basicReducer.basicImg);
 const buttonActiveSwitch = useSelector(state => state.switchReducer.buttonActiveSwitch);
+const myAccount = useSelector(state => state.stateReducer.myAccount);
 const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
 const { loginId, loginPs } = idInput;
 const btnRef = useRef(null);
@@ -33,7 +34,7 @@ const btnRef = useRef(null);
             placeholder="비밀번호" 
             />
             <button onClick={()=>{
-                loginFn(loginId, loginPs, basicImg, props.history, dispatch);
+                loginFn(loginId, loginPs, basicImg, myAccount, props.history, dispatch);
                 setIdInput({ loginId: '', loginPs: '' });
             }} 
             className="login-btn" 

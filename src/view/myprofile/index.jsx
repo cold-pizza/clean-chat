@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import { Route } from 'react-router-dom'; 
+import { Route } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
 import nameChangeFn from '../../controller/nameChangeFn';
 import onChange from '../../controller/onChange';
 import NameInput from '../nameInput';
 import './style.scss';
-// import ProfileImageEdit from '../profileimageedit';
+import ProfileImageEdit from '../profileimageedit';
 
 function MyProfile(props) {
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function MyProfile(props) {
     const myAccount = useSelector(state => state.stateReducer.myAccount);
     const [nickNameEdit, setNickNameEdit] = useState('');    
   useEffect(()=>{
-    dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
+    // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
     return console.log('내 계정 업데이트');
   }, [])
     return <div className="my-profiles">
@@ -71,14 +71,7 @@ function MyProfile(props) {
             }
         }} className="fas fa-edit edit-btn"></i>
         </main>
-
-        {/* <Route path="/myprofile/profileimageedit">
-        <ProfileImageEdit 
-        myAccount={myAccount}
-        setMyAccount={setMyAccount}
-        history={history}
-        />
-      </Route> */}
+        <Route path="/myprofile/profileimageedit" render={() => <ProfileImageEdit history={props.history} />} />
     </div>
 }
 

@@ -7,15 +7,12 @@ import msgReceiveFn from '../../controller/msgReceiveFn';
 
 function Friends(props) {    
     const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
-        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
-        msgReceiveFn(io, dispatch);
-        return console.log('업데이트 되었습니다.');
-      }, [dispatch]);
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
     const myAccount = useSelector(state => state.stateReducer.myAccount);
+    useEffect(()=>{
+        // msgReceiveFn(io, dispatch);
+        return console.log('업데이트 되었습니다.');
+      }, []);
       
     return <div className="friends">
         <section onClick={()=>{
@@ -36,8 +33,8 @@ function Friends(props) {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                     <img 
-                    src={imageOutputFn(imagePath, basicImg)} 
-                    alt={imageOutputFn(imagePath, basicImg)} 
+                    src={imageOutputFn(imagePath)} 
+                    alt={imageOutputFn(imagePath)} 
                     />
                     <p>{name}</p>
                 </li>

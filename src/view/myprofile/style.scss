@@ -2,6 +2,8 @@
 
 .my-profiles {
     @include main;
+    display: flex;
+    justify-content: center;
     background: #B5D4ED;
     position:absolute;
     top: 0;

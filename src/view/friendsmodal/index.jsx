@@ -14,7 +14,7 @@ function FriendsModal(props) {
     const { id } = useParams();
 
     useEffect(() => {
-        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem("myInfo")) });
+        // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem("myInfo")) });
         localStorage.setItem("friendsNumber", id);
     }, [])
     return <div className="friends-modal">

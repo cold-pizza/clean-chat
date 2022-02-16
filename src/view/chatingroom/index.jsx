@@ -70,8 +70,7 @@ function ChatingRoom(props) {
         />
         <button>
             { inputSwitch ? 
-            <i 
-            onClick={()=>{
+            <i onClick={()=>{
                 dispatch({ 
                     type: "CREATE_MESSAGE", 
                     payload: { id: chatingRoom[id].id, message: ment, setTalk } });

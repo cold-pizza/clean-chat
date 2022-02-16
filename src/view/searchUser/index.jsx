@@ -7,7 +7,7 @@ import imageOutputFn from '../../controller/imageOutputFn';
 import onChange from '../../controller/onChange';
 import { useSelector } from 'react-redux';
 
-function SearchUser(props) {
+function SearchUser() {
     // 리스트 지정.
     const listRef = useRef(null);
     const basicImg = useSelector(state => state.basicReducer.basicImg);

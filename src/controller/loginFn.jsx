@@ -6,7 +6,7 @@ import io from 'socket.io-client';
 
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs,basicImg, history, dispatch) {
+  const loginFn = function(loginId, loginPs,basicImg, myAccount, history, dispatch) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;
@@ -16,12 +16,12 @@ import io from 'socket.io-client';
         return false;
       }
     }
-    if (localStorage.length !== 0) {
-      if (JSON.parse(localStorage.myInfo).email === loginId) {
-        alert('이미 로그인된 아이디 입니다.')
-        return false;
-      }
-    } else {
+      if (localStorage.length > 1) {
+        if (myAccount.email === loginId) {
+          alert('이미 로그인된 아이디 입니다.');
+          return history.replace('/');
+        }
+      } else {
       const data = {
         email: loginId, 
         password: loginPs
@@ -33,6 +33,8 @@ import io from 'socket.io-client';
       axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
       .then(res => {
         const user = res.data.result;
+        dispatch({ type: "SET_MY_ACCOUNT", payload: user });
+        console.log(res.data.message);
         // console.log(user);
         if (res.status === 200) {
           // 친구요청.
@@ -41,12 +43,13 @@ import io from 'socket.io-client';
             console.log("친구가 " + res.data.message);
             // console.log(res.data.result);
             const friends = imageFilterFn(res.data.result, basicImg);
-            localStorage.setItem('users', JSON.stringify(friends));
-            dispatch({ type: "SET_USERS", payload: JSON.parse(localStorage.getItem('users')) });
+            // localStorage.setItem('users', JSON.stringify(friends));
+            dispatch({ type: "SET_USERS", payload: friends });
           })
           .catch(err => {
             console.log('친구 에러');
             console.log(err);
+            history.replace('/');
           });
 
           // 채팅방 요청.
@@ -54,17 +57,18 @@ import io from 'socket.io-client';
           .then(res => {
             console.log('채팅방이 ' + res.data.message);
             const cr = res.data.result;
-            localStorage.setItem('chatingRoom', JSON.stringify(cr));
+            console.log(cr)
+            dispatch({ type: "SET_CHATINGROOM", payload: cr });
+            // localStorage.setItem('chatingRoom', JSON.stringify(cr));
             chatMsgSearchFn(cr);
           })
           .catch(err => {
             console.log('채팅방 에러');
             console.log(err);
+            history.replace('/');
           })
           // 내 계정 업로드.
-          localStorage.setItem('myInfo', JSON.stringify(user));
-          dispatch({ type: "SET_MY_ACCOUNT", payload: user });
-          console.log(res.data.message);
+          // localStorage.setItem('myInfo', JSON.stringify(user));
           history.push('/friends');
           // 로그인버튼 활성화.
           dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
