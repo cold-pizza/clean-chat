@@ -1,31 +1,29 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import './style.scss';
 import logoutFn from '../../controller/logoutFn';
-import { useDispatch } from 'react-redux';
+import SearchUser from '../searchUser';
+import FriendsRemove from '../friendsremove';
 
 function Setting(props) {
-    const SETTING_SWITCH = "SWITCH_SETTING";
-    const dispatch = useDispatch();
-
     return <div className="setting">
         <div className="btns">
             <button onClick={()=>{
-                dispatch({ type: SETTING_SWITCH });
-                props.history.push('/searchuser');
+                props.history.push('/setting/searchuser');
             }} type="button">친구추가</button>
             <button onClick={()=>{
-                dispatch({ type: SETTING_SWITCH });
-                props.history.push('/friendsremove')
+                props.history.push('/setting/friendsremove');
             }} type="button">친구삭제</button>
             <button onClick={()=>{
-                dispatch({ type: SETTING_SWITCH });
                 logoutFn(props.history);
             }}>로그아웃</button>
             <button onClick={()=>{
-                dispatch({ type: SETTING_SWITCH });
+                props.history.goBack();
             }} type="button">취소</button>
         </div>
+        <Route exact path="/setting/searchuser" render={() => <SearchUser />} />
+        <Route path="/setting/friendsremove" render={() => <FriendsRemove history={props.history} />} />
     </div>
 }
 
-export default React.memo(Setting);
+export default Setting;

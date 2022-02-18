@@ -1,9 +1,11 @@
 import './style.scss';
 import React, { useEffect } from 'react';
+import { Route } from 'react-router-dom';
 import imageOutputFn from '../../controller/imageOutputFn';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import msgReceiveFn from '../../controller/msgReceiveFn';
+import FriendsModal from '../friendsmodal';
 
 function Friends(props) {    
     const dispatch = useDispatch();
@@ -49,6 +51,7 @@ function Friends(props) {
         <button onClick={() => {
             dispatch({ type: "SWITCH_CHATING_BUBBLE" })
         }}>채팅기록 수정하기</button> */}
+        <Route path="/friends/friendsmodal/:id" render={() => <FriendsModal />} />
     </div>
     
 }

@@ -13,8 +13,6 @@ function FriendsModal() {
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
     const history = useHistory();
     const { id } = useParams();
-    console.log(users[id].id)
-
     useEffect(() => {
         localStorage.setItem("friendsNumber", id);
     }, [])

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Route } from 'react-router-dom';
+import ChatingRoom from '../chatingroom';
 import './style.scss';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -9,7 +11,6 @@ function Chat(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
-    console.log(chatingRoom);
     const [removeNum, setRemoveNum] = useState(null);
     return <div className="chat">
         {
@@ -17,7 +18,7 @@ function Chat(props) {
             chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
                 return <li key={id}>
             <div onClick={()=>{
-            props.history.push(`/chatingroom/${i}`);
+            props.history.push(`/chat/chatingroom/${i}`);
             dispatch({ type: "GET_MESSAGE", payload: { id: i } });
         }} className="meta-data">
                 <img src={basicImg} alt={basicImg} />
@@ -51,6 +52,7 @@ function Chat(props) {
                 </div>
             </div> : null
         }
+        <Route path="/chat/chatingroom/:id" render={() => <ChatingRoom history={props.history} />} />
     </div>
 }
 

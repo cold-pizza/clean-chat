@@ -8,9 +8,9 @@ function Delete(props) {
     const { id } = useParams();
     const users = useSelector(state => state.stateReducer.users);
     return <div className="delete">
-        <div className="form">
+        <div className="delete-form">
         <p>{users[id].name} 님을 삭제하시겠습니까?</p>
-        <div className="btns">
+        <div className="delete-btns">
             <button onClick={()=>{
                     friendsDeleteFn(users[id].id);
                 props.history.push('/friends');

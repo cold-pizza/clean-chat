@@ -24,7 +24,7 @@ const basicState = {
       title: '채팅'
     }, {
       id: 2,
-      site: '/searchuser',
+      site: '/setting/searchuser',
       title: '유저검색'
     }, {
       id: 3,
@@ -32,7 +32,7 @@ const basicState = {
       title: '친구찾기'
     }, {
       id: 4,
-      site: '/friendsremove',
+      site: '/setting/friendsremove',
       title: '친구관리'
     }]
   }

@@ -1,10 +1,15 @@
 @import '/src/App.scss';
 
 .friends-remove {
-    @include main;
-    position: relative;
     @include col;
+    position: relative;
+    height: 80%;
+    overflow: scroll;
+    width: 100%;
+    z-index: 3;
+    background: white;
     .item {
+        width: 100%;
         @include row;
         align-items: center;
         justify-content: space-between;
