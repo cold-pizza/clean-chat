@@ -6,6 +6,7 @@ import onChange from '../../controller/onChange';
 import NameInput from '../nameInput';
 import './style.scss';
 import ProfileImageEdit from '../profileimageedit';
+import imageOutputFn from '../../controller/imageOutputFn';
 
 function MyProfile(props) {
     const dispatch = useDispatch();
@@ -49,8 +50,8 @@ function MyProfile(props) {
         }
         <section>
             <img 
-            src={myAccount !== null ? myAccount.imagePath : null} 
-            alt={myAccount !== null ? myAccount.imagePath : null} />
+            src={imageOutputFn(myAccount.imagePath)} 
+            alt={imageOutputFn(myAccount.imagePath)} />
 
             { myEditSwitch ? <i onClick={()=>{
                 props.history.push('/myprofile/profileimageedit');

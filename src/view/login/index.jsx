@@ -33,9 +33,8 @@ const btnRef = useRef(null);
             type="password" 
             placeholder="비밀번호" 
             />
-            <button onClick={()=>{
-                loginFn(loginId, loginPs, basicImg, myAccount, props.history, dispatch);
-                setIdInput({ loginId: '', loginPs: '' });
+            <button onClick={async ()=>{
+                loginFn(loginId, loginPs, basicImg, myAccount, props.history, dispatch, setIdInput);
             }} 
             className="login-btn" 
             type="submit" 

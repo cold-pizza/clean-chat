@@ -1,6 +1,6 @@
 const urlLimitFn = function(myAccount, history) {
     const path = window.location.pathname;
-    console.log(path)
+    // console.log(path)
     const url = ["/clean-chat", "/clean-chat/", "/clean-chat/signup"];
     if (myAccount === null) {
       if (path !== url[0 || 1]) {

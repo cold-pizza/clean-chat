@@ -4,7 +4,7 @@ import axios from 'axios';
   const logoutFn = function(history) {
     axios.post(`${axios.defaults.baseURL}/api/auth/logout`, { withCredentials: true })
     .then(res => {
-      localStorage.clear();
+      localStorage.clear("persist:root");
         console.log(res.data.message);
         history.replace('/');
     })

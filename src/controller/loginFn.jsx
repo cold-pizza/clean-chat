@@ -1,12 +1,12 @@
 import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
-import socketCallFn from './socketCallFn';
+// import socketCallFn from './socketCallFn';
 import imageFilterFn from './imageFilterFn';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs,basicImg, myAccount, history, dispatch) {
+  const loginFn = function(loginId, loginPs, basicImg, myAccount, history, dispatch, setIdInput) {
     if (loginId === '') {
       alert('이메일을 입력해주세요.')
       return false;
@@ -70,13 +70,14 @@ import io from 'socket.io-client';
           // 내 계정 업로드.
           // localStorage.setItem('myInfo', JSON.stringify(user));
           history.push('/friends');
+          setIdInput({ loginId: '', loginPs: '' });
           // 로그인버튼 활성화.
           dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
         }
-        const socketio = io('wss://clean-chat.kumas.dev');
-        socketio.on('conn', () => {
-          socketCallFn(socketio.id);
-        });
+        // const socketio = io('wss://clean-chat.kumas.dev');
+        // socketio.on('conn', () => {
+        //   socketCallFn(socketio.id);
+        // });
       })
       .catch(err => {
         console.log(err);

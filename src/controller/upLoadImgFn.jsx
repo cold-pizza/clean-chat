@@ -9,8 +9,7 @@ const upLoadImgFn = function(myAccount, dispatch) {
     .then(res => {
         const arr = { ...myAccount };
         arr.imagePath = axios.defaults.baseURL + imgUrl;
-        localStorage.setItem('myInfo', JSON.stringify(arr));
-        dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
+        dispatch({ type: "SET_MY_ACCOUNT", payload: arr });
         console.log(res);
         console.log("이미지가 " + res.data.message);
         localStorage.removeItem('image');

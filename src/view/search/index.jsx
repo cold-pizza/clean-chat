@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import searchOnChange from '../../controller/searchOnChange';
 import imageOutputFn from '../../controller/imageOutputFn';
 import './style.scss';
@@ -8,7 +8,10 @@ function Search(props) {
     const [search, setSearch] = useState('');
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
-    let array = [...users];
+    const [friends, setFriends] = useState(null);
+    useEffect(() => {
+        setFriends(users);
+    }, []);
     return <div className="search">
         <section className="search-form">
         <input value={search} onChange={e => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
@@ -16,11 +19,11 @@ function Search(props) {
         </section>
         <ul>
             {
-                users !== null ?
-            array.filter(users => {
-                if (search === '' || users.name.includes(search)) return users;
-            }).map(({ name, imagePath, id }, i)=>{
-                return <li key={id} onClick={()=>{
+                friends !== null ?
+                friends.filter(friends => {
+                if (search === '' || friends.name.includes(search)) return friends;
+            }).map(({ name, imagePath, id }, i) => {
+                return <li key={id} onClick={() => {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
                 <img src={imageOutputFn(imagePath)} alt={imageOutputFn(imagePath)} />
