@@ -100,7 +100,7 @@ function App() {
       <Route path="/myprofile" render={() => <MyProfile history={history} />} />
 
       {/* 친구프로필 */}
-      <Route path="/friends/friendsmodal/:id" render={() => <FriendsModal history={history} />} />
+      <Route path="/friends/friendsmodal/:id" render={() => <FriendsModal />} />
 
       {/* 채팅알림창 */}
       { alarm ? <ChatingAlarm /> : null }

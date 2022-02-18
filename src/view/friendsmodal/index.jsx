@@ -4,34 +4,37 @@ import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import addChatingRoomFn from '../../controller/addChatingRoomFn';
 import imageOutputFn from '../../controller/imageOutputFn';
+import checkChatingRoomFn from '../../controller/checkChatingRoomFn';
 import './style.scss';
 
-function FriendsModal(props) {
+function FriendsModal() {
     const dispatch = useDispatch();
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
+    const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
     const history = useHistory();
     const { id } = useParams();
+    console.log(users[id].id)
 
     useEffect(() => {
-        // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem("myInfo")) });
         localStorage.setItem("friendsNumber", id);
     }, [])
     return <div className="friends-modal">
         {
-            props.user !== null ? 
+            users !== null ? 
             <section className="friends-profile">
             <div className="meta-info">
                 <img 
-                src={imageOutputFn(users[id].imagePath, basicImg)} 
-                alt={imageOutputFn(users[id].imagePath, basicImg)} 
+                src={imageOutputFn(users[id].imagePath)} 
+                alt={imageOutputFn(users[id].imagePath)} 
                 />
                 <p>{users[id].name}</p>
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    addChatingRoomFn(users[id].id);
-                    history.push(`/chatingroom/${id}`);
+                    checkChatingRoomFn(chatingRoom, users, history);
+                    if (checkChatingRoomFn !== 0) {
+                        addChatingRoomFn(users, chatingRoom.length, dispatch, history);
+                    }
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
                     localStorage.removeItem("friendsNumber");

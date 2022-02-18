@@ -1,25 +1,22 @@
 import axios from "axios";
 
 // 채팅방에 추가할 함수.
-const addChatingRoomFn = function(id) {
+const addChatingRoomFn = function(users, length,  dispatch, history) {
+  const id = Number(localStorage.getItem('friendsNumber'));
   const body = {
-    userId: [id].id
+    userId: users[id].id
   }
   axios.post(`${axios.defaults.baseURL}/api/chats`, body)
   .then(res => {
-    const room = res.data.result;
+    const result = res.data.result;
     console.log(res.data.message);
-    const item = localStorage.getItem('chatingRoom');
-    if (item !== null) {
-      const cr = [...JSON.parse(item), room];
-      localStorage.setItem('chatingRoom', JSON.stringify(cr));
-    } else {
-      localStorage.setItem('chatingRoom', JSON.stringify(room));
-    }
+    dispatch({ type: "SET_CHATINIGROOM", payload: result });
+    localStorage.setItem(`chatContents_${length}`);
+    history.push(`/chatingroom/${length}`);
   })
   .catch(err => {
-    console.log(err);
     console.log("채팅방 생성 에러");
+    console.log(err);
   });
   }
   

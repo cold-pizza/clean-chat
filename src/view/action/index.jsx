@@ -1,12 +1,10 @@
-
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './style.scss';
 
 function Action(props) {
-  const dispatch = useDispatch();
   const chatBubble = useSelector(state => state.switchReducer.chatBubble);
   const site = useSelector(state => state.basicReducer.site);
-  
+
     return <div className="action">
       {
         site.map(({ site, logo, id })=>{
