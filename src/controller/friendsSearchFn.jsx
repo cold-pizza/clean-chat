@@ -4,7 +4,10 @@ import userOverlapCheckFn from './userOverlapCheckFn';
 
  // 친구 검색 요청 함수.
  const friendsSearchFn = function(email, setSearchList, friends, state, setState) {
-    axios.get(`${axios.defaults.baseURL}/api/users/email/${email}`, { withCredentials: true })
+     if (state === true) {
+         setState(!state);
+     }
+    axios.get(`${axios.defaults.baseURL}/api/users/email/${email}`)
     .then(res => {
         console.log(res.data.message);
         console.log(res.data.result);

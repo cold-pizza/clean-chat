@@ -1,6 +1,3 @@
-
-
-
 const userOverlapCheckFn = function(friends, searchList, state, setState) {
     console.log(friends);
     for (let i = 0; i < friends.length; i++) {
@@ -8,7 +5,7 @@ const userOverlapCheckFn = function(friends, searchList, state, setState) {
             setState(!state);
         }
     }
-    return console.log("변경되었습니다.")
+    return console.log("변경되었습니다.");
 }
 
 export default userOverlapCheckFn

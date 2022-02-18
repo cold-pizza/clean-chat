@@ -36,9 +36,9 @@ const btnRef = useRef(null);
             <button onClick={async ()=>{
                 loginFn(loginId, loginPs, basicImg, myAccount, props.history, dispatch, setIdInput);
             }} 
-            className="login-btn" 
-            type="submit" 
-            disabled={buttonActiveSwitch} 
+            className="login-btn"
+            type="submit"
+            disabled={buttonActiveSwitch}
             ref={btnRef} 
             style={{ background: buttonActiveSwitch ? "#828282" : "#2647ff" }}
             >{ buttonActiveSwitch ? "Loading.." : "로그인" }</button>

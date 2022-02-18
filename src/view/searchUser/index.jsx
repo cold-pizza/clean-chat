@@ -10,16 +10,11 @@ import { useSelector } from 'react-redux';
 function SearchUser() {
     // 리스트 지정.
     const listRef = useRef(null);
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
+    // const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
-
-    // 리스트 온오프 스위치.
-    const [listRefSwitch, setListRefSwitch] = useState(false);
-    
     const [searchList, setSearchList] = useState(null);
-
+    const [listRefSwitch, setListRefSwitch] = useState(false);
     const [userOverlap, setUserOverlap] = useState(false);
-
     // 친구추가 모달 스위치.
     const [plusModalSwitch, setPlusModalSwitch] = useState(false);
     
@@ -33,7 +28,8 @@ function SearchUser() {
               setListRefSwitch(!listRefSwitch);
             }
       }
-  }, [listRefSwitch, searchList])
+      return console.log('load');
+  }, [listRefSwitch, searchList]);
 
     return <div className="search-email">
         <div className="search-form">
@@ -53,8 +49,8 @@ function SearchUser() {
                 <li className="item">
                 <div className="meta-data">
                 <img 
-                src={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : basicImg} 
-                alt={searchList.imagePath !== '' ? imageOutputFn(searchList.imagePath) : basicImg} />
+                src={imageOutputFn(searchList.imagePath)} 
+                alt={imageOutputFn(searchList.imagePath)} />
                 {
                     searchList !== null ? <p>{searchList.name}</p> : null
                 }

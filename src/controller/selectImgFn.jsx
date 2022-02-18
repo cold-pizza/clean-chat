@@ -18,7 +18,7 @@ const selectImgFn = function(e, viewImg) {
         const url = res.data.result.imagePath;
         localStorage.setItem('image', String(url));
         console.log("이미지가 " + res.data.message);
-    })
+    }) 
     .catch(err => {
         console.log("이미지 업로드 에러");
         console.log(err);
