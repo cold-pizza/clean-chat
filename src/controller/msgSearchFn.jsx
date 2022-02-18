@@ -13,7 +13,6 @@ const msgSearchFn = function(i, chatingRoom, dispatch) {
         .then(res => {
           console.log('채팅방이 ' + res.data.message);
           const cr = res.data.result;
-          localStorage.setItem('chatingRoom', JSON.stringify(cr));
           dispatch({ type: "SET_CHATINGROOM", payload: cr });
         })
         .catch(err => {

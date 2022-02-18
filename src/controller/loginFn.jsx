@@ -2,8 +2,6 @@ import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
 // import socketCallFn from './socketCallFn';
 import imageFilterFn from './imageFilterFn';
-// import io from 'socket.io-client';
-
 
   // 로그인 함수.
   const loginFn = function(loginId, loginPs, basicImg, myAccount, history, dispatch, setIdInput) {
@@ -43,7 +41,6 @@ import imageFilterFn from './imageFilterFn';
             console.log("친구가 " + res.data.message);
             // console.log(res.data.result);
             const friends = imageFilterFn(res.data.result, basicImg);
-            // localStorage.setItem('users', JSON.stringify(friends));
             dispatch({ type: "SET_USERS", payload: friends });
           })
           .catch(err => {
@@ -59,7 +56,6 @@ import imageFilterFn from './imageFilterFn';
             const cr = res.data.result;
             console.log(cr)
             dispatch({ type: "SET_CHATINGROOM", payload: cr });
-            // localStorage.setItem('chatingRoom', JSON.stringify(cr));
             chatMsgSearchFn(cr);
           })
           .catch(err => {
@@ -67,17 +63,11 @@ import imageFilterFn from './imageFilterFn';
             console.log(err);
             history.replace('/');
           })
-          // 내 계정 업로드.
-          // localStorage.setItem('myInfo', JSON.stringify(user));
           history.push('/friends');
           setIdInput({ loginId: '', loginPs: '' });
           // 로그인버튼 활성화.
           dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
         }
-        // const socketio = io('wss://clean-chat.kumas.dev');
-        // socketio.on('conn', () => {
-        //   socketCallFn(socketio.id);
-        // });
       })
       .catch(err => {
         console.log(err);

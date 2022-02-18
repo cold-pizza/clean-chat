@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 function Search(props) {
     const [search, setSearch] = useState('');
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
     const [friends, setFriends] = useState(null);
     useEffect(() => {

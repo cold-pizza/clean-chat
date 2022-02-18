@@ -24,7 +24,6 @@ function ChatingRoom(props) {
     const { ment } = talk;
 
     useEffect(() => {
-        dispatch({ type: "SET_CHATINGROOM", payload: JSON.parse(localStorage.getItem("chatingRoom")) });
         socketMsgFn(io, dispatch);
         return console.log("로딩");
     }, [dispatch]);
@@ -50,11 +49,11 @@ function ChatingRoom(props) {
                         if (list.User.id === myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers.name} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers.name} />
                     }
                 }) : console.log('chatContents === null')
             }
