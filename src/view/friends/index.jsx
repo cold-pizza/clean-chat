@@ -20,7 +20,7 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={imageOutputFn(myAccount.imagePath)} alt={imageOutputFn(myAccount.imagePath)} />
+            <img src={myAccount !== null ? imageOutputFn(myAccount.imagePath) : null} alt={myAccount !== null ? imageOutputFn(myAccount.imagePath) : null} />
             <p>{myAccount !== null ? myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
