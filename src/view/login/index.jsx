@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './style.scss';
 import onChange from '../../controller/onChange';

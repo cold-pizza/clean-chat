@@ -1,5 +1,7 @@
-import axios from "axios";
 import chatRoomRemoveFn from "../controller/chatRoomRemoveFn";
+import createMessageFn from "../controller/createMessageFn";
+import sendMessageFn from "../controller/sendMessageFn";
+import callUsersFn from "../controller/callUsersFn";
 
 const stateManagement = {
     users: null,
@@ -25,66 +27,26 @@ const stateReducer = function(state = stateManagement, action) {
     switch(action.type) {
 
           case GET_MESSAGE:
-                let arr = { ...state };
-                arr.chatContents = JSON.parse(localStorage.getItem(`chatContents_${action.payload.id}`)); 
-                return arr;
-
+            return { ...state, chatContents: JSON.parse(localStorage.getItem(`chatContents_${action.payload.id}`))};
 
           case CREATE_MESSAGE:
-            const setTalk = action.payload.setTalk;
             let array = { ...state };
-            const data = {
-              message: action.payload.message
-            }
-            axios.post(`${axios.defaults.baseURL}/api/chats/${action.payload.id}/messages`, data)
-                  .then(res => {
-                      console.log(res.data);
-                      array.chatContents = [ ...array.chatContents, res.data.result ];
-                      setTalk({ ment: '' });
-                      return array;
-                  }) 
-                  .catch(err => {
-                      console.log(err);
-                      console.log('메시지 전송 에러');
-                  })
-                  return array;
-
+            createMessageFn(action, array);
+            return array;
 
           case SEND_MESSAGE:
             let sendedMessage = { ...state };
             const messageData = action.payload.data;
             const beforeMessage = sendedMessage.chatContents[sendedMessage.chatContents.length-1];
-            if (beforeMessage.message !== undefined) {
-              if (messageData.message === beforeMessage.message) {
-                return sendedMessage;
-              } else {
-                sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
-              }
-            } else {
-              sendedMessage.chatContents = [ ...sendedMessage.chatContents, action.payload.data ];
-            }
+            sendMessageFn(beforeMessage, sendedMessage, messageData);
               return sendedMessage;
-
-
 
             case REMOVE_CHATINGROOM:
               return chatRoomRemoveFn(action.payload.id);
 
-
               case CALL_USERS:
                 let users = { ...state };
-              axios.get(`${axios.defaults.baseURL}/api/friends`)
-              .then(res => {
-                console.log("친구가 " + res.data.message);
-                console.log(res.data.result);
-                localStorage.setItem('user', JSON.stringify(res.data.result));
-                users.user = res.data.result;
-                return users;
-              })
-              .catch(err => {
-                console.log('친구 에러');
-                console.log(err);
-              });
+                callUsersFn(users);
               return users;
 
               case ALARM_MESSAGE:
