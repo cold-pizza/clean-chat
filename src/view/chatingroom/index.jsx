@@ -49,11 +49,11 @@ function ChatingRoom(props) {
                         if (list.User.id === myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers.name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers.name} />
+                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
                     }
                 }) : console.log('chatContents === null')
             }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 // 컴포넌트
 import './App.scss';
 import Nav from './view/nav';
@@ -17,20 +17,30 @@ import ChatingAlarm from './view/chatingAlarm';
 
 import urlLimitFn from './controller/urlLimitFn';
 import checkLogoutFn from './controller/checkLogoutFn'
+import chatAlarm from './controller/chatAlarmFn';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
 
 function App() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const alarm = useSelector(state => state.switchReducer.alarm);
   const myAccount = useSelector(state => state.stateReducer.myAccount);
-
+  const messageData = useSelector(state => state.stateReducer.message);
   useEffect(() => {
     checkLogoutFn(myAccount, history);
     urlLimitFn(myAccount, history);
     return console.log('로그인체크');
   }, [history, myAccount]);
+  useEffect(() => {
+    if (localStorage.length > 1) {
+      const pathLen = window.location.pathname.split('/').length;
+      if (pathLen < 5) {
+          chatAlarm(messageData, dispatch);
+      }
+    }
+}, [dispatch, messageData]);
 
   return (
     <div className="App">

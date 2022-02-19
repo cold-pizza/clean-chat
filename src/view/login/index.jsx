@@ -1,23 +1,17 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './style.scss';
 import onChange from '../../controller/onChange';
 import loginFn from '../../controller/loginFn';
-import chatAlarm from '../../controller/chatAlarmFn';
 
 function Login(props) {
     const dispatch = useDispatch();
     const basicImg = useSelector(state => state.basicReducer.basicImg);
-    const messageData = useSelector(state => state.stateReducer.message);
     const myAccount = useSelector(state => state.stateReducer.myAccount);
     const buttonActiveSwitch = useSelector(state => state.switchReducer.buttonActiveSwitch);
     const [idInput, setIdInput] = useState({ loginId: "", loginPs: "" });
     const { loginId, loginPs } = idInput;
     const btnRef = useRef(null);
-
-    //   useEffect(() => {
-    //     chatAlarm(messageData, dispatch);
-    //   }, [dispatch, messageData]);
 
     const onChangeCallback = useCallback(e => onChange(e, idInput, setIdInput), [idInput]);
 

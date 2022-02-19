@@ -6,6 +6,7 @@ const chatAlarm = function(message, dispatch) {
         console.log('알람 ON');
         setTimeout(() => {
             dispatch({type: "SWITCH_ALARM"});
+            dispatch({ type: "ALARM_MESSAGE", payload: {data: null} });
             console.log('알람 OFF');
         }, 2000)
     } else {

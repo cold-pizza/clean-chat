@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import './style.scss';
 import alarmNameFn from '../../controller/alarmNameFn';
 
-const ChatingAlarm = function(props) {
+const ChatingAlarm = function() {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const messageData = useSelector(state => state.stateReducer.message);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
