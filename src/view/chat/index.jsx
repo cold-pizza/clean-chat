@@ -18,8 +18,8 @@ function Chat(props) {
             chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
                 return <li key={id}>
             <div onClick={()=>{
-            props.history.push(`/chat/chatingroom/${i}`);
-            dispatch({ type: "GET_MESSAGE", payload: { id: i } });
+            props.history.push(`/chat/chatingroom/${id}`);
+            dispatch({ type: "GET_MESSAGE", payload: id });
         }} className="meta-data">
                 <img src={basicImg} alt={basicImg} />
                 <section>

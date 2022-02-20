@@ -33,6 +33,7 @@ function App() {
     urlLimitFn(myAccount, history);
     return console.log('로그인체크');
   }, [history, myAccount]);
+
   useEffect(() => {
     if (localStorage.length > 1) {
       const pathLen = window.location.pathname.split('/').length;
@@ -40,6 +41,7 @@ function App() {
           chatAlarm(messageData, dispatch);
       }
     }
+    return console.log('채팅알람');
 }, [dispatch, messageData]);
 
   return (

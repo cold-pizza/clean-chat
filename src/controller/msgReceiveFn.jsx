@@ -5,7 +5,7 @@ const msgReceiveFn = function(io, dispatch) {
     socketio.on('conn', () => {
         socketCallFn(socketio.id);
         socketio.on('message', data => {
-            dispatch({type: "ALARM_MESSAGE", payload: { data: data }});
+            dispatch({type: "ALARM_MESSAGE", payload: data });
         });
     }); 
 }

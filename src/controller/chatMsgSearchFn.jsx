@@ -6,9 +6,9 @@ const chatMsgSearchFn = function(chatingRoom) {
             console.log(`${i}번째 ` + res.data.message);
             if (res.data.result[0].ChatContents !== null) {
                 const chatContents = res.data.result[0].ChatContents;
-                localStorage.setItem(`chatContents_${i}`, JSON.stringify(chatContents.reverse()));
+                localStorage.setItem(`chatContents_${chatingRoom[i].id}`, JSON.stringify(chatContents.reverse()));
             } else {
-                return console.log(`${i}번째 채팅은 없습니다.`);
+                return console.log(`${chatingRoom[i].id}번id 채팅은 없습니다.`);
             } 
         })
         .catch(err => {

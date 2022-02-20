@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams } from 'react-router';
 import io from 'socket.io-client';
 import './style.scss';
@@ -22,6 +22,7 @@ function ChatingRoom(props) {
     const [inputSwitch, setInputSwitch] = useState(false);
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
+    const onChangeCallback = useCallback(e => onChange(e, talk, setTalk), [talk]);
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
@@ -33,13 +34,19 @@ function ChatingRoom(props) {
         return console.log('정렬');
     }, [chatContents]);
 
+    const chatNameFilterFn = function(chatingRoom, id) {
+        const list = [...chatingRoom];
+        list.filter(list => list.id === id);
+        return list[0].chatUsers[0].name;
+    }
+
     return <div className="chating-room">
         <nav>
         <i onClick={()=>{ 
-            msgSearchFn(id, chatingRoom, dispatch);
+            msgSearchFn(id, dispatch);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
-        <p className="name">{chatingRoom !== null ? chatingRoom[id].chatUsers[0].name : null}</p>
+        <p className="name">{chatingRoom !== null ? chatNameFilterFn(chatingRoom, id) : null}</p>
         <div></div>
         </nav>
         <section ref={scrollRef} className="chating-form">
@@ -49,18 +56,18 @@ function ChatingRoom(props) {
                         if (list.User.id === myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatNameFilterFn(chatingRoom, id)} />
                     } else if (list.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
-                        return <OtherContent key={i} list={list} chatName={chatingRoom[id].chatUsers[0].name} />
+                        return <OtherContent key={i} list={list} chatName={chatNameFilterFn(chatingRoom, id)} />
                     }
                 }) : console.log('chatContents === null')
             }
         </section>
         <div className="chating-input">
         <input 
-        onChange={e => onChange(e, talk, setTalk)}  
+        onChange={e => onChangeCallback(e)}  
         onKeyUp={chatingSencerFn(ment, inputSwitch, setInputSwitch)}
         value={ment} 
         name="ment" 
@@ -72,7 +79,7 @@ function ChatingRoom(props) {
             <i onClick={()=>{
                 dispatch({ 
                     type: "CREATE_MESSAGE", 
-                    payload: { id: chatingRoom[id].id, message: ment, setTalk } });
+                    payload: { id, message: ment, setTalk } });
                     setInputSwitch(!inputSwitch);
         }} className="fas fa-arrow-up"></i>
          : null }
@@ -81,4 +88,4 @@ function ChatingRoom(props) {
     </div>
 }
 
-export default ChatingRoom;
+export default React.memo(ChatingRoom);

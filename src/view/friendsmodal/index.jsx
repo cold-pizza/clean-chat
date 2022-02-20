@@ -29,10 +29,9 @@ function FriendsModal() {
             </div>
             <div className="btns">
                 <button onClick={()=>{
-                    checkChatingRoomFn(chatingRoom, users, history);
-                    if (checkChatingRoomFn !== 0) {
-                        addChatingRoomFn(users, chatingRoom.length, dispatch, history);
-                    }
+                    // if (checkChatingRoomFn(chatingRoom, users, history) !== 0) {
+                        addChatingRoomFn(users, chatingRoom, dispatch, history);
+                    // }
                 }} className="chating-btn">채팅</button>
                 <button onClick={()=>{
                     localStorage.removeItem("friendsNumber");

@@ -10,11 +10,11 @@ function Search(props) {
     const [friends, setFriends] = useState(null);
     useEffect(() => {
         setFriends(users);
-    }, []);
+    }, [users]);
     return <div className="search">
         <section className="search-form">
         <input value={search} onChange={e => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
-        <i className="fas fa-times cancel-btn"></i>
+        {/* <i className="fas fa-times cancel-btn"></i> */}
         </section>
         <ul>
             {
@@ -25,7 +25,8 @@ function Search(props) {
                 return <li key={id} onClick={() => {
                     props.history.push(`/friends/friendsmodal/${i}`)
                 }}>
-                <img src={imageOutputFn(imagePath)} alt={imageOutputFn(imagePath)} />
+                <img src={imageOutputFn(imagePath)} 
+                alt={imageOutputFn(imagePath)} />
                 <p>{name}</p>
             </li>
             })

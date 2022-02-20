@@ -25,9 +25,8 @@ const SET_CHATINGROOM = "SET_CHATINGROOM";
 
 const stateReducer = function(state = stateManagement, action) {
     switch(action.type) {
-
           case GET_MESSAGE:
-            return { ...state, chatContents: JSON.parse(localStorage.getItem(`chatContents_${action.payload.id}`))};
+            return { ...state, chatContents: JSON.parse(localStorage.getItem(`chatContents_${action.payload}`))};
 
           case CREATE_MESSAGE:
             let array = { ...state };
@@ -36,9 +35,7 @@ const stateReducer = function(state = stateManagement, action) {
 
           case SEND_MESSAGE:
             let sendedMessage = { ...state };
-            const messageData = action.payload.data;
-            const beforeMessage = sendedMessage.chatContents[sendedMessage.chatContents.length-1];
-            sendMessageFn(beforeMessage, sendedMessage, messageData);
+            sendMessageFn(sendedMessage, action);
               return sendedMessage;
 
             case REMOVE_CHATINGROOM:
@@ -50,7 +47,7 @@ const stateReducer = function(state = stateManagement, action) {
               return users;
 
               case ALARM_MESSAGE:
-                return { ...state, message: action.payload.data };
+                return { ...state, message: action.payload };
 
               case SET_USERS:
                 return { ...state, users: action.payload };

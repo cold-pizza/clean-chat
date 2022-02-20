@@ -2,9 +2,9 @@
 
 .friends-remove {
     @include col;
+    padding: 0 20px;
     position: relative;
-    height: 80%;
-    overflow: scroll;
+    height: 100%;
     width: 100%;
     z-index: 3;
     background: white;

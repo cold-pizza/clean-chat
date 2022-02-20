@@ -1,15 +1,16 @@
 @import '/src/App.scss';
 .search-email {
     @include col;
+    align-items: center;
     width: 100%;
-    height: 80%;
-    overflow: scroll;
+    height: 100%;
     background: white;
     z-index: 2;
     .search-form {
         width: 100%;
         @include row;
         align-items: center;
+        justify-content: center;
         margin-bottom: 20px;
         input {
             width: 300px;
@@ -26,8 +27,11 @@
     }
     .item-list {
         @include col;
+        width: 100%;
+        padding: 0 20px;
         .item {
             @include row;
+            width: 100%;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
