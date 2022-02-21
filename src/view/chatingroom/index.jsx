@@ -60,26 +60,27 @@ function ChatingRoom(props) {
                 }) : console.log('chatContents === null')
             }
         </section>
-        <div className="chating-input">
+        <form className="chating-input" onSubmit="return false;">
         <input 
-        onChange={e => onChangeCallback(e)}  
+        onChange={e => onChangeCallback(e)}
         onKeyUp={chatingSencerFn(ment, inputSwitch, setInputSwitch)}
         value={ment} 
         name="ment" 
         id="chating" 
         type="text" 
         />
-        <button>
-            { inputSwitch ? 
-            <i onClick={()=>{
+        <button type="submit" onClick={e => {
+            e.preventDefault();
                 dispatch({ 
                     type: "CREATE_MESSAGE", 
                     payload: { id, message: ment, setTalk } });
                     setInputSwitch(!inputSwitch);
-        }} className="fas fa-arrow-up"></i>
+        }}>
+            { inputSwitch ? 
+            <i className="fas fa-arrow-up"></i>
          : null }
         </button>
-        </div>
+        </form>
     </div>
 }
 

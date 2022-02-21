@@ -1,7 +1,7 @@
 import axios from "axios"
 const chatMsgSearchFn = function(chatingRoom) {
     for (let i = 0; i < chatingRoom.length; i++) {
-        axios.get(`${axios.defaults.baseURL}/api/chats/${chatingRoom[i].id}/messages`)
+        axios.get(`/api/chats/${chatingRoom[i].id}/messages`)
         .then(res => {
             console.log(`${i}번째 ` + res.data.message);
             if (res.data.result[0].ChatContents !== null) {

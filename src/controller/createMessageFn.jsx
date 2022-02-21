@@ -4,7 +4,7 @@ const createMessageFn = function(action, array) {
     const data = {
       message: action.payload.message
     }
-    axios.post(`${axios.defaults.baseURL}/api/chats/${action.payload.id}/messages`, data)
+    axios.post(`/api/chats/${action.payload.id}/messages`, data)
           .then(res => {
               console.log(res.data);
               array.chatContents = [ ...array.chatContents, res.data.result ];

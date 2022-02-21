@@ -4,7 +4,7 @@ const socketCallFn = function(id) {
     const body = {
         socketId: id
     }
-    axios.post('https://clean-chat.kumas.dev/api/users/socket', body)
+    axios.post('/api/users/socket', body)
     .then(res => {
         console.log("socket이 "+res.data.message);
         console.log(res.data);

@@ -17,7 +17,7 @@ function Login(props) {
 
     return <div className="login">
         <h1>클린챗</h1>
-        <form id="login-form" action="#">
+        <form id="login-form">
             <input 
             onChange={e => onChange(e, idInput, setIdInput)} 
             name="loginId" 
@@ -32,11 +32,12 @@ function Login(props) {
             type="password" 
             placeholder="비밀번호" 
             />
-            <button onClick={async ()=>{
-                loginFn(loginId, loginPs, basicImg, myAccount, props.history, dispatch, setIdInput);
+            <button 
+            type="submit"
+            onClick={e => {
+                loginFn(e, loginId, loginPs, basicImg, myAccount, props.history, dispatch, setIdInput);
             }} 
             className="login-btn"
-            type="submit"
             disabled={buttonActiveSwitch}
             ref={btnRef} 
             style={{ background: buttonActiveSwitch ? "#828282" : "#2647ff" }}

@@ -7,7 +7,7 @@ import userOverlapCheckFn from './userOverlapCheckFn';
      if (state === true) {
          setState(!state);
      }
-    axios.get(`${axios.defaults.baseURL}/api/users/email/${email}`)
+    axios.get(`/api/users/email/${email}`)
     .then(res => {
         console.log(res.data.message);
         console.log(res.data.result);

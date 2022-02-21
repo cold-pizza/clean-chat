@@ -1,6 +1,6 @@
 import axios from 'axios';
 const callUsersFn = function(users) {
-    axios.get(`${axios.defaults.baseURL}/api/friends`)
+    axios.get(`/api/friends`)
               .then(res => {
                 console.log("친구가 " + res.data.message);
                 console.log(res.data.result);

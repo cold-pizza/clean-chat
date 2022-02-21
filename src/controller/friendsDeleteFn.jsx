@@ -2,11 +2,11 @@ import axios from 'axios';
 import imageFilterFn from './imageFilterFn';
 
   const friendsDeleteFn = function(id , dispatch, basicImg) {
-    axios.delete(`${axios.defaults.baseURL}/api/friends/${id}`)
+    axios.delete(`/api/friends/${id}`)
     .then(res => {
       console.log(res);
       console.log(res.data.message);
-      axios.get(`${axios.defaults.baseURL}/api/friends`)
+      axios.get(`/api/friends`)
       .then(res => {
         console.log(res.data.message);
         const friends = imageFilterFn(res.data.result, basicImg);

@@ -2,14 +2,14 @@ import axios from "axios"
 
 
 const msgSearchFn = function(id, dispatch) {
-    axios.get(`${axios.defaults.baseURL}/api/chats/${id}/messages`)
+    axios.get(`/api/chats/${id}/messages`)
     .then(res => {
         console.log('메시지가 ' + res.data.message);
         console.log(res);
         const chatContents = res.data.result[0].ChatContents;
         localStorage.setItem(`chatContents_${id}`, JSON.stringify(chatContents.reverse()));
 
-        axios.get(`${axios.defaults.baseURL}/api/chats`)
+        axios.get(`/api/chats`)
         .then(res => {
           console.log('채팅방이 ' + res.data.message);
           const cr = res.data.result;

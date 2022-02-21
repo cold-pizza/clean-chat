@@ -4,31 +4,32 @@ import chatMsgSearchFn from './chatMsgSearchFn';
 import imageFilterFn from './imageFilterFn';
 
   // 로그인 함수.
-  const loginFn = function(loginId, loginPs, basicImg, myAccount, history, dispatch, setIdInput) {
-    if (loginId === '') {
+  const loginFn = function(e, email, password, basicImg, myAccount, history, dispatch, setIdInput) {
+    if (email === '') {
       alert('이메일을 입력해주세요.')
       return false;
     } else {
-      if (loginPs === '') {
+      if (password === '') {
         alert('비밀번호를 입력해주세요.')
         return false;
       }
     }
       if (localStorage.length > 1) {
-        if (myAccount.email === loginId) {
+        if (myAccount.email === email) {
           alert('이미 로그인된 아이디 입니다.');
           return history.replace('/');
         }
       } else {
       const data = {
-        email: loginId, 
-        password: loginPs
+        email, 
+        password
       }
       // 로그인 버튼 비활성화.
       dispatch({ type: "SWITCH_BUTTON_ACTIVE" });
+      e.preventDefault();
 
       // 로그인 요청.
-      axios.post(`${axios.defaults.baseURL}/api/auth/login`, data)
+      axios.post(`/api/auth/login`, data)
       .then(res => {
         const user = res.data.result;
         dispatch({ type: "SET_MY_ACCOUNT", payload: user });
@@ -36,7 +37,7 @@ import imageFilterFn from './imageFilterFn';
         // console.log(user);
         if (res.status === 200) {
           // 친구요청.
-          axios.get(`${axios.defaults.baseURL}/api/friends`)
+          axios.get(`/api/friends`)
           .then(res => {
             console.log("친구가 " + res.data.message);
             // console.log(res.data.result);
@@ -50,7 +51,7 @@ import imageFilterFn from './imageFilterFn';
           });
 
           // 채팅방 요청.
-          axios.get(`${axios.defaults.baseURL}/api/chats`)
+          axios.get(`/api/chats`)
           .then(res => {
             console.log('채팅방이 ' + res.data.message);
             const cr = res.data.result;

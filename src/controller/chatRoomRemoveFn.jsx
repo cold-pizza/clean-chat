@@ -1,11 +1,11 @@
 import axios from "axios"
 
 const chatRoomRemoveFn = function(id) {
-    axios.delete(`${axios.defaults.baseURL}/api/chats/${id}`)
+    axios.delete(`/api/chats/${id}`)
     .then(res => {
         console.log(res.data.message);
         // 삭제하고 업데이트.
-        axios.get(`${axios.defaults.baseURL}/api/chats`)
+        axios.get(`/api/chats`)
         .then(res => {
             localStorage.setItem('chatingRoom', JSON.stringify(res.data.result));
             console.log(res.data.message);

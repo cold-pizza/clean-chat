@@ -6,7 +6,7 @@ const addChatingRoomFn = function(users, chatingRoom,  dispatch, history) {
   const body = {
     userId: users[id].id
   }
-  axios.post(`${axios.defaults.baseURL}/api/chats`, body)
+  axios.post(`/api/chats`, body)
   .then(res => {
     const result = res.data.result;
     console.log(res.data.message); 

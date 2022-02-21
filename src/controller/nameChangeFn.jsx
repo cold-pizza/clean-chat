@@ -6,7 +6,7 @@ import axios from "axios";
     const data = {
       name: nickNameEdit.names
     }
-    axios.patch(`${axios.defaults.baseURL}/api/users`, data)
+    axios.patch(`/api/users`, data)
     .then(res => {
       console.log(res.data.message);
       const arr = { ...myAccount };

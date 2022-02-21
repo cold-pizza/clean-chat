@@ -5,7 +5,7 @@ const basicImgChangeFn = function(myAccount, basicImg, dispatch) {
         const data = {
             imagePath: basicImg 
         }
-        axios.patch(`${axios.defaults.baseURL}/api/users`, data)
+        axios.patch(`/api/users`, data)
         .then(res => {
             console.log(res.data.message);
             const arr = { ...myAccount };

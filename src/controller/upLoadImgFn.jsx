@@ -5,7 +5,7 @@ const upLoadImgFn = function(myAccount, dispatch) {
     const body = {
         imagePath: imgUrl
     }
-    axios.patch(`${axios.defaults.baseURL}/api/users`, body)
+    axios.patch(`/api/users`, body)
     .then(res => {
         const arr = { ...myAccount };
         arr.imagePath = axios.defaults.baseURL + imgUrl;

@@ -28,17 +28,20 @@ function SearchUser() {
   }, [listRefSwitch, searchList]);
 
     return <div className="search-email">
-        <div className="search-form">
+        <form className="search-form" onSubmit="return false;">
         <input 
         onChange={e => onChange(e, searchInput, setSearchInput)}
         name="userSearch" 
         type="text" 
         placeholder="이메일(email)을 입력해주세요" 
         />
-        <i onClick={() => {
+        <button onClick={e => {
+            e.preventDefault();
             friendsSearchFn(userSearch, setSearchList, users, userOverlap, setUserOverlap);
-        }} className="fas fa-check cancel-btn"></i>
-        </div>
+        }} type="submit">
+        <i className="fas fa-check cancel-btn"></i>
+        </button>
+        </form>
         <section ref={listRef} className="item-list">
             {
                 listRefSwitch ? 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
   // 로그아웃 함수.
   const logoutFn = function(history) {
-    axios.post(`${axios.defaults.baseURL}/api/auth/logout`, { withCredentials: true })
+    axios.post(`/api/auth/logout`, { withCredentials: true })
     .then(res => {
       localStorage.clear("persist:root");
         console.log(res.data.message);

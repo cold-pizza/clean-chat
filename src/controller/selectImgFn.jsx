@@ -13,7 +13,7 @@ const selectImgFn = function(e, viewImg) {
     const upLoadFile = e.target.files[0];
     dataFile.append('img', upLoadFile);
 
-    axios.post(`${axios.defaults.baseURL}/api/users/images`, dataFile)
+    axios.post(`/api/users/images`, dataFile)
     .then(res => {
         const url = res.data.result.imagePath;
         localStorage.setItem('image', String(url));

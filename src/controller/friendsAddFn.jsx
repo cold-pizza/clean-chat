@@ -4,10 +4,10 @@ import axios from 'axios';
     const body = {
       userId: id
     }
-    axios.post(`${axios.defaults.baseURL}/api/friends`, body)
+    axios.post(`/api/friends`, body)
     .then(res => {
       console.log("친구가 "+ res.data.message);
-      axios.get(`${axios.defaults.baseURL}/api/friends`)
+      axios.get(`/api/friends`)
       .then(res => {
         console.log(res);
         localStorage.setItem('user', JSON.stringify(res.data.result));
