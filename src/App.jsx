@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     checkLogoutFn(myAccount, history);
     urlLimitFn(myAccount, history);
-    return console.log('로그인체크');
+    return console.log('url확인');
   }, [history, myAccount]);
 
   useEffect(() => {

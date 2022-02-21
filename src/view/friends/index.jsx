@@ -18,7 +18,7 @@ function Friends(props) {
                 msgReceiveFn(io, dispatch);
             }
         }
-        return console.log('업데이트 되었습니다.');
+        return () => console.log('cleanup');
       }, [dispatch]);
       
     return <div className="friends">

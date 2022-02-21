@@ -10,6 +10,7 @@ import msgSearchFn from '../../controller/msgSearchFn';
 import socketMsgFn from '../../controller/socketMsgFn';
 import chatingSencerFn from '../../controller/chatingSencerFn';
 import onChange from '../../controller/onChange';
+import chatNameFilterFn from '../../controller/chatNameFilterFn';
 import { useSelector, useDispatch } from 'react-redux';
 
 function ChatingRoom(props) {
@@ -33,12 +34,6 @@ function ChatingRoom(props) {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return console.log('정렬');
     }, [chatContents]);
-
-    const chatNameFilterFn = function(chatingRoom, id) {
-        const list = [...chatingRoom];
-        list.filter(list => list.id === id);
-        return list[0].chatUsers[0].name;
-    }
 
     return <div className="chating-room">
         <nav>
