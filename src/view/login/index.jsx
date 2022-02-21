@@ -35,7 +35,7 @@ function Login(props) {
             <button 
             type="submit"
             onClick={e => {
-                loginFn(e, loginId, loginPs, basicImg, myAccount, props.history, dispatch, setIdInput);
+                myAccount ?? loginFn(e, loginId, loginPs, basicImg, props.history, dispatch, setIdInput);
             }} 
             className="login-btn"
             disabled={buttonActiveSwitch}

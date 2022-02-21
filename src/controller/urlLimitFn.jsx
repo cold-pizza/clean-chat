@@ -1,6 +1,5 @@
-const urlLimitFn = function(myAccount, history) {
+const urlLimitFn = function(history) {
     const path = window.location.pathname;
-    if (myAccount === null) {
       const urlCheck = path.split('/');
       if (urlCheck.length >= 3) {
         if (urlCheck[2].length > 0) {
@@ -10,14 +9,6 @@ const urlLimitFn = function(myAccount, history) {
         } else { 
           console.log('통과');
         }
-    } else {
-      if (window.location.pathname === '/clean-chat/') {
-        import('./logoutFn')
-        .then(({ default: logout }) => {
-          logout(history);
-        });
-      }
-    }
   }
 
 export default urlLimitFn
