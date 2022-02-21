@@ -2,6 +2,9 @@
         .name-input {
             position: absolute;
             top: 180px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
             input {
                 width: 250px;
                 height: 40px;
@@ -10,5 +13,11 @@
                 border-bottom: 1px solid white;
                 background: transparent;
                 padding: 4px;
+            }
+            i {
+                position: absolute;
+                right: 0;
+                font-size: 18px;
+                color: white;
             }
         }

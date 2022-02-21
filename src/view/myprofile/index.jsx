@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route } from 'react-router-dom'; 
 import { useDispatch, useSelector } from 'react-redux';
-import nameChangeFn from '../../controller/nameChangeFn';
-import onChange from '../../controller/onChange';
 import NameInput from '../nameInput';
 import './style.scss';
 import ProfileImageEdit from '../profileimageedit';
@@ -14,10 +12,8 @@ function MyProfile(props) {
     const NAME_INPUT_SWITCH = "SWITCH_NAME_INPUT";
     const nameInputSwitch = useSelector(state => state.switchReducer.nameInputSwitch);
     const myEditSwitch = useSelector(state => state.switchReducer.myEditSwitch);
-    const myAccount = useSelector(state => state.stateReducer.myAccount);
-    const [nickNameEdit, setNickNameEdit] = useState('');    
+    const myAccount = useSelector(state => state.stateReducer.myAccount); 
   useEffect(()=>{
-    // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
     return console.log('내 계정 업데이트');
   }, [])
     return <div className="my-profiles">
@@ -25,29 +21,15 @@ function MyProfile(props) {
             <nav>
             <i onClick={()=>{
                 props.history.push('/friends');
-                if (myEditSwitch) {
-                    dispatch({ type: MY_EDIT_SWITCH });
-                }
+                if (myEditSwitch) dispatch({ type: MY_EDIT_SWITCH });
+                if (nameInputSwitch) dispatch({ type: NAME_INPUT_SWITCH });
             }} className="fas fa-chevron-left"></i>
-            { 
-            !nameInputSwitch ? <i onClick={() => {
-                dispatch({ type: "SWITCH_SETTING" }); 
+            <i onClick={() => {
+                props.history.push('/setting');
             }} className="fas fa-cog"></i>
-             : <i onClick={()=>{
-            nameChangeFn(myAccount, nickNameEdit, dispatch);
-            dispatch({ type: MY_EDIT_SWITCH });
-            dispatch({ type: NAME_INPUT_SWITCH });
-            setNickNameEdit({ names: '' });
-        }} className="fas fa-check"></i> 
-        }
         </nav>
 
-        {
-         nameInputSwitch ? 
-        <NameInput 
-        onChange={e => onChange(e, nickNameEdit, setNickNameEdit)} 
-        name={myAccount !== null ? myAccount.name : null } /> : null 
-        }
+        { nameInputSwitch ? <NameInput name={myAccount?.name || null } /> : null }
         <section>
             <img 
             src={imageOutputFn(myAccount.imagePath)} 
@@ -57,7 +39,7 @@ function MyProfile(props) {
                 props.history.push('/myprofile/profileimageedit');
             }} className="fas fa-edit image-edit"></i> : null }
 
-            <p>{myAccount !== null ? myAccount.name : 'NULL'}</p>
+            <p>{myAccount?.name || 'NULL'}</p>
             
             { myEditSwitch ? <i onClick={()=>{
                 dispatch({ type: NAME_INPUT_SWITCH });
