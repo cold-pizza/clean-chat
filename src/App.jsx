@@ -16,7 +16,7 @@ import Action from './view/action';
 import ChatingAlarm from './view/chatingAlarm';
 
 import urlLimitFn from './controller/urlLimitFn';
-import checkLogoutFn from './controller/checkLogoutFn'
+import checkBaseUrlFn from './controller/checkBaseUrl'
 import chatAlarmSencer from './controller/chatAlarmSencer'
 
 axios.defaults.withCredentials = true;
@@ -29,7 +29,7 @@ function App() {
   const myAccount = useSelector(state => state.stateReducer.myAccount);
   const messageData = useSelector(state => state.stateReducer.message);
   useEffect(() => {
-    myAccount === null ? urlLimitFn(history) : checkLogoutFn(history);
+    myAccount === null ? urlLimitFn(history) : checkBaseUrlFn(history);
     return () => console.log('url확인');
   }, [history, myAccount]);
 
