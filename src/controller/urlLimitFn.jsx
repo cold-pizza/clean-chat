@@ -7,9 +7,16 @@ const urlLimitFn = function(myAccount, history) {
           history.replace('/');
           alert('로그인시 이용 가능합니다.');
         }
-        } else {
+        } else { 
           console.log('통과');
         }
+    } else {
+      if (window.location.pathname === '/clean-chat/') {
+        import('./logoutFn')
+        .then(({ default: logout }) => {
+          logout(history);
+        });
+      }
     }
   }
 

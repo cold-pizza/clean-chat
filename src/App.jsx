@@ -29,9 +29,9 @@ function App() {
   const myAccount = useSelector(state => state.stateReducer.myAccount);
   const messageData = useSelector(state => state.stateReducer.message);
   useEffect(() => {
-    checkLogoutFn(myAccount, history);
+    // checkLogoutFn(myAccount, history);
     urlLimitFn(myAccount, history);
-    return console.log('url확인');
+    return () => console.log('url확인');
   }, [history, myAccount]);
 
   useEffect(() => {

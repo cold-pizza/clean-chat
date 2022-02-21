@@ -17,7 +17,7 @@ function Login(props) {
 
     return <div className="login">
         <h1>클린챗</h1>
-        <section id="login-form" action="#">
+        <form id="login-form" action="#">
             <input 
             onChange={e => onChange(e, idInput, setIdInput)} 
             name="loginId" 
@@ -47,7 +47,7 @@ function Login(props) {
             className="signup-btn" 
             type="button"
             >회원가입</button>
-        </section>
+        </form>
     </div>
 }
 

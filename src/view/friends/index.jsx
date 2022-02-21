@@ -18,8 +18,8 @@ function Friends(props) {
                 msgReceiveFn(io, dispatch);
             }
         }
-        return () => console.log('cleanup');
-      }, [dispatch]);
+        return console.log('cleanup');
+      }, []);
       
     return <div className="friends">
         <section onClick={()=>{
