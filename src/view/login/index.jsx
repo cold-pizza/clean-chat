@@ -13,20 +13,20 @@ function Login(props) {
     const { loginId, loginPs } = idInput;
     const btnRef = useRef(null);
 
-    const onChangeCallback = useCallback(e => onChange(e, idInput, setIdInput), [idInput]);
+    // const onChangeCallback = useCallback(e => onChange(e, idInput, setIdInput), [idInput]);
 
     return <div className="login">
         <h1>클린챗</h1>
         <section id="login-form" action="#">
             <input 
-            onChange={e => onChangeCallback(e)} 
+            onChange={e => onChange(e, idInput, setIdInput)} 
             name="loginId" 
             className="email" 
             type="email" 
             placeholder="이메일" 
             />
             <input 
-            onChange={e => onChangeCallback(e)}  
+            onChange={e => onChange(e, idInput, setIdInput)}  
             name="loginPs" 
             className="password" 
             type="password" 
