@@ -33,7 +33,7 @@ import imageFilterFn from './imageFilterFn';
             // 채팅방 요청.
             const chatingRoom = await axios.get(`/api/chats`);
             const cr = chatingRoom.data.result;
-            dispatch({ type: "SET_CHATINGROOM", payload: cr });
+            dispatch({ type: "SET_CHATINGROOM", payload: cr }); 
             // 채팅기록 생성.
             chatMsgSearchFn(cr);
             setIdInput({ loginId: '', loginPs: '' });

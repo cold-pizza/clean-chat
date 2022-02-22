@@ -18,6 +18,7 @@ import ChatingAlarm from './view/chatingAlarm';
 import urlLimitFn from './controller/urlLimitFn';
 import checkBaseUrlFn from './controller/checkBaseUrl'
 import chatAlarmSencer from './controller/chatAlarmSencer'
+import logoutFn from './controller/logoutFn';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'https://clean-chat.kumas.dev';
@@ -29,10 +30,13 @@ function App() {
   const myAccount = useSelector(state => state.stateReducer.myAccount);
   const messageData = useSelector(state => state.stateReducer.message);
   useEffect(() => {
+    // logoutFn(history, dispatch);
     myAccount === null ? urlLimitFn(history) : checkBaseUrlFn(history);
     return () => console.log('url확인');
-  }, [history, myAccount]);
-
+  }, [dispatch, history, myAccount]);
+  // if (window.closed) {
+  //   logoutFn(history, dispatch);
+  // }
   useEffect(() => {
     chatAlarmSencer(messageData, dispatch);
     return () => console.log('채팅알람');

@@ -11,10 +11,13 @@ function Chat(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const chatBubble = useSelector(state => state.switchReducer.chatBubble);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
+    // const messageData = useSelector(state => state.stateReducer.message);
+    console.log(chatingRoom[0])
+    // console.log(messageData);
     const [removeNum, setRemoveNum] = useState(null);
     return <div className="chat">
         {
-            chatingRoom !== null ?
+            chatingRoom ?
             chatingRoom.map(({ chatUsers, ChatContent, id }, i)=>{
                 return <li key={id}>
             <div onClick={()=>{
@@ -27,7 +30,7 @@ function Chat(props) {
                     <span className="name">{chatUsers[0].name}</span>
                     { chatBubble ? <div className="red-dot">1</div> : null}
                     </div>
-                    <p className="content">{ChatContent ? ChatContent.content : null}</p>
+                    <p className="content">{ChatContent?.content ?? "null" }</p>
                 </section>
             </div>
             <i onClick={() => {

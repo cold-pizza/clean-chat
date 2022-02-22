@@ -1,9 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './style.scss';
+import callChat from '../../controller/callChat';
 
 function Action(props) {
   const chatBubble = useSelector(state => state.switchReducer.chatBubble);
   const site = useSelector(state => state.basicReducer.site);
+  const dispatch = useDispatch();
+
 
     return <div className="action">
       {
