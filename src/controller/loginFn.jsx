@@ -1,6 +1,5 @@
 import axios from 'axios';
 import chatMsgSearchFn from './chatMsgSearchFn';
-// import socketCallFn from './socketCallFn';
 import imageFilterFn from './imageFilterFn';
 
   // 로그인 함수.
@@ -30,15 +29,15 @@ import imageFilterFn from './imageFilterFn';
         const friend = await axios.get(`/api/friends`);
         const friends = imageFilterFn(friend.data.result, basicImg);
         dispatch({ type: "SET_USERS", payload: friends });
-        if (user) {
-          // 채팅방 요청.
-          const chatingRoom = await axios.get(`/api/chats`);
-          const cr = chatingRoom.data.result;
-          dispatch({ type: "SET_CHATINGROOM", payload: cr });
-          // 채팅기록 생성.
-          chatMsgSearchFn(cr);
-          setIdInput({ loginId: '', loginPs: '' });
-          return history.push('/friends');
+        if (login) {
+            // 채팅방 요청.
+            const chatingRoom = await axios.get(`/api/chats`);
+            const cr = chatingRoom.data.result;
+            dispatch({ type: "SET_CHATINGROOM", payload: cr });
+            // 채팅기록 생성.
+            chatMsgSearchFn(cr);
+            setIdInput({ loginId: '', loginPs: '' });
+            return history.push('/friends');
         }
       } catch(err) {
         console.error(err);

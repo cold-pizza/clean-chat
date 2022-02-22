@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     chatAlarmSencer(messageData, dispatch);
-    return console.log('채팅알람');
+    return () => console.log('채팅알람');
 }, [dispatch, messageData]);
 
   return (

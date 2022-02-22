@@ -4,8 +4,10 @@ import './style.scss';
 import logoutFn from '../../controller/logoutFn';
 import SearchUser from '../searchUser';
 import FriendsRemove from '../friendsremove';
+import { useDispatch } from 'react-redux';
 
 function Setting(props) {
+    const dispatch = useDispatch();
     return <div className="setting">
         <div className="btns">
             <button onClick={()=>{
@@ -15,7 +17,7 @@ function Setting(props) {
                 props.history.push('/setting/friendsremove');
             }} type="button">친구삭제</button>
             <button onClick={()=>{
-                logoutFn(props.history);
+                logoutFn(props.history, dispatch);
             }}>로그아웃</button>
             <button onClick={()=>{
                 props.history.goBack();

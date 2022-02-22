@@ -21,6 +21,7 @@ const ALARM_MESSAGE = "ALARM_MESSAGE";
 const SET_USERS = "SET_USERS";
 const SET_MY_ACCOUNT = "SET_MY_ACCOUNT";
 const SET_CHATINGROOM = "SET_CHATINGROOM";
+const LOGOUT = "LOGOUT";
 
 
 const stateReducer = function(state = stateManagement, action) {
@@ -57,6 +58,9 @@ const stateReducer = function(state = stateManagement, action) {
 
               case SET_CHATINGROOM:
                 return { ...state, chatingRoom: action.payload };
+
+              case LOGOUT:
+                return { ...state, message: action.payload, users: action.payload, myAccount: action.payload, chatingRoom: action.payload };
   
   default:
     return state;
