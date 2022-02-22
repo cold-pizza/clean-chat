@@ -4,7 +4,7 @@ import chatMsgSearchFn from './chatMsgSearchFn';
 import imageFilterFn from './imageFilterFn';
 
   // 로그인 함수.
-  const loginFn = async function(email, password, basicImg, history, dispatch, setIdInput) {
+  const loginFn = async function(e, email, password, basicImg, history, dispatch, setIdInput) {
     if (!email) {
       alert('이메일을 입력해주세요.');
       return ;
@@ -17,6 +17,7 @@ import imageFilterFn from './imageFilterFn';
       email, 
       password
     }
+    e.preventDefault();
     try {
     // 로그인 버튼 비활성화.
       dispatch({ type: "SWITCH_BUTTON_ACTIVE" });

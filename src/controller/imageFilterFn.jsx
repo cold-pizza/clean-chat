@@ -1,11 +1,6 @@
 const imageFilterFn = function(arr, basicImg) {
-    let array = [...arr];
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].imagePath.length < 5) {
-        array[i].imagePath = basicImg;
-      }
-    }
+    let array = [...arr].forEach(list => list.imagePath.length < 5 ? list.imagePath = basicImg : list);
     return array;
-  }
+}
 
   export default imageFilterFn

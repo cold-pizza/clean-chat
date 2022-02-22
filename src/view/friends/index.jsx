@@ -25,16 +25,16 @@ function Friends(props) {
         <section onClick={()=>{
             props.history.push('/myprofile');
         }} className="my-profile">
-            <img src={myAccount !== null ? imageOutputFn(myAccount.imagePath) : null} 
-            alt={myAccount !== null ? imageOutputFn(myAccount.imagePath) : null} />
-            <p>{myAccount !== null ? myAccount.name : '로딩중입니다.'}</p>
+            <img src={myAccount ? imageOutputFn(myAccount.imagePath) : null} 
+            alt={myAccount ? imageOutputFn(myAccount.imagePath) : null} />
+            <p>{myAccount ? myAccount.name : '로딩중입니다.'}</p>
         </section>
         <div className="friends-number">
-            <p>친구 {users !== null ? users.length : 0 }</p>
+            <p>친구 {users?.length || 0 }</p>
         </div>
         <ul className="friends-list">
         {
-            users !== null ?
+            users ?
             users.map(({ name, imagePath, id }, i)=>{
                 return (
                 <li key={id} onClick={()=>{
