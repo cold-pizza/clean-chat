@@ -31,6 +31,10 @@ function Friends(props) {
         </section>
         <div className="friends-number">
             <p>친구 {users?.length || 0 }</p>
+            {/* 친구찾기 */}
+            <i onClick={() => {
+                props.history.push('/search');
+                }} className="fas fa-search"></i>
         </div>
         <ul className="friends-list">
         {

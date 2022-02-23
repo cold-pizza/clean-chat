@@ -6,8 +6,6 @@ function Action(props) {
   const chatBubble = useSelector(state => state.switchReducer.chatBubble);
   const site = useSelector(state => state.basicReducer.site);
   const dispatch = useDispatch();
-
-
     return <div className="action">
       {
         site.map(({ site, logo, id })=>{

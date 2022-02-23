@@ -13,9 +13,10 @@ function Nav(props) {
             <section key={id}>
               <div>{title}</div>
                 <div>
-                  <i onClick={()=>{
-                    props.history.push('/setting');
-                  }} className="fas fa-cog"></i>
+                  { site === '/search' ?
+                    <i onClick={()=>{
+                      props.history.goBack();
+                    }} className="fas fa-times"></i> : null }
               </div>
             </section>
           </Route>

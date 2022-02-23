@@ -25,10 +25,14 @@
     }
     .friends-number {
         width: 100%;
-        text-align: left;
+        @include row;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 10px;
-        font-size: 14px;
-        color: $main-gray;
+        p, i {
+            font-size: 14px;
+            color: $main-gray;
+        }
     }
     .friends-list {
         width: 100%;

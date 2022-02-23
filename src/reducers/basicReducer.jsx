@@ -10,8 +10,8 @@ const basicState = {
       logo: 'fas fa-comment'
     }, {
       id: 2,
-      site: '/search',
-      logo: 'fas fa-search'
+      site: '/setting',
+      logo: 'fas fa-cog'
     }
   ],
   navSite: [{
