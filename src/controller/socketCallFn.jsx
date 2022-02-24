@@ -7,7 +7,7 @@ const socketCallFn = function(id) {
     axios.post('/api/users/socket', body)
     .then(res => {
         console.log("socket이 "+res.data.message);
-        console.log(res.data);
+        // console.log(res.data);
     })
     .catch(err => {
         console.log("socket에러\n" + err);

@@ -1,7 +1,7 @@
 
 
 const chatAlarm = function(messageData, dispatch) {
-    if (messageData !== null) {
+    if (messageData) {
         dispatch({type: "SWITCH_ALARM"});
         console.log('알람 ON');
         setTimeout(() => {

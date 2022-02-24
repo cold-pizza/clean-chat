@@ -10,6 +10,7 @@ function Chat(props) {
     const chatRemoveSwitch = useSelector(state => state.switchReducer.chatRemoveSwitch);
     const basicImg = useSelector(state => state.basicReducer.basicImg);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
+    console.log(chatingRoom)
     const [removeNum, setRemoveNum] = useState(null);
     return <div className="chat">
         {

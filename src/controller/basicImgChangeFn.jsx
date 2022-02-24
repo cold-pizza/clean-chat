@@ -8,10 +8,7 @@ const basicImgChangeFn = function(myAccount, basicImg, dispatch) {
         axios.patch(`/api/users`, data)
         .then(res => {
             console.log(res.data.message);
-            const arr = { ...myAccount };
-            arr.imagePath = basicImg;
-            localStorage.setItem('myInfo', JSON.stringify(arr));
-            dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
+            dispatch({ type: "SET_MY_ACCOUNT", payload: { ...myAccount, imagePath: basicImg } });
         })
         .catch(err => {
             console.log(err);
