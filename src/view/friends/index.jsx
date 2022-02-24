@@ -11,13 +11,12 @@ function Friends(props) {
     const dispatch = useDispatch();
     const users = useSelector(state => state.stateReducer.users);
     const myAccount = useSelector(state => state.stateReducer.myAccount);
+
     useEffect(()=>{
-        if (localStorage.length > 1) {
             const pathLen = window.location.pathname.split('/').length;
-            if (pathLen < 5) {   
+            if (pathLen < 5) { 
                 msgReceiveFn(io, dispatch);
             }
-        }
         return () => console.log('cleanup');
       }, [dispatch]);
       

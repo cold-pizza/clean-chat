@@ -29,14 +29,15 @@ function App() {
   const alarm = useSelector(state => state.switchReducer.alarm);
   const myAccount = useSelector(state => state.stateReducer.myAccount);
   const messageData = useSelector(state => state.stateReducer.message);
+
+// window.addEventListener('unload', () => {
+//   logoutFn(history, dispatch);
+// })
   useEffect(() => {
     // logoutFn(history, dispatch);
     myAccount === null ? urlLimitFn(history) : checkBaseUrlFn(history);
     return () => console.log('url확인');
   }, [dispatch, history, myAccount]);
-  // if (window.closed) {
-  //   logoutFn(history, dispatch);
-  // }
   useEffect(() => {
     chatAlarmSencer(messageData, dispatch);
     return () => console.log('채팅알람');

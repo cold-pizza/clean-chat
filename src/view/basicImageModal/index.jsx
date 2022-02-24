@@ -1,7 +1,6 @@
 import './style.scss';
 import basicImgChangeFn from "../../controller/basicImgChangeFn";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 function BasicImageModal(props) {
     const basicImg = useSelector(state => state.basicReducer.basicImg);

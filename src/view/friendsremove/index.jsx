@@ -10,7 +10,7 @@ function FriendsRemove(props) {
 
     return <div className="friends-remove">
         {
-            users !== null ?
+            users ?
             users.map(({ name, imagePath, id }, i)=>{
                 return (
             <div key={id} className="item">

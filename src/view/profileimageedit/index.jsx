@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import './style.scss';
 import BasicImageModal from '../basicImageModal'
 import SelectImage from '../selectImage';
@@ -11,11 +11,6 @@ function ProfileImageEdit(props) {
     const selectImgSwitch = useSelector(state => state.switchReducer.selectImgSwitch);
     const imgFileRef = useRef(null);
     const viewImg = useRef(null);
-
-    useEffect(() => {
-        // dispatch({ type: "SET_MY_ACCOUNT", payload: JSON.parse(localStorage.getItem('myInfo')) });
-        return console.log('내 정보 업데이트');
-    }, [])
     
     return <div className="profile-image-edit">
         { basicModalSwitch ? <BasicImageModal history={props.history}/> : null }

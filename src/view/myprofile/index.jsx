@@ -24,9 +24,9 @@ function MyProfile(props) {
                 if (myEditSwitch) dispatch({ type: MY_EDIT_SWITCH });
                 if (nameInputSwitch) dispatch({ type: NAME_INPUT_SWITCH });
             }} className="fas fa-chevron-left"></i>
-            <i onClick={() => {
+            {/* <i onClick={() => {
                 props.history.push('/setting');
-            }} className="fas fa-cog"></i>
+            }} className="fas fa-cog"></i> */}
         </nav>
 
         { nameInputSwitch ? <NameInput name={myAccount?.name || null } /> : null }
@@ -49,9 +49,7 @@ function MyProfile(props) {
         <div className="line"></div>
         <i onClick={()=>{
             dispatch({ type: MY_EDIT_SWITCH });
-            if (nameInputSwitch) {
-                dispatch({ type: NAME_INPUT_SWITCH });
-            }
+            if (nameInputSwitch) dispatch({ type: NAME_INPUT_SWITCH });
         }} className="fas fa-edit edit-btn"></i>
         </main>
         <Route path="/myprofile/profileimageedit" render={() => <ProfileImageEdit history={props.history} />} />

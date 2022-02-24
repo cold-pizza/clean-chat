@@ -12,7 +12,7 @@ const ChatingAlarm = function() {
             <img src={basicImg} alt={basicImg} />
             <div className="chat-info">
             <p>{alarmNameFn(chatingRoom, Number(messageData.chatId))}</p>
-            <p>{messageData !== null ? messageData.message : "메시지 없음"}</p>
+            <p>{messageData ? messageData.message : "메시지 없음"}</p>
             </div>
         </div>
     </div>

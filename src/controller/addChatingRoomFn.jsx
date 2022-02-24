@@ -13,7 +13,7 @@ const addChatingRoomFn = function(users, chatingRoom,  dispatch, history) {
     if (res.data.message === '이미 채팅방이 존재합니다.') {
       const list = [...chatingRoom];
       const num = list.filter(list => list.chatUsers[0].id === users[id].id);
-      history.push(`/chatingroom/${num[0].id}`);
+      history.push(`/chat/chatingroom/${num[0].id}`);
     } else {
       dispatch({ type: "SET_CHATINIGROOM", payload: result });
       localStorage.setItem(`chatContents_${result.id}`);

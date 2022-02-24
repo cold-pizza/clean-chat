@@ -9,7 +9,6 @@ const switchState = {
     chatRemoveSwitch: false,
     profileImageEditSwitch: false,
     buttonActiveSwitch: false,
-    test: null,
 }
 
 const SWITCH_ALARM = "SWITCH_ALARM";

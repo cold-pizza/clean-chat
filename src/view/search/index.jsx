@@ -14,11 +14,10 @@ function Search(props) {
     return <div className="search">
         <section className="search-form">
         <input value={search} onChange={e => searchOnChange(e, setSearch)} type="text" placeholder="검색" />
-        {/* <i className="fas fa-times cancel-btn"></i> */}
         </section>
         <ul>
             {
-                friends !== null ?
+                friends ?
                 friends.filter(friends => {
                 if (search === '' || friends.name.includes(search)) return friends;
             }).map(({ name, imagePath, id }, i) => {

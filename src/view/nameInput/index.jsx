@@ -8,7 +8,6 @@ function NameInput(props) {
     const dispatch = useDispatch();
     const myAccount = useSelector(state => state.stateReducer.myAccount);
     const [nickName, setNickName] = useState(null); 
-    console.log(nickName)
     return <div className="name-input">
         <input
         onChange={e => onChange(e, nickName, setNickName)}

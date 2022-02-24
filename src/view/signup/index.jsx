@@ -16,14 +16,11 @@ function Signup(props) {
         imagePath: '' 
     });
 
-    // 첫 렌더링시 성별.
     useEffect(()=>{
         const arr = { ...joinAccount }
         arr.gender = 'male';
         setJoinAccount(arr);
-    }, [])
-
-
+    }, []);
     return <div className="signup">
         <h1>회원가입</h1>
         <div className="password-comment">

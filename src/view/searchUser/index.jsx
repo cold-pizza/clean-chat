@@ -9,7 +9,6 @@ import { useSelector } from 'react-redux';
 
 function SearchUser() {
     const listRef = useRef(null);
-    const basicImg = useSelector(state => state.basicReducer.basicImg);
     const users = useSelector(state => state.stateReducer.users);
     const [searchList, setSearchList] = useState(null);
     const [listRefSwitch, setListRefSwitch] = useState(false);
@@ -19,12 +18,8 @@ function SearchUser() {
     const { userSearch } = searchInput;
 
   useEffect(()=> {
-      if (searchList !== null) {
-          if (listRefSwitch === false) {
-              setListRefSwitch(!listRefSwitch);
-            }
-      }
-      return console.log('load');
+          if (searchList && listRefSwitch === false) setListRefSwitch(!listRefSwitch);
+      return () => console.log('load');
   }, [listRefSwitch, searchList]);
 
     return <div className="search-email">
@@ -48,11 +43,9 @@ function SearchUser() {
                 <li className="item">
                 <div className="meta-data">
                 <img 
-                src={searchList.imagePath.length > 5 ? imageOutputFn(searchList.imagePath) : basicImg} 
-                alt={searchList.imagePath.length > 5 ? imageOutputFn(searchList.imagePath) : basicImg} />
-                {
-                    searchList !== null ? <p>{searchList.name}</p> : null
-                }
+                src={imageOutputFn(searchList.imagePath)} 
+                alt={imageOutputFn(searchList.imagePath)} />
+                { searchList ? <p>{searchList.name}</p> : null }
                 </div>
                 {
                     userOverlap ? <p style={{ color: "gray" }}>이미 친구입니다!</p> :
@@ -65,7 +58,7 @@ function SearchUser() {
             }
         </section>
         {
-            plusModalSwitch === true ? <section className="plus-modal">
+            plusModalSwitch ? <section className="plus-modal">
             <p>{searchList.name}님을 추가하시겠습니까?</p>
             <div>
             <i onClick={() => {

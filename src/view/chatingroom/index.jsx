@@ -41,18 +41,18 @@ function ChatingRoom(props) {
             msgSearchFn(id, dispatch);
             props.history.goBack();
         }} className="fas fa-chevron-left"></i>
-        <p className="name">{chatingRoom !== null ? chatNameFilterFn(chatingRoom, id) : null}</p>
+        <p className="name">{chatingRoom ? chatNameFilterFn(chatingRoom, id) : null}</p>
         <div></div>
         </nav>
         <section ref={scrollRef} className="chating-form">
             {
-                chatContents.length > 0 ? chatContents.map((list, i) => {
-                    if (list.User) {
+                chatContents ? chatContents.map((list, i) => {
+                    if (list?.User) {
                         if (list.User.id === myAccount.id) {
                             return <MyContent key={i} list={list} />
                         } else 
                         return <OtherContent key={i} list={list} chatName={chatNameFilterFn(chatingRoom, id)} />
-                    } else if (list.UserId) {
+                    } else if (list?.UserId) {
                         return <MyContent key={i} list={list} />
                     } else {
                         return <OtherContent key={i} list={list} chatName={chatNameFilterFn(chatingRoom, id)} />
@@ -60,7 +60,7 @@ function ChatingRoom(props) {
                 }) : console.log('chatContents === null')
             }
         </section>
-        <form className="chating-input" onSubmit="return false;">
+        <form className="chating-input">
         <input 
         onChange={e => onChangeCallback(e)}
         onKeyUp={chatingSencerFn(ment, inputSwitch, setInputSwitch)}
