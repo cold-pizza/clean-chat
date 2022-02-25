@@ -12,6 +12,7 @@ import chatingSencerFn from '../../controller/chatingSencerFn';
 import onChange from '../../controller/onChange';
 import chatNameFilterFn from '../../controller/chatNameFilterFn';
 import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
 function ChatingRoom(props) {
     const dispatch = useDispatch();
@@ -25,15 +26,26 @@ function ChatingRoom(props) {
     const { ment } = talk;
     const onChangeCallback = useCallback(e => onChange(e, talk, setTalk), [talk]);
 
+    const getScrollMessage = function(id) {
+        const num = JSON.parse(localStorage.getItem(`chatContents_${id}`))[0].id;
+        console.log(num)
+        axios.get(`/api/chats/${id}/messages?messageId=${num}`)
+        .then(res => {
+            console.log(res.data.result);
+        })
+    }
+
     useEffect(() => {
         socketMsgFn(io, dispatch);
-        return console.log("로딩");
+        return () => console.log("로딩");
     }, [dispatch]);
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        return console.log('정렬');
+        return () => console.log('정렬');
     }, [chatContents]);
+
+    const handleScroll = (e) => console.log(e.target.scrollTop);
 
     return <div className="chating-room">
         <nav>
@@ -44,7 +56,9 @@ function ChatingRoom(props) {
         <p className="name">{chatingRoom ? chatNameFilterFn(chatingRoom, id) : null}</p>
         <div></div>
         </nav>
-        <section ref={scrollRef} className="chating-form">
+        <section ref={scrollRef}
+        //  onScroll={e => handleScroll(e)} 
+         className="chating-form">
             {
                 chatContents ? chatContents.map((list, i) => {
                     if (list?.User) {

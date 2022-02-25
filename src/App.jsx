@@ -30,9 +30,6 @@ function App() {
   const myAccount = useSelector(state => state.stateReducer.myAccount);
   const messageData = useSelector(state => state.stateReducer.message);
 
-// window.addEventListener('unload', () => {
-//   logoutFn(history, dispatch);
-// })
   useEffect(() => {
     // logoutFn(history, dispatch);
     myAccount === null ? urlLimitFn(history) : checkBaseUrlFn(history);
