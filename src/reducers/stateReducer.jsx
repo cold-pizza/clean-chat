@@ -20,12 +20,16 @@ const SET_USERS = "SET_USERS";
 const SET_MY_ACCOUNT = "SET_MY_ACCOUNT";
 const SET_CHATINGROOM = "SET_CHATINGROOM";
 const LOGOUT = "LOGOUT";
+const SCROLL_MESSAGE = "SCROLL_MESSAGE";
 
 
 const stateReducer = function(state = stateManagement, action) {
     switch(action.type) {
           case GET_MESSAGE:
             return { ...state, chatContents: JSON.parse(localStorage.getItem(`chatContents_${action.payload}`))};
+
+          case SCROLL_MESSAGE:
+            return { ...state, chatContents: [...action.payload, ...state.chatContents] };
 
           case CREATE_MESSAGE:
             let array = createMessageFn(action, {...state});

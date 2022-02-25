@@ -11,8 +11,8 @@ import socketMsgFn from '../../controller/socketMsgFn';
 import chatingSencerFn from '../../controller/chatingSencerFn';
 import onChange from '../../controller/onChange';
 import chatNameFilterFn from '../../controller/chatNameFilterFn';
+import getScrollMessage from '../../controller/getScrollMessage';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 
 function ChatingRoom(props) {
     const dispatch = useDispatch();
@@ -20,20 +20,12 @@ function ChatingRoom(props) {
     const chatContents = useSelector(state => state.stateReducer.chatContents);
     const chatingRoom = useSelector(state => state.stateReducer.chatingRoom);
     const myAccount = useSelector(state => state.stateReducer.myAccount);
-    const scrollRef = useRef(null);
     const [inputSwitch, setInputSwitch] = useState(false);
     const [talk, setTalk] = useState({ ment: '' });
     const { ment } = talk;
+    const scrollRef = useRef(null);
+    const [height, setHeight] = useState(null);
     const onChangeCallback = useCallback(e => onChange(e, talk, setTalk), [talk]);
-
-    const getScrollMessage = function(id) {
-        const num = JSON.parse(localStorage.getItem(`chatContents_${id}`))[0].id;
-        console.log(num)
-        axios.get(`/api/chats/${id}/messages?messageId=${num}`)
-        .then(res => {
-            console.log(res.data.result);
-        })
-    }
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
@@ -42,10 +34,20 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        setHeight(scrollRef.current.scrollHeight);
+        console.log(height);
         return () => console.log('정렬');
-    }, [chatContents]);
+    }, [chatContents, height]);
 
-    const handleScroll = (e) => console.log(e.target.scrollTop);
+    const handleScroll = (e) => {
+        console.log(scrollRef.current.scrollTop);
+        if (scrollRef.current.scrollTop === 0) {
+            getScrollMessage(id, dispatch);
+            const beforeY = height;
+            const Y = scrollRef.current.scrollHeight;
+            scrollRef.current.scrollTop = Y - beforeY;
+        }
+    };
 
     return <div className="chating-room">
         <nav>
@@ -57,7 +59,7 @@ function ChatingRoom(props) {
         <div></div>
         </nav>
         <section ref={scrollRef}
-        //  onScroll={e => handleScroll(e)} 
+         onScroll={handleScroll} 
          className="chating-form">
             {
                 chatContents ? chatContents.map((list, i) => {
