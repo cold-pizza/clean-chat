@@ -11,6 +11,7 @@ import chatingSencerFn from "../../controller/chatingSencerFn";
 import onChange from "../../controller/onChange";
 import chatNameFilterFn from "../../controller/chatNameFilterFn";
 import getScrollMessage from "../../controller/getScrollMessage";
+// import handleScroll from "../../controller/handleScroll";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 
@@ -23,9 +24,9 @@ function ChatingRoom(props) {
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
     const myAccount = useSelector((state) => state.stateReducer.myAccount);
     const [inputSwitch, setInputSwitch] = useState(false);
+    const scrollRef = useRef(null);
     const [talk, setTalk] = useState({ ment: "" });
     const { ment } = talk;
-    const scrollRef = useRef(null);
     const [height, setHeight] = useState(null);
     const onChangeCallback = useCallback(
         (e) => onChange(e, talk, setTalk),
@@ -38,13 +39,18 @@ function ChatingRoom(props) {
     }, [dispatch]);
 
     useEffect(() => {
-        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         setHeight(scrollRef.current.scrollHeight);
+        if (chatContents.length <= 100) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        } else {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight / 2;
+        }
+        console.log(chatContents.length);
         console.log(height);
         return () => console.log("정렬");
     }, [chatContents, height]);
 
-    const handleScroll = (e) => {
+    const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);
         if (scrollRef.current.scrollTop === 0) {
             getScrollMessage(id, dispatch);
