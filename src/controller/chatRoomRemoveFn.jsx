@@ -1,24 +1,28 @@
-import axios from "axios"
+import axios from "axios";
 
-const chatRoomRemoveFn = function(id) {
-    axios.delete(`/api/chats/${id}`)
-    .then(res => {
-        console.log(res.data.message);
-        // 삭제하고 업데이트.
-        axios.get(`/api/chats`)
-        .then(res => {
-            localStorage.setItem('chatingRoom', JSON.stringify(res.data.result));
+const chatRoomRemoveFn = function (id, dispatch) {
+    axios
+        .delete(`/api/chats/${id}`)
+        .then((res) => {
             console.log(res.data.message);
+            axios
+                .get(`/api/chats`)
+                .then((res) => {
+                    dispatch({
+                        type: "SET_CHATINGROOM",
+                        payload: res.data.result,
+                    });
+                    console.log(res.data.message);
+                })
+                .catch((err) => {
+                    console.log("호출 문제");
+                    console.log(err);
+                });
         })
-        .catch(err => {
+        .catch((err) => {
+            console.log("삭제 문제");
             console.log(err);
-            console.log("호출 문제");
-        })
-    })
-    .catch(err => {
-        console.log(err);
-        console.log("삭제 문제");
-    });
-}
+        });
+};
 
-export default chatRoomRemoveFn
+export default chatRoomRemoveFn;

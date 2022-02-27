@@ -40,13 +40,11 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         setHeight(scrollRef.current.scrollHeight);
-        if (chatContents.length <= 100) {
+        if (chatContents?.length <= 100) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         } else {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight / 2;
         }
-        console.log(chatContents.length);
-        console.log(height);
         return () => console.log("정렬");
     }, [chatContents, height]);
 
@@ -66,7 +64,7 @@ function ChatingRoom(props) {
                 <i
                     onClick={() => {
                         msgSearchFn(id, dispatch);
-                        props.history.goBack();
+                        props.history.push("/chat");
                     }}
                     className="fas fa-chevron-left"
                 ></i>

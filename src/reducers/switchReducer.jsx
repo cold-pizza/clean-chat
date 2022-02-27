@@ -9,7 +9,7 @@ const switchState = {
     chatRemoveSwitch: false,
     profileImageEditSwitch: false,
     buttonActiveSwitch: false,
-}
+};
 
 const SWITCH_ALARM = "SWITCH_ALARM";
 const SWITCH_CHATING_BUBBLE = "SWITCH_CHATING_BUBBLE";
@@ -22,7 +22,7 @@ const SWITCH_CHAT_REMOVE = "SWITCH_CHAT_REMOVE";
 const SWITCH_PROFILE_IMAGE_EDIT = "SWITCH_PROFILE_IMAGE_EDIT";
 const SWITCH_BUTTON_ACTIVE = "SWITCH_BUTTON_ACTIVE";
 
-const switchReducer = function(state = switchState, action) {
+const switchReducer = function (state = switchState, action) {
     switch (action.type) {
         case SWITCH_ALARM:
             return { ...state, alarm: !state.alarm };
@@ -38,7 +38,7 @@ const switchReducer = function(state = switchState, action) {
 
         case SWITCH_IMG_SELECTION:
             return { ...state, selectImgSwitch: !state.selectImgSwitch };
-        
+
         case SWITCH_NAME_INPUT:
             return { ...state, nameInputSwitch: !state.nameInputSwitch };
 
@@ -49,14 +49,17 @@ const switchReducer = function(state = switchState, action) {
             return { ...state, chatRemoveSwitch: !state.chatRemoveSwitch };
 
         case SWITCH_PROFILE_IMAGE_EDIT:
-          return { ...state, profileImageEditSwitch: !state.profileImageEditSwitch };
-        
-          case SWITCH_BUTTON_ACTIVE:
-              return { ...state, buttonActiveSwitch: !state.buttonActiveSwitch };
+            return {
+                ...state,
+                profileImageEditSwitch: !state.profileImageEditSwitch,
+            };
+
+        case SWITCH_BUTTON_ACTIVE:
+            return { ...state, buttonActiveSwitch: !state.buttonActiveSwitch };
 
         default:
             return state;
     }
-}
+};
 
-export default switchReducer
+export default switchReducer;
