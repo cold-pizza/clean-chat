@@ -6,7 +6,7 @@
 
 ## myPosition
 
-<code>
+<code style="color: skyblue">
 FrontEnd
 </code>
 
