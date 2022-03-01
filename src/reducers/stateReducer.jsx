@@ -44,7 +44,8 @@ const stateReducer = function (state = stateManagement, action) {
             return array;
 
         case SEND_MESSAGE:
-            let sendedMessage = sendMessageFn({ ...state }, action);
+            let sendedMessage = { ...state };
+            sendMessageFn(sendedMessage, action);
             return sendedMessage;
 
         case REMOVE_CHATINGROOM:
