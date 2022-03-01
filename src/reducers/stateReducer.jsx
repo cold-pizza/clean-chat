@@ -39,7 +39,8 @@ const stateReducer = function (state = stateManagement, action) {
             };
 
         case CREATE_MESSAGE:
-            let array = createMessageFn(action, { ...state });
+            let array = { ...state };
+            createMessageFn(action, array);
             return array;
 
         case SEND_MESSAGE:
