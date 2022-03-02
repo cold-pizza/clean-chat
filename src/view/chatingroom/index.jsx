@@ -27,7 +27,7 @@ function ChatingRoom(props) {
     const scrollRef = useRef(null);
     const [talk, setTalk] = useState({ ment: "" });
     const { ment } = talk;
-    const [height, setHeight] = useState(null);
+    const [num, setNum] = useState(null);
     const onChangeCallback = useCallback(
         (e) => onChange(e, talk, setTalk),
         [talk]
@@ -39,22 +39,20 @@ function ChatingRoom(props) {
     }, [dispatch]);
 
     useEffect(() => {
-        setHeight(scrollRef.current.scrollHeight);
         if (chatContents?.length <= 100) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        } else {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight / 2;
-        }
+        } else scrollRef.current.scrollTop = num;
+
         return () => console.log("정렬");
-    }, [chatContents, height]);
+    }, [chatContents, num]);
 
     const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);
         if (scrollRef.current.scrollTop === 0) {
-            getScrollMessage(id, dispatch);
-            const beforeY = height;
-            const Y = scrollRef.current.scrollHeight;
-            scrollRef.current.scrollTop = Y - beforeY;
+            if (num !== 0) {
+                getScrollMessage(id, dispatch, chatContents, setNum);
+                console.log(num);
+            } else console.log("더 이상 불러올 수 없습니다.");
         }
     };
 

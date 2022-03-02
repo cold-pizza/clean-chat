@@ -41,7 +41,8 @@ function Chat(props) {
                                         {/* <div className="red-dot">1</div> */}
                                     </div>
                                     <p className="content">
-                                        {ChatContent?.content ?? "null"}
+                                        {ChatContent?.content ??
+                                            "채팅이 비어있습니다."}
                                     </p>
                                 </section>
                             </div>

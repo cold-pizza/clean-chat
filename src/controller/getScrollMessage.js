@@ -1,14 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-const getScrollMessage = function(id, dispatch) {
-    const num = JSON.parse(localStorage.getItem(`chatContents_${id}`))[0].id;
-    axios.get(`/api/chats/${id}/messages?messageId=${num}`)
-    .then(res => {
-        console.log('스크롤 채팅 불러오기');
-        console.log(res.data);
+const getScrollMessage = function (id, dispatch, chatContents, setNum) {
+    const num = chatContents[0].id;
+    axios.get(`/api/chats/${id}/messages?messageId=${num}`).then((res) => {
         const contents = res.data.result[0].ChatContents.reverse();
+        setNum(contents.length * 57);
         dispatch({ type: "SCROLL_MESSAGE", payload: contents });
-    })
-}
+    });
+};
 
-export default getScrollMessage
+export default getScrollMessage;
