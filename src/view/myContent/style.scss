@@ -1,23 +1,24 @@
-@import '../../App.scss';
+@import "../../App.scss";
 
 .me {
     display: flex;
     flex-direction: row-reverse;
     position: relative;
     margin-bottom: 10px;
-.comment {
-    font-size: 16px;
-    padding: 8px 10px;
-    background: $main-blue;
-    color: white;
-    border-radius: 5px 0 5px 5px;
-    margin-left: 5px;
-}
-.time {
-    font-size: 10px;
-    color: $main-gray;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-}
+    height: 40px;
+    .comment {
+        font-size: 16px;
+        padding: 8px 10px;
+        background: $main-blue;
+        color: white;
+        border-radius: 5px 0 5px 5px;
+        margin-left: 5px;
+    }
+    .time {
+        font-size: 10px;
+        color: $main-gray;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+    }
 }

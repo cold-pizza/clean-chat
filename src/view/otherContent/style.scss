@@ -1,9 +1,10 @@
-@import '../../App.scss';
+@import "../../App.scss";
 .you {
     @include row;
     align-items: flex-end;
     margin-bottom: 20px;
     position: relative;
+    height: 40px;
     img {
         width: 40px;
         height: 40px;

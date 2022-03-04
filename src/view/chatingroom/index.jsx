@@ -10,6 +10,7 @@ import socketMsgFn from "../../controller/socketMsgFn";
 import chatingSencerFn from "../../controller/chatingSencerFn";
 import onChange from "../../controller/onChange";
 import chatNameFilterFn from "../../controller/chatNameFilterFn";
+import chatAlarm from "../../controller/chatAlarmFn";
 import getScrollMessage from "../../controller/getScrollMessage";
 // import handleScroll from "../../controller/handleScroll";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +23,7 @@ function ChatingRoom(props) {
         (state) => state.stateReducer.chatContents
     );
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
+    const messageData = useSelector((state) => state.stateReducer.message);
     const myAccount = useSelector((state) => state.stateReducer.myAccount);
     const [inputSwitch, setInputSwitch] = useState(false);
     const scrollRef = useRef(null);
@@ -41,15 +43,18 @@ function ChatingRoom(props) {
     useEffect(() => {
         if (chatContents?.length <= 100) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        } else scrollRef.current.scrollTop = num;
+        }
+        if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
+            chatAlarm(messageData, dispatch);
 
         return () => console.log("정렬");
-    }, [chatContents, num]);
+    }, [chatContents, dispatch, messageData, num]);
 
     const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);
-        if (scrollRef.current.scrollTop === 0) {
+        if (scrollRef.current.scrollTop < 500) {
             if (num !== 0) {
+                scrollRef.current.scrollTop = num;
                 getScrollMessage(id, dispatch, chatContents, setNum);
                 console.log(num);
             } else console.log("더 이상 불러올 수 없습니다.");
