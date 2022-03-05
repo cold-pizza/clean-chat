@@ -54,7 +54,7 @@ function ChatingRoom(props) {
         console.log(scrollRef.current.scrollTop);
         if (scrollRef.current.scrollTop < 500) {
             if (num !== 0) {
-                scrollRef.current.scrollTop = num;
+                scrollRef.current.scrollTop = 5747;
                 getScrollMessage(id, dispatch, chatContents, setNum);
                 console.log(num);
             } else console.log("더 이상 불러올 수 없습니다.");
