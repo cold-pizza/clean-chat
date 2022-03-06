@@ -29,6 +29,7 @@ function ChatingRoom(props) {
     const scrollRef = useRef(null);
     const [talk, setTalk] = useState({ ment: "" });
     const { ment } = talk;
+    console.log(ment);
     const [num, setNum] = useState(null);
     const onChangeCallback = useCallback(
         (e) => onChange(e, talk, setTalk),
@@ -41,14 +42,12 @@ function ChatingRoom(props) {
     }, [dispatch]);
 
     useEffect(() => {
-        if (chatContents?.length <= 100) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
             chatAlarm(messageData, dispatch);
 
         return () => console.log("정렬");
-    }, [chatContents, dispatch, messageData, num]);
+    }, [dispatch, messageData]);
 
     const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);
@@ -127,10 +126,12 @@ function ChatingRoom(props) {
                     type="submit"
                     onClick={(e) => {
                         e.preventDefault();
-                        dispatch({
-                            type: "CREATE_MESSAGE",
-                            payload: { id, message: ment, setTalk },
-                        });
+                        if (ment) {
+                            dispatch({
+                                type: "CREATE_MESSAGE",
+                                payload: { id, message: ment, setTalk },
+                            });
+                        }
                         setInputSwitch(!inputSwitch);
                     }}
                 >
