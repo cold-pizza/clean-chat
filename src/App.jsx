@@ -29,7 +29,12 @@ function App() {
     const alarm = useSelector((state) => state.switchReducer.alarm);
     const myAccount = useSelector((state) => state.stateReducer.myAccount);
     const messageData = useSelector((state) => state.stateReducer.message);
-
+    // window.onbeforeunload = function (e) {
+    //     if (localStorage.length > 1) {
+    //         history.push("/friends");
+    //     }
+    //     e.preventDefault();
+    // };
     useEffect(() => {
         // logoutFn(history, dispatch);
         myAccount === null ? urlLimitFn(history) : checkBaseUrlFn(history);

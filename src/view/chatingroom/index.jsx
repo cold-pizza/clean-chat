@@ -12,7 +12,6 @@ import onChange from "../../controller/onChange";
 import chatNameFilterFn from "../../controller/chatNameFilterFn";
 import chatAlarm from "../../controller/chatAlarmFn";
 import getScrollMessage from "../../controller/getScrollMessage";
-// import handleScroll from "../../controller/handleScroll";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
 
@@ -29,7 +28,6 @@ function ChatingRoom(props) {
     const scrollRef = useRef(null);
     const [talk, setTalk] = useState({ ment: "" });
     const { ment } = talk;
-    console.log(ment);
     const [num, setNum] = useState(null);
     const onChangeCallback = useCallback(
         (e) => onChange(e, talk, setTalk),
@@ -38,24 +36,25 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
-        return () => console.log("로딩");
-    }, [dispatch]);
-
-    useEffect(() => {
-        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
             chatAlarm(messageData, dispatch);
-
         return () => console.log("정렬");
-    }, [dispatch, messageData]);
+    }, [chatContents.length, dispatch, messageData]);
+
+    useEffect(() => {
+        if (messageData === null) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+        return () => console.log("스크롤 정리");
+    }, [chatContents]);
 
     const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);
         if (scrollRef.current.scrollTop < 500) {
             if (num !== 0) {
-                scrollRef.current.scrollTop = 5747;
                 getScrollMessage(id, dispatch, chatContents, setNum);
                 console.log(num);
+                scrollRef.current.scrollTop = 5747;
             } else console.log("더 이상 불러올 수 없습니다.");
         }
     };
@@ -133,6 +132,8 @@ function ChatingRoom(props) {
                             });
                         }
                         setInputSwitch(!inputSwitch);
+                        scrollRef.current.scrollTop =
+                            scrollRef.current.scrollHeight;
                     }}
                 >
                     {inputSwitch ? <i className="fas fa-arrow-up"></i> : null}
