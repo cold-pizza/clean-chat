@@ -36,10 +36,10 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
-        if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
-            chatAlarm(messageData, dispatch);
+        // if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
+        //     chatAlarm(messageData, dispatch);
         return () => console.log("정렬");
-    }, [chatContents.length, dispatch, messageData]);
+    }, []);
 
     useEffect(() => {
         if (messageData === null) {

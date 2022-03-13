@@ -18,6 +18,7 @@ import ChatingAlarm from "./view/chatingAlarm";
 import urlLimitFn from "./controller/urlLimitFn";
 import checkBaseUrlFn from "./controller/checkBaseUrl";
 import chatAlarmSencer from "./controller/chatAlarmSencer";
+import chatAlarm from "./controller/chatAlarmFn";
 import logoutFn from "./controller/logoutFn";
 
 axios.defaults.withCredentials = true;
@@ -41,9 +42,10 @@ function App() {
         return () => console.log("url확인");
     }, [dispatch, history, myAccount]);
     useEffect(() => {
-        chatAlarmSencer(messageData, dispatch);
-        return () => console.log("채팅알람");
-    }, [dispatch, messageData]);
+        // chatAlarmSencer(messageData, dispatch);
+        chatAlarm(messageData, dispatch);
+        return () => clearTimeout(chatAlarm);
+    }, [messageData]);
 
     return (
         <div className="App">
