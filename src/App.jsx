@@ -47,15 +47,17 @@ function App() {
         return () => clearTimeout(chatAlarm);
     }, [dispatch, messageData]);
 
+    const pathFunction = function () {
+        if (localStorage.length > 1) {
+            return <Friends history={history} />;
+        } else return <Login history={history} />;
+    };
+
     return (
         <div className="App">
             <div className="app-box">
                 <Nav history={history} />
-                <Route
-                    exact
-                    path="/"
-                    render={() => <Login history={history} />}
-                />
+                <Route exact path="/" render={() => pathFunction()} />
                 <Route
                     path="/signup"
                     render={() => <Signup history={history} />}
