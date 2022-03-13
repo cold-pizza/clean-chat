@@ -36,17 +36,16 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
-        // if (scrollRef.current.scrollTop < scrollRef.current.scrollHeight - 150)
-        //     chatAlarm(messageData, dispatch);
         return () => console.log("정렬");
     }, []);
 
     useEffect(() => {
+        console.log(messageData);
         if (messageData === null) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        }
+        } else return;
         return () => console.log("스크롤 정리");
-    }, [chatContents]);
+    }, []);
 
     const handleScroll = () => {
         console.log(scrollRef.current.scrollTop);

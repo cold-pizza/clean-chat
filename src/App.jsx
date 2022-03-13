@@ -45,7 +45,7 @@ function App() {
         // chatAlarmSencer(messageData, dispatch);
         chatAlarm(messageData, dispatch);
         return () => clearTimeout(chatAlarm);
-    }, [messageData]);
+    }, [dispatch, messageData]);
 
     return (
         <div className="App">
