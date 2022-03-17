@@ -27,6 +27,7 @@ function ChatingRoom(props) {
     const [inputSwitch, setInputSwitch] = useState(false);
     const scrollRef = useRef(null);
     const [talk, setTalk] = useState({ ment: "" });
+    const [name, setName] = useState(null);
     const { ment } = talk;
     const [num, setNum] = useState(null);
     const onChangeCallback = useCallback(
@@ -41,9 +42,7 @@ function ChatingRoom(props) {
 
     useEffect(() => {
         console.log(messageData);
-        if (messageData === null) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-        } else return;
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         return () => console.log("스크롤 정리");
     }, []);
 
@@ -69,7 +68,7 @@ function ChatingRoom(props) {
                     className="fas fa-chevron-left"
                 ></i>
                 <p className="name">
-                    {chatingRoom ? chatNameFilterFn(chatingRoom, id) : null}
+                    {chatingRoom ? chatNameFilterFn(chatingRoom, id) : "null"}
                 </p>
                 <div></div>
             </nav>
