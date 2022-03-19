@@ -31,7 +31,7 @@ const loginFn = async function (
         // 로그인 요청.
         const login = await axios.post(`/api/auth/login`, data);
         const user = login.data.result;
-        console.log(login);
+        // console.log(login);
         dispatch({ type: "SET_MY_ACCOUNT", payload: user });
         // 친구 요청.
         const friend = await axios.get(`/api/friends`);

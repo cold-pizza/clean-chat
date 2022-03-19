@@ -4,7 +4,7 @@ const chatRoomRemoveFn = function (id, dispatch) {
     axios
         .delete(`/api/chats/${id}`)
         .then((res) => {
-            console.log(res.data.message);
+            // console.log(res.data.message);
             axios
                 .get(`/api/chats`)
                 .then((res) => {
@@ -12,7 +12,7 @@ const chatRoomRemoveFn = function (id, dispatch) {
                         type: "SET_CHATINGROOM",
                         payload: res.data.result,
                     });
-                    console.log(res.data.message);
+                    // console.log(res.data.message);
                 })
                 .catch((err) => {
                     console.log("호출 문제");

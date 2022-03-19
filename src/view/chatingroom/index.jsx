@@ -10,7 +10,7 @@ import socketMsgFn from "../../controller/socketMsgFn";
 import chatingSencerFn from "../../controller/chatingSencerFn";
 import onChange from "../../controller/onChange";
 import chatNameFilterFn from "../../controller/chatNameFilterFn";
-import chatAlarm from "../../controller/chatAlarmFn";
+// import chatAlarm from "../../controller/chatAlarmFn";
 import getScrollMessage from "../../controller/getScrollMessage";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
@@ -32,7 +32,6 @@ function ChatingRoom(props) {
         (e) => onChange(e, talk, setTalk),
         [talk]
     );
-    useEffect(() => {}, []);
 
     useEffect(() => {
         if (
@@ -43,17 +42,15 @@ function ChatingRoom(props) {
         } else if (scrollRef.current.scrollTop < 100) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-        return () => console.log("스크롤 정리");
+        return;
     }, [chatContents]);
 
     useEffect(() => {
         socketMsgFn(io, dispatch);
-        return () => console.log("정렬");
+        return;
     }, [dispatch]);
 
     const handleScroll = () => {
-        console.log(scrollRef.current.scrollTop);
-        console.log(scrollRef.current.scrollHeight - 880);
         if (scrollRef.current.scrollTop < 500) {
             if (num !== 0) {
                 getScrollMessage(id, dispatch, chatContents, setNum);
