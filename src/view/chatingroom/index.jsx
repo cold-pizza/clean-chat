@@ -34,7 +34,6 @@ function ChatingRoom(props) {
         [talk]
     );
 
-    console.log(inputSwitch);
     useEffect(() => {
         if (
             scrollRef.current.scrollTop >
