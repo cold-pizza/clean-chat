@@ -22,6 +22,7 @@ function ChatingRoom(props) {
         (state) => state.stateReducer.chatContents
     );
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
+    const messageData = useSelector((state) => state.stateReducer.message);
     const myAccount = useSelector((state) => state.stateReducer.myAccount);
     const [inputSwitch, setInputSwitch] = useState(false);
     const scrollRef = useRef(null);
@@ -33,6 +34,7 @@ function ChatingRoom(props) {
         [talk]
     );
 
+    console.log(inputSwitch);
     useEffect(() => {
         if (
             scrollRef.current.scrollTop >
@@ -40,6 +42,8 @@ function ChatingRoom(props) {
         ) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         } else if (scrollRef.current.scrollTop < 100) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        } else if (!inputSwitch) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
         return;
