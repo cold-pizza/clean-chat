@@ -22,7 +22,6 @@ function ChatingRoom(props) {
         (state) => state.stateReducer.chatContents
     );
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
-    const messageData = useSelector((state) => state.stateReducer.message);
     const myAccount = useSelector((state) => state.stateReducer.myAccount);
     const [inputSwitch, setInputSwitch] = useState(false);
     const scrollRef = useRef(null);
