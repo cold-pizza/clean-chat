@@ -13,6 +13,7 @@ function Chat(props) {
     );
     const basicImg = useSelector((state) => state.basicReducer.basicImg);
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
+    console.log(chatingRoom[0].chatUsers[0].name);
     const [removeNum, setRemoveNum] = useState(null);
     return (
         <div className="chat">
@@ -36,7 +37,7 @@ function Chat(props) {
                                 <section>
                                     <div className="data">
                                         <span className="name">
-                                            {chatUsers[0].name}
+                                            {/* {chatUsers[0].name} */}
                                         </span>
                                         {/* <div className="red-dot">1</div> */}
                                     </div>

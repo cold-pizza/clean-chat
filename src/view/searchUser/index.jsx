@@ -6,8 +6,11 @@ import friendsSearchFn from "../../controller/friendsSearchFn";
 import imageOutputFn from "../../controller/imageOutputFn";
 import onChange from "../../controller/onChange";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 function SearchUser() {
+    const dispatch = useDispatch();
+    const basicImg = useSelector((state) => state.basicReducer.basicImg);
     const listRef = useRef(null);
     const users = useSelector((state) => state.stateReducer.users);
     const [searchList, setSearchList] = useState(null);
@@ -77,7 +80,7 @@ function SearchUser() {
                     <div>
                         <i
                             onClick={() => {
-                                friendsAddFn(searchList.id);
+                                friendsAddFn(searchList.id, dispatch, basicImg);
                                 setPlusModalSwitch(!plusModalSwitch);
                             }}
                             className="fas fa-check"
