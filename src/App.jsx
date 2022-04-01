@@ -42,7 +42,6 @@ function App() {
         return () => console.log("url확인");
     }, [dispatch, history, myAccount]);
     useEffect(() => {
-        // chatAlarmSencer(messageData, dispatch);
         chatAlarm(messageData, dispatch);
         return () => clearTimeout(chatAlarm);
     }, [dispatch, messageData]);

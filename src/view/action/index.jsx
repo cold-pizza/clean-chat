@@ -1,7 +1,10 @@
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import "./style.scss";
 
 function Action(props) {
+    const dispatch = useDispatch();
     const chatBubble = useSelector((state) => state.switchReducer.chatBubble);
     const site = useSelector((state) => state.basicReducer.site);
     const redIconCheck = window.location.href;
@@ -17,6 +20,15 @@ function Action(props) {
                         }}
                         key={id}
                         onClick={() => {
+                            if (site === "/chat") {
+                                axios.get(`/api/chats`).then((res) => {
+                                    const chatingRoom = res.data.result;
+                                    dispatch({
+                                        type: "SET_CHATINGROOM",
+                                        payload: chatingRoom,
+                                    });
+                                });
+                            }
                             props.history.push(site);
                         }}
                         className={logo}

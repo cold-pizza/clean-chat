@@ -3,6 +3,6 @@ const chatNameFilterFn = function (chatingRoom, id) {
         return list.id === Number(id);
     });
     return arr[0].chatUsers[0].name;
-};
+}; 
 
 export default chatNameFilterFn;
