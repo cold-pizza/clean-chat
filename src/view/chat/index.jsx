@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import ChatingRoom from "../chatingroom";
 import chatRoomRemoveFn from "../../controller/chatRoomRemoveFn";
@@ -13,7 +13,6 @@ function Chat(props) {
     );
     const basicImg = useSelector((state) => state.basicReducer.basicImg);
     const chatingRoom = useSelector((state) => state.stateReducer.chatingRoom);
-    console.log(chatingRoom);
     const [removeNum, setRemoveNum] = useState(null);
     return (
         <div className="chat">
@@ -37,7 +36,9 @@ function Chat(props) {
                                 <section>
                                     <div className="data">
                                         <span className="name">
-                                            {/* {chatUsers[0].name} */}
+                                            {chatUsers
+                                                ? chatUsers[0].name
+                                                : "닉네임이 비어있습니다."}
                                         </span>
                                         {/* <div className="red-dot">1</div> */}
                                     </div>

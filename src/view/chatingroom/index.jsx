@@ -32,7 +32,6 @@ function ChatingRoom(props) {
         (e) => onChange(e, talk, setTalk),
         [talk]
     );
-    console.log(chatingRoom);
     useEffect(() => {
         if (
             scrollRef.current.scrollTop >
