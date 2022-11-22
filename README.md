@@ -19,6 +19,12 @@ FrontEnd
 -   복잡해진 컴포넌트로 데이터 관리수정 문제 -> Redux로 상태관리
 -   스크롤 이벤트의 대량 호출문제 -> lodash throttle로 일정시간마다 호출하여 완화
 
+## file
+
+-   controller - 기능 관리
+-   view - 컴포넌트 & css파일 관리
+-   reducers - 모든 컴포넌트에 적용할 기능 & 데이터 관리
+
 ## update
 
 -   스크롤 시 이전 채팅목록 불러오기 추가.
